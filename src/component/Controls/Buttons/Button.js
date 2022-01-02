@@ -4,11 +4,9 @@ import "../../../Css/app.css";
 function Button(props) {
   return (
     <>
-      <button type="submit" className="button">
-        {props.name}
-      </button>
+      <button className="btn button">{props.name}</button>
     </>
   );
 }
 
-export default Button
+export default Button;

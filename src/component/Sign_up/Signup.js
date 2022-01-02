@@ -11,20 +11,19 @@ import PhoneInput from "react-phone-number-input";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
+  const [First_name, setFirstName] = useState("");
+  const [Last_name, setLastName] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmpassword, setConfirmPassword] = useState("");
-  const [organisationname, setOrganisationName] = useState("");
-  const [mobilenumber, setMobileNumber] = useState("");
-  const [radio, setRadioBtn] = useState("");
+  const [Confirm_password, setConfirmPassword] = useState("");
+  const [Org_name, setOrgName] = useState("");
+  const [Mobile_number, setMobileNumber] = useState("");
+  const [Role_name, setRole] = useState("");
   const history = useHistory();
 
   const Validate = async (e) => {
     e.preventDefault();
-
-    let mobile = await mobilenumber;
-    let phone_number = await mobile.substr(-10, 10);
+    let mobile = await Mobile_number;
+    let Phone_number = await mobile.substr(-10, 10);
     let Email_ID = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(
       email
     );
@@ -32,40 +31,38 @@ export default function Signup() {
     //Validations
     if (Email_ID === false) {
       alert("Please enter correct email");
-    } else if (firstname === "") {
-      alert("Please fill firstname");
-    } else if (lastname === "") {
-      alert("Please fill lastname");
+    } else if (First_name === "") {
+      alert("Please enter first name");
+    } else if (Last_name === "") {
+      alert("Please enter last name");
     } else if (password === "") {
-      alert("Please fill password");
-    } else if (confirmpassword === "") {
-      alert("Please fill confirm password");
-    } else if (organisationname === "") {
-      alert("Please fill organisation name");
-    } else if (mobilenumber === "" && mobilenumber.length) {
-      alert("Please fill mobile number");
-    } else if (phone_number.length !== 10) {
-      alert(`Mobile number should be 10 digits ${phone_number}`);
-    } else if (radio === "") {
-      alert("Please fill role");
+      alert("Please enter password");
+    } else if (Confirm_password === "") {
+      alert("Please enter confirm password");
+    } else if (Org_name === "") {
+      alert("Please enter organization name");
+    } else if (Mobile_number === "" && Mobile_number.length) {
+      alert("Please enter mobile number");
+    } else if (Phone_number.length !== 10) {
+      alert(`Mobile number should be 10 digits ${Phone_number}`);
+    } else if (Role_name === "") {
+      alert("Please select role");
     } else {
-      let countryCode = await mobilenumber;
+      let countryCode = await Mobile_number;
       let country_Code = await countryCode.slice(0, -10);
-
-      //API CALLS
       let item = {
-        email,
-        firstname,
-        lastname,
-        password,
-        confirmpassword,
-        organisationname,
-        phone_number,
-        country_Code,
+        Email: email,
+        FirstName: First_name,
+        LastName: Last_name,
+        Password: password,
+        Role: Role_name,
+        OrgName: Org_name,
+        MobileNo: Phone_number,
+        CountryCode: country_Code,
       };
-      Client.post("SignUp", item) //Signup API Call
+      Client.post("SignUp", item)  //Signup API Call
         .then((resData) => {
-          alert(resData);
+          console.warn("res", resData);
           history.push("/Login");
         })
         .catch((error) => {
@@ -133,7 +130,7 @@ export default function Signup() {
                   <Form.Label className="black-600-text">First Name</Form.Label>
                   <FormControl
                     aria-label="First Name"
-                    value={firstname}
+                    value={First_name}
                     onChange={(e) => setFirstName(e.target.value)}
                   />
                 </InputGroup>
@@ -143,7 +140,7 @@ export default function Signup() {
                   <Form.Label className="black-600-text">Last Name</Form.Label>
                   <FormControl
                     aria-label="Last Name"
-                    value={lastname}
+                    value={Last_name}
                     onChange={(e) => setLastName(e.target.value)}
                   />
                 </InputGroup>
@@ -167,7 +164,7 @@ export default function Signup() {
                   </Form.Label>
                   <FormControl
                     aria-label="Confirm Password"
-                    value={confirmpassword}
+                    value={Confirm_password}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                 </InputGroup>
@@ -181,8 +178,8 @@ export default function Signup() {
                   </Form.Label>
                   <FormControl
                     aria-label="Organisation Name"
-                    value={organisationname}
-                    onChange={(e) => setOrganisationName(e.target.value)}
+                    value={Org_name}
+                    onChange={(e) => setOrgName(e.target.value)}
                   />
                 </InputGroup>
               </Col>
@@ -192,24 +189,15 @@ export default function Signup() {
                 <InputGroup className="mb-2">
                   <Form.Label className="black-600-text">Mobile No.</Form.Label>
                   <Row>
-                    {/* <Col xs={2} style={{ paddingLeft: 0 }}>
-                        <InputGroup>
-                          <FormControl aria-label="mobile number" />
-                        </InputGroup>
-                      </Col> */}
                     <Col xs={12} style={{ paddingLeft: 0 }}>
                       <InputGroup>
                         <PhoneInput
                           aria-label="mobile number"
                           className="form-control"
                           placeholder="Enter phone number"
-                          value={mobilenumber}
+                          value={Mobile_number}
                           onChange={setMobileNumber}
                         />
-                        {/* <FormControl 
-                            aria-label="mobile number"
-                            value={mobilenumber} 
-                            onChange={(e)=>setMobileNumber(e.target.value)} /> */}
                       </InputGroup>
                     </Col>
                   </Row>
@@ -225,7 +213,7 @@ export default function Signup() {
                           name="Role"
                           aria-label="Radio button for following text input"
                           value={"Hire Workers"}
-                          onChange={() => setRadioBtn("Hire Workers")}
+                          onChange={() => setRole("Hire Workers")}
                         />
                         Hire Workers
                       </InputGroup>
@@ -236,7 +224,7 @@ export default function Signup() {
                           name="Role"
                           aria-label="Radio button for following text input"
                           value={"Supply Workers"}
-                          onChange={() => setRadioBtn("Supply Workers")}
+                          onChange={() => setRole("Supply Workers")}
                         />
                         Supply Workers
                       </InputGroup>
@@ -248,7 +236,6 @@ export default function Signup() {
           </Form.Group>
           <Row>
             <Col sm={12} style={{ textAlign: "center" }}>
-              {/* <Button onClick={signUp} name={"Register"} /> */}
               <button onClick={Validate} className="btn button">
                 Register
               </button>

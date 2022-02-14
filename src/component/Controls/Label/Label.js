@@ -1,9 +1,10 @@
 import React from "react";
+import Form from 'react-bootstrap/Form'
 
 export default function Label(props) {
   return (
-    <div className="container my-3">
-      <h3>Label</h3>
-    </div>
+    <Form.Label id={props.id} className={props.className ? props.className : ''}>
+      {props.value}
+    </Form.Label>
   );
 }

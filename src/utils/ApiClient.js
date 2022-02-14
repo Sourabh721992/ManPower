@@ -1,55 +1,75 @@
 import axios from "axios";
-import { appConfig } from "./AppConfig";
+import {
+  appConfig
+} from "./AppConfig";
 import qs from "qs";
 
 const client = {
   async get(apiName, params) {
     try {
-        const _path = appConfig.apiUri + apiName;
-        const resp = await axios.get(_path, {
-            params: params,
-            timeout:60000
+      const _path = appConfig.apiUri + apiName;
+      const resp = await axios.get(_path, {
+        params: params,
+        timeout: 60000
+      });
+      if (resp.status >= 400 && resp.status <= 500) {
+        return Promise.reject({
+          "status": resp.status,
+          "Message": resp.data.status.Message
         });
-        if (resp.status >= 400 && resp.status <= 500) {
-            return Promise.reject(resp.status);
-        }
-        return Promise.resolve(resp.data);
-    }
-    catch(err) {
-        if(err.response)
-            return Promise.reject(err.response.status);
-        else
-            return Promise.reject(500);
+      }
+      return Promise.resolve(resp.data);
+    } catch (err) {
+      if (err.response)
+        return Promise.reject({
+          "status": err.response.status,
+          "Message": err.response.data.Message
+        });
+      else
+        return Promise.reject({
+          "status": 500,
+          "Message": "Internal Server Error"
+        });
     }
   },
   async post(apiName, body) {
     try {
-    
-      let _path = appConfig.apiUri + apiName;
-   
+
+      const _path = appConfig.apiUri + apiName;
+
       var config = {
         method: 'post',
         url: _path,
-        headers: { 
+        headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        data : qs.stringify(body)
+        data: qs.stringify(body)
       };
 
       const resp = await axios(config);
 
       if (resp.status >= 400 && resp.status <= 500) {
-          return Promise.reject(resp.status);
+        console.log("called");
+        return Promise.reject({
+          "status": resp.status,
+          "Message": resp.data.Message
+        });
       }
 
       return Promise.resolve(resp.data);
-    }
-    catch(err) {
-        console.log(err);
-        if(err.response)
-            return Promise.reject(err.response.status);
-        else
-            return Promise.reject(500);
+    } catch (err) {
+      console.log(err);
+      if (err.response) {
+        console.log("error")
+        return Promise.reject({
+          "status": err.response.status,
+          "Message": err.response.data.Message
+        });
+      } else
+        return Promise.reject({
+          "status": 500,
+          "Message": "Internal Server Error"
+        });
     }
   }
 }

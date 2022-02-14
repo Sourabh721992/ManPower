@@ -1,0 +1,168 @@
+import Client from "./ApiClient";
+
+const SignupAPI = async (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("User/SignUp", payload) //Signup API Call
+            .then((resData) => {
+
+                resolve(resData);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    })
+}
+
+const LoginAPI = (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("User/LogIn", payload) //Login API Call
+            .then((resData) => {
+                console.log("LoginAPI", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
+    })
+}
+
+const TradesApi = (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("metainfo/trades", payload) //Login API Call
+            .then((resData) => {
+                console.log("metainfo/trades", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
+    })
+}
+
+const RequirementInsert = (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("Requirement/Insert", payload) //Login API Call
+            .then((resData) => {
+                console.log("Requirement/Insert", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
+    })
+}
+
+const AddSupplierApi = (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("User/adduser", payload) //Login API Call
+            .then((resData) => {
+                console.log("User/adduser", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
+    })
+}
+
+const GetSupplierApi = (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("Supplier/getSupplierList", payload) //Login API Call
+            .then((resData) => {
+                console.log("Supplier/getSupplierList", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
+    })
+}
+
+const GetUserProfileApi = (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("User/GetUser", payload) //Login API Call
+            .then((resData) => {
+                console.log("User/GetUser", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
+    })
+}
+
+const UpdateUserProfileApi = (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("User/UpdateUser", payload) //Login API Call
+            .then((resData) => {
+                console.log("User/UpdateUser", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
+    })
+}
+
+const GetPendingUsersApi = (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("User/PendingUsers", payload) //Login API Call
+            .then((resData) => {
+                console.log("User/PendingUsers", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
+    })
+}
+
+const DeletePendingUsersApi = (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("User/DeletePendingUsers", payload) //Login API Call
+            .then((resData) => {
+                console.log("User/DeletePendingUsers", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
+    })
+}
+
+const DeleteSupplierApi = (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("Supplier/RemoveSupplier", payload) //Login API Call
+            .then((resData) => {
+                console.log("Supplier/RemoveSupplier", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
+    })
+}
+
+export {
+    SignupAPI,
+    LoginAPI,
+    TradesApi,
+    RequirementInsert,
+    AddSupplierApi,
+    GetSupplierApi,
+    GetUserProfileApi,
+    UpdateUserProfileApi,
+    GetPendingUsersApi,
+    DeletePendingUsersApi,
+    DeleteSupplierApi
+}

@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import { BsFillPersonFill, BsFillKeyFill } from "react-icons/bs";
 import { LoginAPI } from "../../utils/ApiFunctions";
 import { TradesApi } from "../../utils/ApiFunctions";
-import CommonList from "../../utils/CommonList";
+import {setTrade} from "../../utils/CommonList";
 import SuccessAlert from "../Controls/alert/successAlert";
 
 export default function Login(props) {
@@ -53,7 +53,7 @@ export default function Login(props) {
 
       TradesApi({}).then
         ((resData) => {
-          CommonList.setTrade(resData.Message, true);
+          setTrade(resData.Message, true);
         }).catch((error) => {
           alert("catch error found 1", error);
         })
@@ -63,7 +63,14 @@ export default function Login(props) {
           localStorage.setItem("LoginCredential", JSON.stringify(item));
           UserProfile.setSession(resData.Message, true);
           console.log("Login API success");
-          history.push("/Dashboard");
+          console.log(resData)
+          let session = JSON.parse(resData.Message)
+          if(session.Role === "S"){
+            history.push("/SupplierDashboard");
+          }else{
+            history.push("/Dashboard");
+          }
+          
         }).catch((error) => {
           //alert("catch error found 1", error);
 

@@ -31,7 +31,47 @@ export default function RequirementTable(props) {
     } */
 
     return (
-        <div id="RequirementTable" className="RequirementTable DashboardTableSpacing">
+
+        <div className='my-3 mx-5'>
+            <Table responsive striped borderless>
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>No. of workers</th>
+                        <th>Trade</th>
+                        <th>Salary</th>
+                        <th>Status</th>
+                        <th>Buyer</th>
+                        <th>Created Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {props.detail.map((item, index) => {
+                        return(
+                            <tr key={"requirement_table_index_" + index}>
+                                <td>{item.Code}</td>
+                                <td>{item.WorkersCount}</td>
+                                <td>{item.Trades.map((s, index) => (
+                                    <React.Fragment key={"req_trade_cell_ " + index}>
+                                        {s.Name}
+                                        <br />
+                                    </React.Fragment>
+                                ))}</td>
+                                <td>32K-40K</td>
+                                <td>Pending</td>
+                                <td>ABC Buyer</td>
+                                <td>20 Dec 2021</td>
+                                <td></td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </Table>
+        </div>
+
+
+        /* <div id="RequirementTable" className="RequirementTable DashboardTableSpacing">
             <Table responsive striped bordered hover>
                 <thead>
                     <tr>
@@ -83,6 +123,6 @@ export default function RequirementTable(props) {
                     }
                 </tbody>
             </Table>
-        </div>
+        </div> */
     )
 }

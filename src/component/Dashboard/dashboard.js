@@ -6,7 +6,7 @@ import { RequirementInsert, LoginAPI } from "../../utils/ApiFunctions";
 import { Row, Col, Form} from "react-bootstrap";
 import "react-phone-number-input/style.css";
 import UserProfile from "../../utils/UserProfile";
-import CommonList from "../../utils/CommonList";
+import {getTrades} from "../../utils/CommonList";
 import StatusCounter from "./StatusCounter"
 import RequirementTable from "./RequirementTable";
 import Modal from 'react-bootstrap/Modal'
@@ -33,7 +33,7 @@ export default function Dashboard(props) {
     };
     const handleShow = () => { history.push("/AddRequirement"); }
     var session = UserProfile.getSession();
-    let Trades = CommonList.getTrades();
+    let Trades = getTrades();
     console.log("Dashboard ", session);
 
     const Rating = [{ id: 1, Name: 1 }, { id: 2, Name: 2 }, { id: 3, Name: 3 }, { id: 4, Name: 4 }, { id: 5, Name: 5 }]

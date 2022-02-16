@@ -1,26 +1,18 @@
-import React from "react";
-import "../../Css/app.css";
-import "react-phone-number-input/style.css";
-import { Card, Col, Row } from "react-bootstrap";
+import React from 'react'
+import { Card, Col, Row } from 'react-bootstrap'
 
-export default function StatusCounter(props) {
-    const mapStatusWithColor = { "Closed": "#96E2A1", "Flight": "#FF9190", "Resources": "#80A8FF", "VISA Stamp": "#F7D166", "Work Permit": "#C1A7FE" };
-    // let statusArr = [];
-    console.log(props)
-    /* if (props.detail) {
-        statusArr = Object.keys(props.detail);
-    } */
+export default function SupplierStatusCounter() {
     return (
-
         <div className='my-5 mx-3'>
             <Row>
                 <Col sm={1}></Col>
                 <Col sm={2}>
                     <Card className="overflow-hidden">
                         <Card.Body className='d-flex justify-content-center align-items-center'>
-                            <h2 className="f-w-400">{props.detail["Resources"]}</h2>
+                            <h2 className="f-w-400">63</h2>
+                            {/* <p className="text-muted f-w-600 f-16"><span className="text-c-blue">Amount</span> Processed</p> */}
                         </Card.Body>
-                        <Card.Footer style={{ backgroundColor:mapStatusWithColor["Resources"]}}>
+                        <Card.Footer>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <label className='text-muted f-w-600 f-16'>Resources</label>
                             </div>
@@ -30,9 +22,10 @@ export default function StatusCounter(props) {
                 <Col sm={2}>
                     <Card className="overflow-hidden">
                         <Card.Body className='d-flex justify-content-center align-items-center'>
-                            <h2 className="f-w-400">{props.detail["Work Permit"]}</h2>
+                            <h2 className="f-w-400">212</h2>
+                            {/* <p className="text-muted f-w-600 f-16"><span className="text-c-blue">Amount</span> Processed</p> */}
                         </Card.Body>
-                        <Card.Footer style={{ backgroundColor:mapStatusWithColor["Work Permit"]}}>
+                        <Card.Footer>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <label className='text-muted f-w-600 f-16'>Work Permit</label>
                             </div>
@@ -42,11 +35,12 @@ export default function StatusCounter(props) {
                 <Col sm={2}>
                     <Card className="overflow-hidden">
                         <Card.Body className='d-flex justify-content-center align-items-center'>
-                            <h2 className="f-w-400">{props.detail["VISA Stamp"]}</h2>
+                            <h2 className="f-w-400">21</h2>
+                            {/* <p className="text-muted f-w-600 f-16"><span className="text-c-blue">Amount</span> Processed</p> */}
                         </Card.Body>
-                        <Card.Footer style={{ backgroundColor:mapStatusWithColor["VISA Stamp"]}}>
+                        <Card.Footer>
                             <div className='d-flex justify-content-center align-items-center'>
-                                <label className='text-muted f-w-600 f-16'>VISA Stamp</label>
+                                <label className='text-muted f-w-600 f-16'>Visa Stamp</label>
                             </div>
                         </Card.Footer>
                     </Card>
@@ -54,9 +48,10 @@ export default function StatusCounter(props) {
                 <Col sm={2}>
                     <Card className="overflow-hidden">
                         <Card.Body className='d-flex justify-content-center align-items-center'>
-                            <h2 className="f-w-400">{props.detail["Flight"]}</h2>
+                            <h2 className="f-w-400">109</h2>
+                            {/* <p className="text-muted f-w-600 f-16"><span className="text-c-blue">Amount</span> Processed</p> */}
                         </Card.Body>
-                        <Card.Footer style={{ backgroundColor:mapStatusWithColor["Flight"]}}>
+                        <Card.Footer>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <label className='text-muted f-w-600 f-16'>Flight</label>
                             </div>
@@ -66,9 +61,10 @@ export default function StatusCounter(props) {
                 <Col sm={2}>
                     <Card className="overflow-hidden">
                         <Card.Body className='d-flex justify-content-center align-items-center'>
-                            <h2 className="f-w-400">{props.detail["Closed"]}</h2>
+                            <h2 className="f-w-400">1752</h2>
+                            {/* <p className="text-muted f-w-600 f-16"><span className="text-c-blue">Amount</span> Processed</p> */}
                         </Card.Body>
-                        <Card.Footer style={{ backgroundColor:mapStatusWithColor["Closed"]}}>
+                        <Card.Footer>
                             <div className='d-flex justify-content-center align-items-center'>
                                 <label className='text-muted f-w-600 f-16'>Closed</label>
                             </div>
@@ -78,19 +74,5 @@ export default function StatusCounter(props) {
                 <Col sm={1}></Col>
             </Row>
         </div>
-
-        /* <div id="statusCounterContainer" className="statusCounterContainer">
-            {
-                statusArr.map((status, index) => (
-                    <div key={"Status " + index} className="StatusCounterCard">
-                        <div className="StatusCounterCount">
-                            {props.detail[status]}
-                        </div>
-                        <div className="clr"></div>
-                        <div className="StatusCounterLabel" style={{ backgroundColor: mapStatusWithColor[status] }}>{status}</div>
-                    </div>
-                ))
-            }
-        </div> */
     )
 }

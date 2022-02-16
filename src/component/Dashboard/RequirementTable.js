@@ -4,83 +4,68 @@ import "react-phone-number-input/style.css";
 import Table from 'react-bootstrap/Table'
 import { AiOutlineSearch } from "react-icons/ai";
 import { IconContext } from "react-icons";
+import { formatShortDate, getMoneyFormat, logger } from "../../utils/CommonList";
+import { FaSearch } from "react-icons/fa";
+import { Button } from "react-bootstrap";
+import {SearchIconBtn, UsersIconBtn} from "../Controls/Buttons/IconButtons";
 
 export default function RequirementTable(props) {
     console.log(props.detail);
 
-    // let trades = "";
-    // let salary = "";
-    // let Requirements = [];
+    function onSearchBtnClick(e){
+        logger.log(e)
+    }
 
-    /* if (props.detail.length > 0) {
-        Requirements = JSON.parse(JSON.stringify(props.detail));
-        Requirements = Requirements.map((item) => {
-            let Trades = ""
-            let Salary = "";
-            let WorkersCount = "";
-            for (var itemTrade of item.Trades) {
-                Trades += (!itemTrade.Name ? "" : itemTrade.Name) + "\n";
-                Salary += itemTrade.MinSalary + " - " + itemTrade.MaxSalary + "\n";
-                WorkersCount += itemTrade.WorkerCount + "\n";
-            }
-            item.Trade = Trades;
-            item.Salary = Salary;
-            item.WorkersCount = WorkersCount;
-            return item;
-        })
-    } */
+    function onClickBtn(e) {
+        logger.log(e)
+    }
 
     return (
-        <div id="RequirementTable" className="RequirementTable DashboardTableSpacing">
-            <Table responsive striped bordered hover>
-                <thead>
+
+        <div className='my-3 mx-5'>
+            <Table responsive striped borderless>
+                <thead className="text-center">
                     <tr>
                         <th>Code</th>
+                        <th>No. of workers</th>
                         <th>Trade</th>
-                        <th>No. of Workers</th>
                         <th>Salary</th>
                         <th>Status</th>
-                        <th>Supplier</th>
-                        <th>Create Date</th>
+                        <th>Buyer</th>
+                        <th>Created Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {props.detail.map((item, index) => (
-
-                        <tr key={"tableRow" + index}>
-                            <td>{item.Code}</td>
-                            <td>{item.Trades.map((s, index) => (
-                                <React.Fragment key={"ReqTradeCell " + index}>
-                                    {s.Name}
-                                    <br />
-                                </React.Fragment>
-                            ))}</td>
-                            <td>{item.Trades.map((s, index) => (
-                                <React.Fragment key={"ReqTradeCell " + index}>
-                                    {s.WorkerCount}
-                                    <br />
-                                </React.Fragment>
-                            ))}</td>
-                            <td>{item.Trades.map((s, index) => (
-                                <React.Fragment key={"ReqTradeCell " + index}>
-                                    {s.Currency + " " + s.MinSalary + " - " + s.MaxSalary}
-                                    <br />
-                                </React.Fragment>
-                            ))}</td>
-                            <td style={{ color: item.Status === "Completed" ? "#02A81A" : "" }}>{item.Status}</td>
-                            <td>{item.Supplier}</td>
-                            <td>{item["CreatedDate"].split("T")[0]}</td>
-                            <td>
-                                <IconContext.Provider value={{ color: "#3860C7", size: "1.4em" }} >
-                                    <div>
-                                        <AiOutlineSearch />
-                                    </div>
-                                </IconContext.Provider>
-                            </td>
-                        </tr>
-                    ))
-                    }
+                <tbody className="text-center">
+                    {props.detail.map((item, index) => {
+                        return(
+                            <tr key={"requirement_table_index_" + index}>
+                                <td>{item.Code}</td>
+                                <td>{item.WorkersCount}</td>
+                                <td>{item.Trades.map((s, i) => {
+                                    return (
+                                        <label key={"req_trade_cell_ " + i}>
+                                            {s.Name}
+                                        </label>
+                                    )
+                                })}</td>
+                                <td>{item.Trades.map((s, i) => {
+                                    return(
+                                        <span key={"req_sal_cell_ " + i}>
+                                            {getMoneyFormat(s.MaxSalary, s.Currency)}-{getMoneyFormat(s.MinSalary, s.Currency)}
+                                        </span>
+                                    )
+                                })}</td>
+                                <td>{item.Status}</td>
+                                <td>{item.BuyerName}</td>
+                                <td>{formatShortDate(item.CreatedDate)}</td>
+                                <td>
+                                    <UsersIconBtn onClickEvent={(e) => onClickBtn(e)} />
+                                    <SearchIconBtn onClickEvent={(e) => onSearchBtnClick(e)}/>
+                                </td>
+                            </tr>
+                        )
+                    })}
                 </tbody>
             </Table>
         </div>

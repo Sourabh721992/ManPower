@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import UserProfile from "../../utils/UserProfile";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { AiOutlineUser, AiFillHome, AiOutlineUsergroupAdd } from "react-icons/ai";
@@ -20,6 +20,7 @@ export default function Header(props) {
   var logoutButton = null;
   var OrgName = null
   var navbar = null;
+  var supplierNavBar = null
 
   console.log("Header ", session)
 
@@ -45,6 +46,17 @@ export default function Header(props) {
     </NavDropdown>)
 
     OrgName = (<Navbar.Brand className="text-white"> Tata Power Co. </Navbar.Brand>)
+
+    supplierNavBar = (
+      <Navbar className="px-3" bg="light" variant="light">
+        <Navbar.Brand href="#home">Home</Navbar.Brand>
+        <Nav className="me-auto">
+          <Nav.Link href="#buyer">Buyer</Nav.Link>
+          <Nav.Link href="#worker">Worker</Nav.Link>
+          <Nav.Link href="#requirements">Requirements</Nav.Link>
+        </Nav>
+      </Navbar>
+    )
 
     navbar = (
       <nav style={{ backgroundColor: "#f3f5fc" }} className="navbar navbar-expand-lg">
@@ -102,7 +114,14 @@ export default function Header(props) {
       </nav>
       <div className="clr"></div>
 
-      {navbar}
+      {
+        session.Role === "S"
+        ?
+          supplierNavBar
+          :
+            navbar
+      }
+      {/* {navbar} */}
 
     </>
   );

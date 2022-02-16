@@ -10,6 +10,7 @@ import Supplier from "../Supplier/Supplier";
 import Profile from "../Profile/Profile";
 import AddRequirement from "../Requirement/AddRequirement.js";
 import Worker from "../Worker/Worker";
+import SupplierDashboard from "../Dashboard/Supplier/SupplierDashboard";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <PrivateRoute exact path="/Supplier" component={Supplier} />
           <PrivateRoute exact path="/Profile" component={Profile} />
           <PrivateRoute exact path="/AddRequirement" component={AddRequirement} />
+          <PrivateRoute exact path="/SupplierDashboard" component={SupplierDashboard} />
         </Switch>
         {/* <Footer /> */}
       </Router>

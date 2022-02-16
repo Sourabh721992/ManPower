@@ -5,7 +5,7 @@ import { RequirementInsert, LoginAPI, GetSupplierApi } from "../../utils/ApiFunc
 import { Row, Col, Form } from "react-bootstrap";
 import "react-phone-number-input/style.css";
 import UserProfile from "../../utils/UserProfile";
-import CommonList from "../../utils/CommonList";
+import {getTrades} from "../../utils/CommonList";
 import Label from "../Controls/Label/Label";
 import Dropdown from "../Controls/Dropdown/Dropdown";
 import Text from "../Controls/Text/Text";
@@ -29,7 +29,7 @@ export default function AddRequirement() {
 
     console.log(currencies.currencies);
     var session = UserProfile.getSession();
-    let Trades = CommonList.getTrades();
+    let Trades = getTrades();
     console.log("Dashboard ", session);
 
     useEffect(() => {

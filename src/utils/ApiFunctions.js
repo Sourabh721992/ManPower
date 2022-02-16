@@ -153,6 +153,34 @@ const DeleteSupplierApi = (payload) => {
     })
 }
 
+const AddWorkerApi = (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("Worker/Insert", payload) 
+            .then((resData) => {
+                console.log("Worker/Insert", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
+    })
+}
+
+const GetWorkerApi = (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("Worker/FetchWorker", payload) 
+            .then((resData) => {
+                console.log("Worker/FetchWorker", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
+    })
+}
+
 export {
     SignupAPI,
     LoginAPI,
@@ -164,5 +192,7 @@ export {
     UpdateUserProfileApi,
     GetPendingUsersApi,
     DeletePendingUsersApi,
-    DeleteSupplierApi
+    DeleteSupplierApi,
+    AddWorkerApi,
+    GetWorkerApi
 }

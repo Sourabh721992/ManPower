@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import UserProfile from '../../../utils/UserProfile';
 import Header from '../../Layout/Header'
 import RequirementTable from '../RequirementTable';
-import SupplierRequirementTable from './SupplierRequirementTable';
-import SupplierStatusCounter from './SupplierStatusCounter';
 import { FiFilter } from "react-icons/fi";
 import StatusCounter from '../StatusCounter';
 
@@ -24,7 +22,6 @@ export class SupplierDashboard extends Component {
                 <Header session={this.state.session} />
 
                 <StatusCounter detail={this.state.session.StatusCounter} />
-                {/* <SupplierStatusCounter /> */}
 
                 <div className='mx-5'>
                     
@@ -34,8 +31,6 @@ export class SupplierDashboard extends Component {
                     </div>
 
                     <hr />
-
-                    {/* <SupplierRequirementTable /> */}
                     <RequirementTable detail={this.state.session.Requirements}/>
                 </div>
                 

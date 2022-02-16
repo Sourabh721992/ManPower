@@ -16,6 +16,25 @@ const Localization = {
     }
 }
 
+const logger = {
+    log: (message, ...args) => {
+        console.log(message, args);
+    },
+    error: (message, ...args) => {
+        console.error(message, args);
+    }
+}
+
+function formatShortDate(date) {
+    var dt = null;
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    if (date) {
+        dt = new Date(date).toLocaleDateString(Localization.locale, options);
+    }
+
+    return dt
+}
+
 
 function setTrade (Trade) {
     try {
@@ -44,7 +63,7 @@ function getTrades () {
     }
 }
 
-function getMoneyNumericFormat (amount, currency) {
+function getMoneyFormat (amount, currency) {
     if (currency) {
         if (typeof currency === 'string') {
             return Intl.NumberFormat(Localization.locale,{ style: 'currency', currency: currency}).format(amount).replace(".00","");
@@ -56,7 +75,9 @@ function getMoneyNumericFormat (amount, currency) {
     }
 }
 
-
+export {
+    setTrade, getTrades, getMoneyFormat, logger, formatShortDate
+}
 
 
 
@@ -101,6 +122,3 @@ function getMoneyNumericFormat (amount, currency) {
 
 
 // export default CommonList
-export {
-    setTrade, getTrades, getMoneyNumericFormat
-}

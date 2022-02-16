@@ -4,6 +4,7 @@ import { Button, Card, Col, Row } from 'react-bootstrap'
 import { TextInput, ValidationForm } from 'react-bootstrap4-form-validation'
 import Select from 'react-select'
 import { LanguagesData } from '../../master-data'
+import { filterDropdown } from '../../utils/CommonList'
 
 const ContactInfo = (props) => {
 
@@ -186,7 +187,7 @@ const ContactInfo = (props) => {
                                     isMulti
                                     placeholder="Select Known Languages"
                                     onChange={handleMultiSelect}
-                                    // defaultValue={this.state.basicInfo.stateObject}
+                                    value={filterDropdown(LanguagesData, contactDetails.Language.split(','))}
                                     required
                                 />
                                 {isLanguageError &&

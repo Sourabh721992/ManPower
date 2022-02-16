@@ -3,14 +3,18 @@ import { Row, Col, Tab, Card, Nav } from 'react-bootstrap'
 import BasicInfo from './BasicInfo'
 import ContactInfo from './ContactInfo'
 import ExpertiseInfo from './ExpertiseInfo'
-import {AddWorkerApi} from '../../utils/ApiFunctions'
+import {AddWorkerApi, /*GetWorkerApi*/} from '../../utils/ApiFunctions'
 
 const Worker = (props) => {
 
-    const [activeTab, setActiveTab] = useState("contactInfo")
+    const [activeTab, setActiveTab] = useState("basicInfo")
     const [workerInfo, setWorkerInfo] = useState({
         SupplierId: "S8"
     })
+
+    // GetWorkerApi({workerCode: "1"}).then((response)=>{
+    //     console.log(response)
+    // })
 
     // on select tab
     const changeTab = (tabKey) => {

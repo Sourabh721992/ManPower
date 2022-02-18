@@ -195,6 +195,20 @@ const GetWorkerListApi = (payload) => {
     })
 }
 
+const GetBuyerListApi = (supplierId) => {
+    return new Promise((resolve, reject) => {
+        Client.post("Buyer/getBuyerList", supplierId) 
+            .then((resData) => {
+                console.log("Buyer/getBuyerList response ->", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
+    })
+}
+
 export {
     SignupAPI,
     LoginAPI,
@@ -209,5 +223,6 @@ export {
     DeleteSupplierApi,
     AddWorkerApi,
     GetWorkerApi,
-    GetWorkerListApi
+    GetWorkerListApi,
+    GetBuyerListApi
 }

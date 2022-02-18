@@ -63,9 +63,9 @@ export default function Header(props) {
 
     supplierNavBar = (
       <Navbar className="px-3" bg="light" variant="light">
-        <Navbar.Brand href="#home">Home</Navbar.Brand>
+        <Navbar.Brand href="/SupplierDashboard">Home</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="#buyer">Buyer</Nav.Link>
+          <Nav.Link href="/buyer">Buyer</Nav.Link>
           <Nav.Link href="/worker">Worker</Nav.Link>
           <Nav.Link href="#requirements">Requirements</Nav.Link>
         </Nav>
@@ -105,29 +105,29 @@ export default function Header(props) {
           </Navbar.Brand>
 
           {/* <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item p-3">
-              <Link className="nav-link active" aria-current="page" to="/">
-                <h6 style={{ color: "black", fontWeight: "500" }}>Dashboard</h6>
-              </Link>
-            </li>
-            <li className="nav-item p-3">
-              <Link className="nav-link" to="/Signup">
-                <h6 style={{ color: "black", fontWeight: "500" }}>Admin</h6>
-              </Link>
-            </li>
-            <li className="nav-item p-3">
-              <Link className="nav-link" to="/settings">
-                <h6 style={{ color: "black", fontWeight: "500" }}>Settings</h6>
-              </Link>
-            </li>
-          </ul>
-        </div> */}
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item p-3">
+                <Link className="nav-link active" aria-current="page" to="/">
+                  <h6 style={{ color: "black", fontWeight: "500" }}>Dashboard</h6>
+                </Link>
+              </li>
+              <li className="nav-item p-3">
+                <Link className="nav-link" to="/Signup">
+                  <h6 style={{ color: "black", fontWeight: "500" }}>Admin</h6>
+                </Link>
+              </li>
+              <li className="nav-item p-3">
+                <Link className="nav-link" to="/settings">
+                  <h6 style={{ color: "black", fontWeight: "500" }}>Settings</h6>
+                </Link>
+              </li>
+            </ul>
+          </div> */}
         </div>
         {/* {logoutButton} */}
         {navRightMenu}
       </nav>
-      <div className="clr"></div>
+      {/* <div className="clr"></div> */}
 
       {
         session && session.Role === "S"

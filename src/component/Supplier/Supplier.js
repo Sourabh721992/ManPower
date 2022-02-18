@@ -42,7 +42,7 @@ export default function Supplier(props) {
     useEffect(() => {
         getSupplier();
         getPendingUser();
-    });
+    }, []);
 
     const getSupplier = async () => {
 

@@ -3,32 +3,48 @@ import { Row, Col, Tab, Card, Nav } from 'react-bootstrap'
 import BasicInfo from './BasicInfo'
 import ContactInfo from './ContactInfo'
 import ExpertiseInfo from './ExpertiseInfo'
+import {AddWorkerApi, /*GetWorkerApi*/} from '../../utils/ApiFunctions'
 
 const Worker = (props) => {
 
     const [activeTab, setActiveTab] = useState("basicInfo")
-    const [workerInfo, setWorkerInfo] = useState({})
+    const [workerInfo, setWorkerInfo] = useState({
+        SupplierId: "S8"
+    })
+
+    // GetWorkerApi({workerCode: "1"}).then((response)=>{
+    //     console.log(response)
+    // })
 
     // on select tab
     const changeTab = (tabKey) => {
         setActiveTab(tabKey)
     }
 
-    const updateFromChild = (data, tabKey) => {
+    const updateFromChild = (data, action, tabKey) => {
         let workerInfoCopy = {...workerInfo}
-        if(data){
-            workerInfoCopy = {...workerInfoCopy, data}
+        if(action && data){
+            workerInfoCopy = {...workerInfoCopy, ...data}
 
             setWorkerInfo(workerInfoCopy)
-            changeTab(tabKey)
+
+            if(action === "save-worker-api-call"){
+                // call save worker API
+                AddWorkerApi(workerInfoCopy)
+            }
+            
+            if(tabKey){
+                changeTab(tabKey)
+            }
+            
         }
     }
 
 
     return(
         <Fragment>
-            <Tab.Container activeKey={activeTab} /*onSelect={(k) => onSelectTab(k)}*/>
-                <Row>
+            <Tab.Container activeKey={activeTab}  /*onSelect={(k) => onSelectTab(k)}*/>
+                <Row className="container m-5">
                     <Col sm={3}>
                         <Card className='shadow-sm'>
                             <Nav variant="pills" className="flex-column">

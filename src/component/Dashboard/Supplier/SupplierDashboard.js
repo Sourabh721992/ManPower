@@ -17,6 +17,10 @@ export class SupplierDashboard extends Component {
         }
     }
 
+    componentDidMount(){
+        
+    }
+
     render() {
         return (
             <>

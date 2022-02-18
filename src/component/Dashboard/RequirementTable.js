@@ -22,7 +22,7 @@ export default function RequirementTable(props) {
 
     return (
 
-        <div className='my-3 mx-5'>
+        <div className='my-3 mx-5 '>
             <Table responsive striped borderless>
                 <thead className="text-center">
                     <tr>
@@ -39,21 +39,21 @@ export default function RequirementTable(props) {
                 <tbody className="text-center">
                     {props.detail.map((item, index) => {
                         return(
-                            <tr key={"requirement_table_index_" + index}>
+                            <tr key={"requirement_table_index_" + index} style={{verticalAlign:"center"}}>
                                 <td>{item.Code}</td>
                                 <td>{item.WorkersCount}</td>
                                 <td>{item.Trades.map((s, i) => {
                                     return (
-                                        <label key={"req_trade_cell_ " + i}>
+                                        <><label key={"req_trade_cell_ " + i}>
                                             {s.Name}
-                                        </label>
+                                        </label><br /></>
                                     )
                                 })}</td>
                                 <td>{item.Trades.map((s, i) => {
                                     return(
-                                        <span key={"req_sal_cell_ " + i}>
+                                        <><span key={"req_sal_cell_ " + i}>
                                             {getMoneyFormat(s.MaxSalary, s.Currency)}-{getMoneyFormat(s.MinSalary, s.Currency)}
-                                        </span>
+                                        </span><br /></>
                                     )
                                 })}</td>
                                 <td>{item.Status}</td>

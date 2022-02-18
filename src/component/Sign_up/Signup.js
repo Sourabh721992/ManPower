@@ -191,6 +191,7 @@ export default function Signup() {
                   <InputGroup className="mb-3">
                     <Form.Label className="black-600-text">Password</Form.Label>
                     <FormControl
+                      type="password"
                       aria-label="Password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -207,6 +208,7 @@ export default function Signup() {
                       Confirm Password
                     </Form.Label>
                     <FormControl
+                      type="password"
                       aria-label="Confirm Password"
                       value={Confirm_password}
                       onChange={(e) => setConfirmPassword(e.target.value)}

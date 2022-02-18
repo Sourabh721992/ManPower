@@ -130,6 +130,7 @@ export default function Login(props) {
                   <BsFillKeyFill className="key" />
                 </InputGroup.Text>
                 <FormControl
+                  type="password"
                   placeholder="Password"
                   aria-label="Password"
                   value={password}

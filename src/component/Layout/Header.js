@@ -115,7 +115,7 @@ export default function Header(props) {
       <div className="clr"></div>
 
       {
-        session.Role === "S"
+        session && session.Role === "S"
         ?
           supplierNavBar
           :

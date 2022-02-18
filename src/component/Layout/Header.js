@@ -66,7 +66,7 @@ export default function Header(props) {
         <Navbar.Brand href="#home">Home</Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="#buyer">Buyer</Nav.Link>
-          <Nav.Link href="#worker">Worker</Nav.Link>
+          <Nav.Link href="/worker">Worker</Nav.Link>
           <Nav.Link href="#requirements">Requirements</Nav.Link>
         </Nav>
       </Navbar>

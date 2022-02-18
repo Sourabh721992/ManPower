@@ -181,6 +181,20 @@ const GetWorkerApi = (payload) => {
     })
 }
 
+const GetWorkerListApi = (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("Worker/FetchWorkers", payload) 
+            .then((resData) => {
+                console.log("Worker/FetchWorkers", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                console.log(error);
+                reject(error);
+            });
+    })
+}
+
 export {
     SignupAPI,
     LoginAPI,
@@ -194,5 +208,6 @@ export {
     DeletePendingUsersApi,
     DeleteSupplierApi,
     AddWorkerApi,
-    GetWorkerApi
+    GetWorkerApi,
+    GetWorkerListApi
 }

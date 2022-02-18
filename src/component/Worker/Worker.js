@@ -3,7 +3,10 @@ import { Row, Col, Tab, Card, Nav } from 'react-bootstrap'
 import BasicInfo from './BasicInfo'
 import ContactInfo from './ContactInfo'
 import ExpertiseInfo from './ExpertiseInfo'
-import {AddWorkerApi, /*GetWorkerApi*/} from '../../utils/ApiFunctions'
+import {AddWorkerApi} from '../../utils/ApiFunctions'
+import { withRouter } from 'react-router-dom'
+import UserProfile from '../../utils/UserProfile'
+import Header from '../Layout/Header'
 
 const Worker = (props) => {
 
@@ -12,9 +15,7 @@ const Worker = (props) => {
         SupplierId: "S8"
     })
 
-    // GetWorkerApi({workerCode: "1"}).then((response)=>{
-    //     console.log(response)
-    // })
+    const session = UserProfile.getSession()
 
     // on select tab
     const changeTab = (tabKey) => {
@@ -30,7 +31,9 @@ const Worker = (props) => {
 
             if(action === "save-worker-api-call"){
                 // call save worker API
-                AddWorkerApi(workerInfoCopy)
+                AddWorkerApi(workerInfoCopy).then(() => {
+                    props.history.push("/addWorker");
+                })
             }
             
             if(tabKey){
@@ -43,8 +46,11 @@ const Worker = (props) => {
 
     return(
         <Fragment>
+            
+            <Header session={session} />
+
             <Tab.Container activeKey={activeTab}  /*onSelect={(k) => onSelectTab(k)}*/>
-                <Row className="container m-5">
+                <Row className="mx-5 m-5">
                     <Col sm={3}>
                         <Card className='shadow-sm'>
                             <Nav variant="pills" className="flex-column">
@@ -85,4 +91,4 @@ const Worker = (props) => {
     )
 } 
 
-export default Worker
+export default withRouter(Worker)

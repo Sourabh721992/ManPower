@@ -9,8 +9,9 @@ import PrivateRoute from "./privateRoute";
 import Supplier from "../Supplier/Supplier";
 import Profile from "../Profile/Profile";
 import AddRequirement from "../Requirement/AddRequirement.js";
-import Worker from "../Worker/Worker";
 import SupplierDashboard from "../Dashboard/Supplier/SupplierDashboard";
+import WorkerList from "../Worker/WorkerList";
+import Worker from "../Worker/Worker"
 
 function App() {
   return (
@@ -28,13 +29,15 @@ function App() {
             <Settings />
           </Route>
           <Route exact path="/worker">
-            <Worker />
+            <WorkerList />
           </Route>
           <PrivateRoute exact path="/Dashboard" component={Dashboard} />
           <PrivateRoute exact path="/Supplier" component={Supplier} />
           <PrivateRoute exact path="/Profile" component={Profile} />
           <PrivateRoute exact path="/AddRequirement" component={AddRequirement} />
           <PrivateRoute exact path="/SupplierDashboard" component={SupplierDashboard} />
+          <PrivateRoute exact path="/worker" component={WorkerList} />
+          <PrivateRoute exact path="/addWorker" component={Worker} />
         </Switch>
         {/* <Footer /> */}
       </Router>

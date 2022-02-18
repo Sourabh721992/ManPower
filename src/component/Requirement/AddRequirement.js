@@ -41,7 +41,7 @@ export default function AddRequirement() {
         console.log(newCurrency)
         SetCurrencies(newCurrency);
         getSupplier();
-    });
+    },[]);
 
 
     const Rating = [{ id: 1, Name: 1 }, { id: 2, Name: 2 }, { id: 3, Name: 3 }, { id: 4, Name: 4 }, { id: 5, Name: 5 }]

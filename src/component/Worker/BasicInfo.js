@@ -1,8 +1,8 @@
 import React, { Fragment, useState } from 'react'
-import { Card, Row, Col, Button, /*Form*/ } from 'react-bootstrap'
+import { Card, Row, Col, Button, Form } from 'react-bootstrap'
 import { ValidationForm, TextInput, Radio } from 'react-bootstrap4-form-validation';
 import moment from "moment";
-// import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
+import PhoneInput, { isValidPhoneNumber, getCountryCallingCode } from 'react-phone-number-input';
 
 const BasicInfo = (props) => {
 
@@ -11,17 +11,29 @@ const BasicInfo = (props) => {
         Age: 0,
         Sex: 'M',
         ContactNo: '',
+        CountryCode: '91',
         DOB: '',
         PassportNo: '',
         PassportExpy: '',
-        AdharNo: ''
+        AdharNo: '',
+        Reference: ''
     })
-    // const [validated, setValidated] = useState({ allValidate: false, mobileValidate: null });
+
+    // useEffect(() => {
+    //   first
+    
+    //   return () => {
+    //     second
+    //   }
+    // }, [])
+    
+    
+    const [contactValidated, setContactValidated] = useState(null);
 
     const handleOnChange = (e, data) => {
 
         if (e && e.target) {
-            let basicDetailsCopy = { ...basicDetails }
+            let basicDetailsCopy = Object.assign({}, basicDetails);
 
             const target = e.target;
             // const type = target.type
@@ -31,44 +43,57 @@ const BasicInfo = (props) => {
             if (name === "Age") {
                 basicDetailsCopy[name] = parseInt(target.value)
             }
+            else if(name === "AdharNo"){
+                target.value = target.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim();
+                basicDetailsCopy[name] = target.value
+            }
             else {
                 basicDetailsCopy[name] = target.value
             }
-
-
-
-            // if(type === 'radio'){
-            //     basicDetailsCopy[name] = target.value
-            // }
-            // else if (){
-
-            // }
 
             setBasicInfo(basicDetailsCopy)
         }
     }
 
-    // const handleContactNo = (value) => {
-    //     if(value){
-    //         let basicDetailsCopy = { ...basicDetails }
+    const handleContactNo = (value) => {
+        if(value){
+            let basicDetailsCopy = Object.assign({}, basicDetails);
 
-    //         basicDetailsCopy.ContactNo = value
-    //         if(isValidPhoneNumber(value) === undefined){
-    //             setValidated({ allValidate: false, mobileValidate: null })
-    //         }
-    //         else{
-    //             setValidated({ allValidate: false, mobileValidate: true })
-    //         }
+            basicDetailsCopy.ContactNo = value
+            if(isValidPhoneNumber(value)){
+                setContactValidated(true)
+            }
+            else{
+                setContactValidated(false)
+            }
 
-    //         setBasicInfo(basicDetailsCopy)
-    //     }
-    // }
+            setBasicInfo(basicDetailsCopy)
+        }
+    }
+
+    const handleCountryChange = (value) => {
+        if(value){
+            let basicDetailsCopy = Object.assign({}, basicDetails);
+
+            basicDetailsCopy.CountryCode = getCountryCallingCode(value)
+
+            setBasicInfo(() => basicDetailsCopy)
+        }
+    }
 
     const onNextButton = (e) => {
         e.preventDefault();
+        let basicDetailsCopy = Object.assign({}, basicDetails);
 
+        if(basicDetailsCopy.ContactNo.trim() === ""){
+            setContactValidated(null)
+            return
+        }
+
+        basicDetailsCopy.ContactNo = basicDetailsCopy.ContactNo.replace("+"+basicDetailsCopy.CountryCode, "")
+        setBasicInfo(basicDetailsCopy)
         // update into parent
-        props.handleOnChange(basicDetails, "update-parent", "contactInfo")
+        props.handleOnChange(basicDetailsCopy, "update-parent", "contactInfo")
     }
 
     return (
@@ -137,26 +162,30 @@ const BasicInfo = (props) => {
                         <Row className="form-group">
                             <Col>
                                 <label className="col-form-label font-weight-bolder" >Contact No<span style={{ color: 'red' }}>*</span></label>
-                                {/* <PhoneInput
+                                <PhoneInput
                                     name="ContactNo"
                                     aria-label="mobile number"
                                     className="form-control w-100"
                                     placeholder="Enter phone number"
-                                    value={basicDetails.ContactNo}
+                                    // value={basicDetails.ContactNo}
                                     onChange={handleContactNo}
+                                    onCountryChange={handleCountryChange}
                                     defaultCountry={"IN"}
+                                    international
                                     required
-                                    error={basicDetails.ContactNo ? (isValidPhoneNumber(basicDetails.ContactNo) ? undefined : 'Invalid phone number') : 'Phone number required'}
+                                    countryCallingCodeEditable={false}
+                                    // error={basicDetails.ContactNo ? (isValidPhoneNumber(basicDetails.ContactNo) ? undefined : 'Invalid phone number') : 'Phone number required'}
                                     // rules={{ required: true }}
                                     // style={{ borderColor: validated.mobileValidate == null ? "#ced4da" : validated.mobileValidate === true ? "red" : "green" }}
                                 />
-                                {
-                                    validated.mobileValidate === true ? "wrong": "correct"
+                                {contactValidated === false ?
+                                    <small className='text-danger'>
+                                        Please enter valid contact no.
+                                    </small>
+                                    : 
+                                     null
                                 }
-                                <Form.Control.Feedback id="MobileFeedback" type="invalid" style={{ display: validated.mobileValidate == null ? "none" : validated.mobileValidate === true ? "block" : "none" }}>
-                                    Please Enter Mobile Number
-                                </Form.Control.Feedback> */}
-                                <TextInput
+                                {/* <TextInput
                                     type="text"
                                     name="ContactNo"
                                     className="form-control w-100"
@@ -169,7 +198,7 @@ const BasicInfo = (props) => {
                                         required: "Mobile number is required",
                                         pattern: "Required 10 digit valid mobile number"
                                     }}
-                                />
+                                /> */}
                             </Col>
                             <Col>
                                 <label className="col-form-label font-weight-bolder" >Aadhaar No<span style={{ color: 'red' }}>*</span></label>
@@ -180,7 +209,7 @@ const BasicInfo = (props) => {
                                     placeholder="Aadhaar Number"
                                     onChange={handleOnChange}
                                     defaultValue={basicDetails.AdharNo}
-                                    // pattern="^\d{4}\d{4}\d{4}$"
+                                    pattern="^\d{4}\s\d{4}\s\d{4}$"
                                     required
                                     errorMessage={{
                                         required: "Aadhaar number is required",
@@ -219,6 +248,19 @@ const BasicInfo = (props) => {
                                     defaultValue={moment(basicDetails.PassportExpy).format('YYYY-MM-DD')}
                                     min={moment(Date.now()).format("YYYY-MM-DD")}
                                     required
+                                />
+                            </Col>
+                        </Row>
+                        <Row className="form-group">
+                            <Col sm={6}>
+                                <label className="col-form-label font-weight-bolder" >Reference</label>
+                                <TextInput
+                                    type="text"
+                                    name="Reference"
+                                    className="form-control w-100"
+                                    placeholder="Add Reference"
+                                    onChange={handleOnChange}
+                                    defaultValue={basicDetails.Reference}
                                 />
                             </Col>
                         </Row>

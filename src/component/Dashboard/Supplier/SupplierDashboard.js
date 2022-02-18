@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import UserProfile from '../../../utils/UserProfile';
 import Header from '../../Layout/Header'
 import RequirementTable from '../RequirementTable';
-import { FiFilter } from "react-icons/fi";
+// import { FiFilter } from "react-icons/fi";
 import StatusCounter from '../StatusCounter';
 import FilterButton from '../../Controls/Buttons/Buttons';
+import { TradesApi } from '../../../utils/ApiFunctions';
+import { logger, setTrade } from '../../../utils/CommonList';
 
 export class SupplierDashboard extends Component {
 
@@ -18,7 +20,13 @@ export class SupplierDashboard extends Component {
     }
 
     componentDidMount(){
-        
+        logger.log(this.state.session)
+        TradesApi({}).then
+        ((resData) => {
+          setTrade(resData.Message, true);
+        }).catch((error) => {
+          //
+        })
     }
 
     render() {

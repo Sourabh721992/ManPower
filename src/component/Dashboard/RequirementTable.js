@@ -2,11 +2,7 @@ import React from "react";
 import "../../Css/app.css";
 import "react-phone-number-input/style.css";
 import Table from 'react-bootstrap/Table'
-import { AiOutlineSearch } from "react-icons/ai";
-import { IconContext } from "react-icons";
 import { formatShortDate, getMoneyFormat, logger } from "../../utils/CommonList";
-import { FaSearch } from "react-icons/fa";
-import { Button } from "react-bootstrap";
 import {SearchIconBtn, UsersIconBtn} from "../Controls/Buttons/IconButtons";
 
 export default function RequirementTable(props) {
@@ -39,21 +35,21 @@ export default function RequirementTable(props) {
                 <tbody className="text-center">
                     {props.detail.map((item, index) => {
                         return(
-                            <tr key={"requirement_table_index_" + index} style={{verticalAlign:"center"}}>
+                            <tr className="align-middle" key={"requirement_table_index_" + index}>
                                 <td>{item.Code}</td>
                                 <td>{item.WorkersCount}</td>
                                 <td>{item.Trades.map((s, i) => {
                                     return (
-                                        <><label key={"req_trade_cell_ " + i}>
+                                        <div key={"req_trade_cell_ " + i}><label>
                                             {s.Name}
-                                        </label><br /></>
+                                        </label><br /></div>
                                     )
                                 })}</td>
                                 <td>{item.Trades.map((s, i) => {
                                     return(
-                                        <><span key={"req_sal_cell_ " + i}>
+                                        <div key={"req_sal_cell_ " + i}><span>
                                             {getMoneyFormat(s.MaxSalary, s.Currency)}-{getMoneyFormat(s.MinSalary, s.Currency)}
-                                        </span><br /></>
+                                        </span><br /></div>
                                     )
                                 })}</td>
                                 <td>{item.Status}</td>

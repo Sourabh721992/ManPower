@@ -1,8 +1,9 @@
 import React from "react";
-import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown/* , Container */ } from "react-bootstrap";
 import UserProfile from "../../utils/UserProfile";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { AiOutlineUser, AiFillHome, AiOutlineUsergroupAdd } from "react-icons/ai";
+import { /* AiOutlineUser, */ AiFillHome, AiOutlineUsergroupAdd } from "react-icons/ai";
+import {FaUserCircle} from "react-icons/fa"
 import { IconContext } from "react-icons";
 
 export default function Header(props) {
@@ -17,10 +18,11 @@ export default function Header(props) {
     }
   }
 
-  var logoutButton = null;
+  // var logoutButton = null;
   var OrgName = null
   var navbar = null;
   var supplierNavBar = null
+  var navRightMenu = null
 
   console.log("Header ", session)
 
@@ -31,7 +33,7 @@ export default function Header(props) {
   }
 
   if (session) {
-    logoutButton = (<NavDropdown className="text-white" style={{ marginRight: "20px" }} title={
+    /* logoutButton = (<NavDropdown className="text-white" style={{ marginRight: "20px" }} title={
       <div style={{ border: "2px solid white", borderRadius: "5px", padding: "2px", width: "132px", float: "left", marginTop: "-5px" }}>
         <IconContext.Provider value={{ color: "#FFFFFF", size: "1.4em" }} >
           <div style={{ width: "30px", float: "left" }}>
@@ -43,9 +45,21 @@ export default function Header(props) {
     } id="navbarScrollingDropdown">
       <NavDropdown.Item href="/Profile">Profile</NavDropdown.Item>
       <NavDropdown.Item href="#" onClick={logout}>Logout</NavDropdown.Item>
-    </NavDropdown>)
+    </NavDropdown>) */
 
-    OrgName = (<Navbar.Brand className="text-white"> Tata Power Co. </Navbar.Brand>)
+    navRightMenu = (
+      <NavDropdown className="nav-dropdown" title={
+          <div className="text-white">
+            <FaUserCircle className="mr-2" />
+            <span>{"Hello "+session.FirstName}</span>
+          </div>
+        } id="navbarScrollingDropdown">
+        <NavDropdown.Item href="/Profile">Profile</NavDropdown.Item>
+        <NavDropdown.Item href="#" onClick={logout}>Logout</NavDropdown.Item>
+      </NavDropdown>
+    )
+
+    OrgName = (<Navbar.Brand className="text-white"> {session.OrgName} </Navbar.Brand>)
 
     supplierNavBar = (
       <Navbar className="px-3" bg="light" variant="light">
@@ -110,7 +124,8 @@ export default function Header(props) {
           </ul>
         </div> */}
         </div>
-        {logoutButton}
+        {/* {logoutButton} */}
+        {navRightMenu}
       </nav>
       <div className="clr"></div>
 

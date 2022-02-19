@@ -1,14 +1,14 @@
 import React from "react";
 import { Navbar, Nav, NavDropdown/* , Container */ } from "react-bootstrap";
 import UserProfile from "../../utils/UserProfile";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { /* AiOutlineUser, */ AiFillHome, AiOutlineUsergroupAdd } from "react-icons/ai";
 import {FaUserCircle} from "react-icons/fa"
 import { IconContext } from "react-icons";
 
 export default function Header(props) {
 
-  const history = useHistory();
+  // const history = useHistory();
 
   var session = null;
 
@@ -24,12 +24,12 @@ export default function Header(props) {
   var supplierNavBar = null
   var navRightMenu = null
 
-  console.log("Header ", session)
+  // console.log("Header ", session)
 
   const logout = async (e) => {
     e.preventDefault();
     UserProfile.logout();
-    history.push("");
+    window.location.href=""
   }
 
   if (session) {

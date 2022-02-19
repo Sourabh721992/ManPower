@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../Css/app.css";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import UserProfile from "../../utils/UserProfile";
 import {
   Row,
@@ -20,7 +20,7 @@ import SuccessAlert from "../Controls/alert/successAlert";
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const history = useHistory();
+  // const history = useHistory();
   const [validated, setValidated] = useState(false);
   const [showAlert, SetAlert] = useState({ show: false, isDataSaved: false, message: "" });
 
@@ -66,9 +66,11 @@ export default function Login(props) {
           console.log(resData)
           let session = JSON.parse(resData.Message)
           if(session.Role === "S"){
-            history.push("/SupplierDashboard");
+            window.location.href= "/SupplierDashboard"
+            // history.push("/SupplierDashboard");
           }else{
-            history.push("/Dashboard");
+            window.location.href= "/Dashboard"
+            // history.push("/Dashboard");
           }
           
         }).catch((error) => {

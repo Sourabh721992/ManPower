@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../Css/app.css";
-// import Header from "../Layout/Header";
+import Header from "../Layout/Header";
 import { RequirementInsert, LoginAPI, GetSupplierApi } from "../../utils/ApiFunctions";
 import { Row, Col, Form } from "react-bootstrap";
 import "react-phone-number-input/style.css";
@@ -202,7 +202,7 @@ export default function AddRequirement() {
 
     return (
         <>
-            {/* <Header session={session} /> */}
+            <Header session={session} />
             <div className="DashboardBody" style={{ marginBottom: "35px" }}>
                 <div>
                     <h2 className="RequireDetlHead"> Add New Requirement </h2>

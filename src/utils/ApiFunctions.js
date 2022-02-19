@@ -212,8 +212,11 @@ const GetRequirementApi = (payload) => {
 }
 
 const GetBuyerListApi = (supplierId) => {
+    let data = {
+        supplierId:supplierId
+    }
     return new Promise((resolve, reject) => {
-        Client.post("Buyer/getBuyerList", supplierId) 
+        Client.post("Buyer/getBuyerList", data) 
             .then((resData) => {
                 logger.log("Buyer/getBuyerList response ->", resData);
                 resolve(resData);
@@ -239,6 +242,20 @@ const AddMapWorkersApi = (payload) => {
     })
 }
 
+const AddBuyerUser = (body) => {
+    return new Promise((resolve, reject) => {
+        Client.post("User/AddBuyer", body) //Login API Call
+            .then((resData) => {
+                logger.log("User/AddBuyer", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                logger.log(error)
+                reject(error);
+            });
+    })
+}
+
 const RemoveWorkerApi = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("Requirement/RemoveWorker", payload) 
@@ -253,9 +270,23 @@ const RemoveWorkerApi = (payload) => {
     })
 }
 
+const RemoveBuyer = (data) => {
+    return new Promise((resolve, reject) => {
+        Client.post("Buyer/RemoveBuyer", data) 
+            .then((resData) => {
+                logger.log("Buyer/RemoveBuyer", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                logger.log(error)
+                reject(error);
+            });
+    })
+}
+
 
 export {
     SignupAPI, LoginAPI, TradesApi, RequirementInsert, AddSupplierApi, GetSupplierApi, GetUserProfileApi, UpdateUserProfileApi, GetPendingUsersApi,
     DeletePendingUsersApi, DeleteSupplierApi, AddWorkerApi, GetWorkerApi, GetWorkerListApi, GetRequirementApi, AddMapWorkersApi,
-    GetBuyerListApi, RemoveWorkerApi
+    GetBuyerListApi, RemoveWorkerApi, AddBuyerUser, RemoveBuyer
 }

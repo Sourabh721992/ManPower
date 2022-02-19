@@ -32,6 +32,16 @@ export default function Header(props) {
     window.location.href=""
   }
 
+  const showNavbar = () =>
+  {
+    if(window.location.pathname.toLowerCase().includes("signup") || 
+       window.location.pathname.toLowerCase().includes("login") || 
+       window.location.pathname.toLowerCase() === "/")
+      return false;
+    else 
+      return true;
+  }
+
   if (session) {
     /* logoutButton = (<NavDropdown className="text-white" style={{ marginRight: "20px" }} title={
       <div style={{ border: "2px solid white", borderRadius: "5px", padding: "2px", width: "132px", float: "left", marginTop: "-5px" }}>
@@ -99,23 +109,35 @@ export default function Header(props) {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light blue">
-        <div className="container-fluid ml-8">
-          <Navbar.Brand href="#home">
-            {OrgName}
-          </Navbar.Brand>
-        </div>
-        {/* {logoutButton} */}
-        {navRightMenu}
-      </nav>
+    {
+      showNavbar() ?
+      (
+        <nav className="navbar navbar-expand-lg navbar-light blue">
+          <div className="container-fluid ml-8">
+            <Navbar.Brand href="#home">
+              {OrgName}
+            </Navbar.Brand>
+          </div>
+          {/* {logoutButton} */}
+          {navRightMenu}
+        </nav>
+      )
+      :
+      null
+    }
       {/* <div className="clr"></div> */}
 
       {
-        session && session.Role === "S"
-        ?
+        showNavbar() ? 
+        (
+          session && session.Role === "S"
+          ?
           supplierNavBar
           :
-            navbar
+          navbar
+        )
+        :
+        null
       }
       {/* {navbar} */}
 

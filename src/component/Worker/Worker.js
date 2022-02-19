@@ -6,7 +6,7 @@ import ExpertiseInfo from './ExpertiseInfo'
 import {AddWorkerApi} from '../../utils/ApiFunctions'
 import { withRouter } from 'react-router-dom'
 import UserProfile from '../../utils/UserProfile'
-import Header from '../Layout/Header'
+// import Header from '../Layout/Header'
 
 const Worker = (props) => {
 
@@ -47,7 +47,7 @@ const Worker = (props) => {
     return(
         <Fragment>
             
-            <Header session={session} />
+            {/* <Header session={session} /> */}
 
             <Tab.Container activeKey={activeTab}  /*onSelect={(k) => onSelectTab(k)}*/>
                 <Row className="mx-5 m-5">

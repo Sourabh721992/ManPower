@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import UserProfile from '../../../utils/UserProfile';
-import Header from '../../Layout/Header'
+// import Header from '../../Layout/Header'
 // import Footer from '../../Layout/Footer'
 import RequirementTable from '../RequirementTable';
 // import { FiFilter } from "react-icons/fi";
@@ -31,7 +31,7 @@ export class SupplierDashboard extends Component {
     render() {
         return (
             <>
-                <Header session={this.state.session} />
+                {/* <Header session={this.state.session} /> */}
 
                 <StatusCounter detail={this.state.session.StatusCounter} />
 

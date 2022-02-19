@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "../../Css/app.css";
-import Header from "../Layout/Header";
+// import Header from "../Layout/Header";
 import { SignupAPI } from "../../utils/ApiFunctions";
 import { Row, Col, Form, InputGroup, FormControl } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -100,7 +100,7 @@ export default function Signup() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="sign-up">
         <div className="first-main-container blue-300">
           <div className="inner-layout">

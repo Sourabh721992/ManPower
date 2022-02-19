@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { AddBuyerUser } from '../../utils/ApiFunctions';
 import { logger } from '../../utils/CommonList';
 import UserProfile from '../../utils/UserProfile';
-import Header from '../Layout/Header'
+// import Header from '../Layout/Header'
 // import Label from '../Controls/Label/Label';
 
 export default function AddNewBuyer() {
@@ -33,7 +33,7 @@ export default function AddNewBuyer() {
 
   return (
     <Fragment>
-      <Header />
+      {/* <Header /> */}
       <div className='d-flex justify-content-start'>
         <div className='vertical-divider'></div>
         <div className='add-buyer-form-div'>

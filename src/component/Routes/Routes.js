@@ -49,7 +49,7 @@ function App() {
           <PrivateRoute exact path="/addBuyer" component={AddNewBuyer} />
           <PrivateRoute exact path="/addWorker" component={Worker} />
           <PrivateRoute exact path="/requirement/:data" component={Requirement} />
-          <PrivateRoute exact path="/mapWorker" component={MapWorker} />
+          <PrivateRoute exact path="/mapWorker/:data" component={MapWorker} />
         </Switch>
         {/* <Footer /> */}
       </Router>

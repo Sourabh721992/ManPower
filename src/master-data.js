@@ -4,6 +4,16 @@ const LanguagesData = [
     { value: "Marathi", label: "Marathi" },
 ]
 
+const Role = {
+    get Supplier(){
+        return "S"
+    },
+
+    get Buyer(){
+        return "B"
+    }
+}
+
 export {
-    LanguagesData
+    LanguagesData, Role
 }

@@ -8,12 +8,21 @@ import DetailedCard from './DetailedCard'
 
 const Requirement = (props) => {
 
-    let data, Id
+    let data, Id, BuyerName = '', Supplier = ''
     if (props.match && props.match.params && props.match.params.data) {
         data = JSON.parse(decodeBase64(props.match.params.data))
         if (data && data.requirementId) {
-            Id = data.requirementId
+            if(data.requirementId){
+                Id = data.requirementId
+            }
+            if(data.buyerName){
+                BuyerName = data.buyerName
+            }
+            if(data.supplierName){
+                Supplier = data.supplierName
+            }
         }
+        
     }
 
     const [requirementCode, setRequirement] = useState(Id)
@@ -26,7 +35,8 @@ const Requirement = (props) => {
             setIsLoading(true)
             GetRequirementApi({requirementCode: Id}).then((response) => {
                 if (response.Code === 1 && response.Message) {
-                    setRequirementData(JSON.parse(response.Message))
+                    let data = JSON.parse(response.Message)
+                    setRequirementData({...data, BuyerName, Supplier})
                     logger.log(JSON.parse(response.Message))
                 }
                 setIsLoading(false)
@@ -37,10 +47,6 @@ const Requirement = (props) => {
     
     }, [Id])
 
-    const handleSuccess = (action, data) => {
-        
-    }
-
     if(requirementData){
         return (
             <div className='my-3 mx-5'>
@@ -49,7 +55,7 @@ const Requirement = (props) => {
                 <DetailedCard details={requirementData}/>
     
                 {/* assigned worker table */}
-                <AssignedWorkerTable details={requirementData} workerList={requirementData.Workers} updateParent={handleSuccess}/>
+                <AssignedWorkerTable details={requirementData}/>
             </div>
         )
     

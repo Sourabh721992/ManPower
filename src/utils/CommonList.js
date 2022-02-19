@@ -111,8 +111,15 @@ function encodeBase64(data){
     return b64;
 }
 
+function trimCutString(string, length){
+    if(string && string.length >= length ){
+        string = string.substring(0, length) + "...";
+    }
+    return string
+}
+
 export {
-    setTrade, getTrades, getMoneyFormat, logger, formatShortDate, filterDropdown, decodeBase64, encodeBase64
+    setTrade, getTrades, getMoneyFormat, logger, formatShortDate, filterDropdown, decodeBase64, encodeBase64, trimCutString
 }
 
 

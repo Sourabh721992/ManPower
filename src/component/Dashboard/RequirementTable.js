@@ -27,7 +27,7 @@ function RequirementTable(props) {
     return (
 
         <div className='my-3 mx-5 '>
-            <Table responsive striped borderless>
+            <Table responsive striped borderless hover>
                 <thead className="text-center">
                     <tr>
                         <th>Code</th>

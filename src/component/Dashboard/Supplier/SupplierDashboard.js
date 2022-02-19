@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import UserProfile from '../../../utils/UserProfile';
-import Header from '../../Layout/Header'
+// import Header from '../../Layout/Header'
+// import Footer from '../../Layout/Footer'
 import RequirementTable from '../RequirementTable';
-import { FiFilter } from "react-icons/fi";
+// import { FiFilter } from "react-icons/fi";
 import StatusCounter from '../StatusCounter';
 import {FilterButton} from '../../Controls/Buttons/Buttons';
+// import { TradesApi } from '../../../utils/ApiFunctions';
+import { logger } from '../../../utils/CommonList';
 
 export class SupplierDashboard extends Component {
 
@@ -18,13 +21,17 @@ export class SupplierDashboard extends Component {
     }
 
     componentDidMount(){
+        logger.log(this.state.session)
+        if(!this.state.session){
+            // get data from api
+        }
         
     }
 
     render() {
         return (
             <>
-                <Header session={this.state.session} />
+                {/* <Header session={this.state.session} /> */}
 
                 <StatusCounter detail={this.state.session.StatusCounter} />
 
@@ -39,6 +46,8 @@ export class SupplierDashboard extends Component {
                     <hr />
                     <RequirementTable detail={this.state.session.Requirements}/>
                 </div>
+
+                {/* <Footer /> */}
                 
             </>
         )

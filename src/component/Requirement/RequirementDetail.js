@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "../../Css/app.css";
-import Header from "../Layout/Header";
+// import Header from "../Layout/Header";
 import { RequirementInsert, LoginAPI } from "../../utils/ApiFunctions";
-import { Row, Col, Form, InputGroup, FormControl, Alert } from "react-bootstrap";
+import { Row, Col, Form/* , InputGroup, FormControl, Alert */ } from "react-bootstrap";
 import "react-phone-number-input/style.css";
 import UserProfile from "../../utils/UserProfile";
 import {getTrades} from "../../utils/CommonList";
@@ -107,11 +107,11 @@ export default function Dashboard(props) {
         console.log("login called");
 
         let valTrade = TradeStateValue.filter(function (item) {
-            return item.trade == "";
+            return item.trade === "";
         })
 
         //Validations
-        if (supplierSelectedValue.supplier == "" || supplierSelectedValue.rating == "" || valTrade.length > 0) {
+        if (supplierSelectedValue.supplier === "" || supplierSelectedValue.rating === "" || valTrade.length > 0) {
             console.log("login called 1");
             setValidated(true);
         } else {
@@ -123,11 +123,12 @@ export default function Dashboard(props) {
             map["rating"] = supplierSelectedValue.rating
 
             let arr = [];
+            // eslint-disable-next-line array-callback-return
             TradeStateValue.map(function (item) {
                 let FromWH = parseInt(item.workHoursFrom.split(":")[0]);
                 let ToWh = parseInt(item.workHoursTo.split(":")[0]);
-                let IfFoodProvided = item.FoodExpense == "Provided" ? true : false
-                let IfAccProvided = item.AccTrans == "Provided" ? true : false
+                let IfFoodProvided = item.FoodExpense === "Provided" ? true : false
+                let IfAccProvided = item.AccTrans === "Provided" ? true : false
                 arr.push({ "TradeId": item.trade, "WorkerCount": item.workers, "Currency": "INR", "MinSalary": parseInt(item.salaryFrom), "MaxSalary": parseInt(item.salaryTo), "FromWH": FromWH, "ToWh": ToWh, "IfFoodProvided": IfFoodProvided, "IfAccProvided": IfAccProvided })
             })
             map["Trades"] = arr;
@@ -157,7 +158,7 @@ export default function Dashboard(props) {
 
     return (
         <>
-            <Header session={session} />
+            {/* <Header session={session} /> */}
             <div className="DashboardBody">
                 <StatusCounter detail={session.StatusCounter} />
                 <div className="clr"></div>
@@ -199,7 +200,7 @@ export default function Dashboard(props) {
                                 <Label value="Client Name" id="AddRequirementClient" />
                             </Col>
                             <Col sm={3}>
-                                <Text key="txtClient" value={supplierSelectedValue.client} id="txtClient" name="client" type="text" onChange={onChange} value={supplierSelectedValue.client} />
+                                <Text key="txtClient" value={supplierSelectedValue.client} id="txtClient" name="client" type="text" onChange={onChange} /* value={supplierSelectedValue.client} */ />
                             </Col>
                             <Col sm={1}>
                             </Col>
@@ -305,7 +306,7 @@ export default function Dashboard(props) {
                                                             id={"groupFooxExpenseP" + index}
                                                             value="Provided"
                                                             onChange={(e) => updateTradeItemValue(e, index)}
-                                                            checked={TradeStateValue[index]["FoodExpense"] == "Provided" ? true : false}
+                                                            checked={TradeStateValue[index]["FoodExpense"] === "Provided" ? true : false}
                                                         />
                                                         <Form.Check
                                                             inline
@@ -315,7 +316,7 @@ export default function Dashboard(props) {
                                                             id={"groupFooxExpenseNP" + index}
                                                             value="Not Provided"
                                                             onChange={(e) => updateTradeItemValue(e, index)}
-                                                            checked={TradeStateValue[index]["FoodExpense"] == "Not Provided" ? true : false}
+                                                            checked={TradeStateValue[index]["FoodExpense"] === "Not Provided" ? true : false}
                                                         />
                                                     </Col>
                                                     <Col sm={1}>
@@ -333,7 +334,7 @@ export default function Dashboard(props) {
                                                             id={"groupAccTransP" + index}
                                                             value="Provided"
                                                             onChange={(e) => updateTradeItemValue(e, index)}
-                                                            checked={TradeStateValue[index]["AccTrans"] == "Provided" ? true : false}
+                                                            checked={TradeStateValue[index]["AccTrans"] === "Provided" ? true : false}
                                                         />
                                                         <Form.Check
                                                             inline
@@ -343,7 +344,7 @@ export default function Dashboard(props) {
                                                             id={"groupAccTransNP" + index}
                                                             value="Not Provided"
                                                             onChange={(e) => updateTradeItemValue(e, index)}
-                                                            checked={TradeStateValue[index]["AccTrans"] == "Not Provided" ? true : false}
+                                                            checked={TradeStateValue[index]["AccTrans"] === "Not Provided" ? true : false}
                                                         />
                                                     </Col>
                                                 </Row>
@@ -365,7 +366,7 @@ export default function Dashboard(props) {
                                 </button>
                             </Col>
                             <Col sm={2}>
-                                <SuccessAlert show={showAlert.show} message={showAlert.isDataSaved == true ? "Saved Successfully !" : "Error Occured"} variant={showAlert.isDataSaved == true ? "success" : "danger"} />
+                                <SuccessAlert show={showAlert.show} message={showAlert.isDataSaved === true ? "Saved Successfully !" : "Error Occured"} variant={showAlert.isDataSaved === true ? "success" : "danger"} />
                             </Col>
                         </Row>
                     </Form>

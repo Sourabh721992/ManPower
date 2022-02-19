@@ -210,6 +210,20 @@ const GetRequirementApi = (payload) => {
     })
 }
 
+const GetBuyerListApi = (supplierId) => {
+    return new Promise((resolve, reject) => {
+        Client.post("Buyer/getBuyerList", supplierId) 
+            .then((resData) => {
+                logger.log("Buyer/getBuyerList response ->", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                logger.log(error)
+                reject(error);
+            });
+    })
+}
+
 const AddMapWorkersApi = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("Requirement/AddWorkers", payload) 
@@ -241,5 +255,6 @@ export {
     GetWorkerApi,
     GetWorkerListApi,
     GetRequirementApi,
-    AddMapWorkersApi
+    AddMapWorkersApi,
+    GetBuyerListApi
 }

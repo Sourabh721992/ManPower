@@ -18,7 +18,7 @@ const Localization = {
 
 const logger = {
     log: (message, ...args) => {
-        console.log(message, args);
+        // console.log(message, args);
     },
     error: (message, ...args) => {
         console.error(message, args);
@@ -41,17 +41,17 @@ function setTrade (Trade) {
         localStorage.setItem("tradesList", Trade)
         Trades = JSON.parse(Trade);
     } catch (e) {
-        console.log(e);
+        // console.log(e);
         return false;
     }
 }
 
 function getTrades () {
     if (Trades) {
-        console.log("Trades saved");
+        // console.log("Trades saved");
         return Trades;
     } else {
-        console.log("Trades Not saved");
+        // console.log("Trades Not saved");
         const TradeSession = localStorage.getItem("tradesList");
 
         if (TradeSession)
@@ -122,10 +122,10 @@ export {
 
     var getTrades = function () {
         if (Trades) {
-            console.log("Trades saved");
+            // console.log("Trades saved");
             return Trades;
         } else {
-            console.log("Trades Not saved");
+            // console.log("Trades Not saved");
             const TradeSession = localStorage.getItem("tradesList");
 
             if (TradeSession)
@@ -144,7 +144,7 @@ export {
             Trades = JSON.parse(Trade);
 
         } catch (e) {
-            console.log(e);
+            // console.log(e);
             return false;
         }
     }

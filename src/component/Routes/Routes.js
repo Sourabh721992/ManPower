@@ -17,6 +17,7 @@ import Requirement from "../Requirement/Requirement";
 import MapWorker from "../Requirement/MapWorker"
 import Buyer from "../Buyer/Buyer";
 import AddNewBuyer from "../Buyer/AddNewBuyer";
+import AddSupplier from "../Supplier/AddSupplier";
 /* import Header from "../Layout/Header";
 import UserProfile from "../../utils/UserProfile";
 import { logger } from "../../utils/CommonList"; */
@@ -54,6 +55,7 @@ function App() {
           <PrivateRoute exact path="/worker" component={WorkerList} />
           <PrivateRoute exact path="/buyer" component={Buyer} />
           <PrivateRoute exact path="/addBuyer" component={AddNewBuyer} />
+          <PrivateRoute exact path="/addSupplier" component={AddSupplier} />
           <PrivateRoute exact path="/addWorker" component={Worker} />
           <PrivateRoute exact path="/requirement/:data" component={Requirement} />
           <PrivateRoute exact path="/mapWorker" component={MapWorker} />

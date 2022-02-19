@@ -24,7 +24,7 @@ export default function Header(props) {
   var supplierNavBar = null
   var navRightMenu = null
 
-  // console.log("Header ", session)
+  // // console.log("Header ", session)
 
   const logout = async (e) => {
     e.preventDefault();

@@ -10,7 +10,7 @@ export default function PendingBuyerTab(props) {
         <Fragment>
             <h6 className='m-4'>Pending Buyers Count: {count}</h6>
 
-            <PendingList pendingList={list}/>
+            <PendingList pendingList={list} response={(res) => props.response(res)} />
         </Fragment>
     )
 }

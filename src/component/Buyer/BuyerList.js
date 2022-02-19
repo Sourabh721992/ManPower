@@ -1,17 +1,17 @@
 import React, { Fragment } from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
-import { MdDelete } from 'react-icons/md'
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+// import { MdDelete } from 'react-icons/md'
+// import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { RemoveBuyer } from '../../utils/ApiFunctions'
 import { formatShortDate, logger } from '../../utils/CommonList'
 import UserProfile from '../../utils/UserProfile'
-import { DeleteIconBtn, EditIconBtn } from '../Controls/Buttons/IconButtons'
+import { DeleteIconBtn/* , EditIconBtn */ } from '../Controls/Buttons/IconButtons'
 
 export default function BuyerList(props) {
     logger.log(props)
 
     const session = UserProfile.getSession()
-    const history = useHistory()
+    // const history = useHistory()
 
     const onDeleteBtn = (item) => {
         let data = {
@@ -22,7 +22,7 @@ export default function BuyerList(props) {
         RemoveBuyer(data)
         .then((resp) => {
             logger.log("deleted...")
-            history.push("/buyer")
+            window.location.href = "/buyer"
         })
     }  
 
@@ -35,7 +35,7 @@ export default function BuyerList(props) {
                             <Col key={"buyer-user-card-" + item.id} sm={4}>
                                 <Card className="buyer-user-card">
                                     <Card.Header className='d-flex justify-content-between'>
-                                        <h6>{item.Id}</h6>
+                                        <h6>{item.Name}</h6>
                                         <span>Added On - {formatShortDate(item.AddedOn)}</span>
                                     </Card.Header>
                                     <Card.Body>

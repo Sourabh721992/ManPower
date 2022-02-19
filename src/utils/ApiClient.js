@@ -49,7 +49,7 @@ const client = {
       const resp = await axios(config);
 
       if (resp.status >= 400 && resp.status <= 500) {
-        console.log("called");
+        // console.log("called");
         return Promise.reject({
           "status": resp.status,
           "Message": resp.data.Message
@@ -58,9 +58,9 @@ const client = {
 
       return Promise.resolve(resp.data);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       if (err.response) {
-        console.log("error")
+        // console.log("error")
         return Promise.reject({
           "status": err.response.status,
           "Message": err.response.data.Message

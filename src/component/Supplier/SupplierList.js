@@ -17,6 +17,7 @@ export default function SupplierList(props) {
 
     return (
         <>
+            <h5 className="RequireDetlHead">{"Total Supplier Count : " + props.data.length}</h5>
             <div className="fl w100pc">
                 {props.data.map((item, index) => (
                     <div key={"SupplierList " + index} className="fl br5px mt30px" style={{ width: "30%", backgroundColor: "#E6EAF3", color: "#5A5D62", marginLeft: "2%" }}>

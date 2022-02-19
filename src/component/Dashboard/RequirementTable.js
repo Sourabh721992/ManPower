@@ -7,7 +7,7 @@ import {SearchIconBtn, UsersIconBtn} from "../Controls/Buttons/IconButtons";
 import { withRouter } from "react-router-dom";
 
 function RequirementTable(props) {
-    console.log(props.detail);
+    // // console.log(props.detail);
 
     function onSearchBtnClick(e){
         logger.log(e)

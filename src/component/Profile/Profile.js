@@ -19,7 +19,7 @@ export default function Profile(props) {
     var session = UserProfile.getSession();
 
     const onChange = (e) => {
-        console.log(e.target.name + " " + e.target.value);
+        // // console.log(e.target.name + " " + e.target.value);
         UserProfileAPIData["UserInfo"][e.target.name] = e.target.value;
 
         let map = JSON.parse(JSON.stringify(UserProfileAPIData));
@@ -33,7 +33,7 @@ export default function Profile(props) {
 
     // component Did Mount
     useEffect(() => {
-        console.log("component Did Mount called in Profile")
+        // // console.log("component Did Mount called in Profile")
         getUserProfilefromAPI();
     })
 
@@ -47,7 +47,7 @@ export default function Profile(props) {
         GetUserProfileApi(item).then
             ((resData) => {
                 resData.Message = JSON.parse(resData.Message);
-                console.log("API called");
+                // // console.log("API called");
                 SetUserProfile(resData.Message);
                 setMobileNumber(resData.Message.UserInfo.CountryCode + " " + resData.Message.UserInfo.MobileNo);
                 SetAlert({ show: false, isDataSaved: false, message: "" });
@@ -63,7 +63,7 @@ export default function Profile(props) {
 
         //Validations
         if (UserProfileAPIData.UserInfo.Email === "" || UserProfileAPIData.UserInfo.FirstName === "" || UserProfileAPIData.UserInfo.LastName === "" || UserProfileAPIData.UserInfo.OrgName === "" || (Mobile_number === "") || (Mobile_number === undefined)) {
-            console.log("login called 1");
+            // // console.log("login called 1");
 
             if (!Mobile_number) {
                 mobileValidationDisplay = true;
@@ -81,7 +81,7 @@ export default function Profile(props) {
 
             UpdateUserProfileApi(UserProfileAPIData.UserInfo).then
                 ((resData) => {
-                    console.log("Supplier Inserted Successfully", resData);
+                    // // console.log("Supplier Inserted Successfully", resData);
                     SetAlert({ show: true, isDataSaved: true, message: resData.Message });
 
                     setTimeout(function () {

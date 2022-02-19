@@ -11,10 +11,10 @@ var UserProfile = (function () {
 
     var getSession = function () {
         if (sessionVar) {
-            console.log("already saved");
+            // console.log("already saved");
             return sessionVar;
         } else {
-            console.log("Not Already saved");
+            // console.log("Not Already saved");
             const storedSession = localStorage.getItem("vmensession");
 
             if (storedSession)
@@ -42,7 +42,7 @@ var UserProfile = (function () {
             localStorage.setItem("vmensession", JSON.stringify(session))
 
         } catch (e) {
-            console.log(e);
+            // console.log(e);
             return false;
         }
     }
@@ -54,7 +54,7 @@ var UserProfile = (function () {
         if (storedSession) {
             isLoggedOn = true
         }
-        console.log(isLoggedOn);
+        // console.log(isLoggedOn);
         return isLoggedOn
     }
 

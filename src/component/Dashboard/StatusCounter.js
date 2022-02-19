@@ -6,7 +6,7 @@ import { Card, Col, Row } from "react-bootstrap";
 export default function StatusCounter(props) {
     const mapStatusWithColor = { "Closed": "#96E2A1", "Flight": "#FF9190", "Resources": "#80A8FF", "VISA Stamp": "#F7D166", "Work Permit": "#C1A7FE" };
     // let statusArr = [];
-    console.log(props)
+    // // console.log(props)
     /* if (props.detail) {
         statusArr = Object.keys(props.detail);
     } */

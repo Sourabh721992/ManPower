@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../Css/app.css";
 import Header from "../Layout/Header";
 import { AddSupplierApi, GetSupplierApi, GetPendingUsersApi, DeletePendingUsersApi, DeleteSupplierApi } from "../../utils/ApiFunctions";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Form, Tabs, Tab } from "react-bootstrap";
 import "react-phone-number-input/style.css";
 import UserProfile from "../../utils/UserProfile";
 import Modal from 'react-bootstrap/Modal'
@@ -13,6 +13,8 @@ import SupplierList from "./SupplierList";
 import Table from 'react-bootstrap/Table'
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import PendingList from "../Buyer/PendingList";
 
 export default function Supplier(props) {
     const [showRequirementPopup, setShowRequirement] = useState(false);
@@ -21,13 +23,18 @@ export default function Supplier(props) {
     const [validated, setValidated] = useState(false);
     const [SupplierData, SetSupplierList] = useState({ SupplierList: {}, ShouldUpdate: true });
     const [PendingUserData, SetPendingUserList] = useState([]);
+    const history = useHistory()
+    const [activeTab, setActiveTab] = useState("totalSupplier")
 
     var session = UserProfile.getSession();
 
     const handleClose = () => {
         setShowRequirement(false); ResetForm();
     };
-    const handleShow = () => setShowRequirement(true);
+    // const handleShow = () => setShowRequirement(true);
+    const handleShow = () => {
+        history.push("/addSupplier")
+    }
 
     const onChange = (e) => {
         SetSupplierEmail(e.target.value);
@@ -77,16 +84,16 @@ export default function Supplier(props) {
         GetPendingUsersApi(item).then
             ((resData) => {
                 resData.Message = JSON.parse(resData.Message);
-                console.log("GetPendingUsersApi called");
+                // console.log("GetPendingUsersApi called");
                 resData.Message.forEach(item => {
                     item.CreatedDt = item.CreatedDt.split("T")[0];
-                    // console.log(item.CreatedDt);
+                    // // console.log(item.CreatedDt);
                 })
 
                 SetPendingUserList(resData.Message);
 
             }).catch((error) => {
-                console.log("catch Error found in GetSupplierApi", JSON.stringify(error));
+                // console.log("catch Error found in GetSupplierApi", JSON.stringify(error));
                 SetPendingUserList([]);
             })
     }
@@ -113,7 +120,7 @@ export default function Supplier(props) {
                 getPendingUser();
 
             }).catch((error) => {
-                console.log("catch Error found in GetSupplierApi", JSON.stringify(error));
+                // console.log("catch Error found in GetSupplierApi", JSON.stringify(error));
                 SetAlert({ show: true, isDataSaved: true, message: error.Message });
 
                 setTimeout(function () {
@@ -144,7 +151,7 @@ export default function Supplier(props) {
 
 
             }).catch((error) => {
-                console.log("catch Error found in GetSupplierApi", JSON.stringify(error));
+                // console.log("catch Error found in GetSupplierApi", JSON.stringify(error));
                 SetAlert({ show: true, isDataSaved: true, message: error.Message });
 
                 setTimeout(function () {
@@ -167,17 +174,17 @@ export default function Supplier(props) {
 
         //Validations
         if (SupplierEmail === "") {
-            console.log("login called 1");
+            // console.log("login called 1");
             setValidated(true);
         } else {
             let item = {};
             item.AuthorisedById = session.UserId
             item.Email = SupplierEmail
 
-            console.log(item);
+            // console.log(item);
             AddSupplierApi(item).then
                 ((resData) => {
-                    console.log("Supplier Inserted Successfully", resData);
+                    // console.log("Supplier Inserted Successfully", resData);
                     SetAlert({ show: true, isDataSaved: true, message: resData.Message });
 
                     getPendingUser();
@@ -223,7 +230,19 @@ export default function Supplier(props) {
                     </button>
                 </div>
                 <div className="clr"></div>
-                <SupplierList data={SupplierData.SupplierList.Suppliers ? SupplierData.SupplierList.Suppliers : []} DeleteApi={DeleteSelectedSupplier} />
+                
+                {/* Tabs for Total Buyer and Pending Buyer */}
+                <Tabs activeKey={activeTab} onSelect={(t) => setActiveTab(t)}>
+                    <Tab eventKey="totalSupplier" title="Total Buyers">
+                        <SupplierList data={SupplierData.SupplierList.Suppliers ? SupplierData.SupplierList.Suppliers : []} DeleteApi={DeleteSelectedSupplier} />
+                    </Tab>
+
+                    <Tab eventKey="pendingSupplier" title="Pending Buyers">
+                        <PendingList from={"supplier"} pendingList={PendingUserData} response={(email) => onClickDelete(email)} />
+                    </Tab>
+                </Tabs>
+
+                {/* <SupplierList data={SupplierData.SupplierList.Suppliers ? SupplierData.SupplierList.Suppliers : []} DeleteApi={DeleteSelectedSupplier} /> */}
             </div>
             <Modal dialogClassName="requirement-modal" show={showRequirementPopup} onHide={handleClose} centered>
                 <Modal.Header>

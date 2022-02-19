@@ -5,8 +5,16 @@ import "../../../Css/app.css";
 
 function FilterButton(props) {
   return (
-    <Button variant="light">
+    <Button variant="light" onClick={props.onClickEvent}>
       <FiFilter /> Filter 
+    </Button>
+  );
+}
+
+function MpButton(props) {
+  return (
+    <Button type={props.btnType} variant={props.variant} onClick={props.onClickEvent}>
+      {props.label}
     </Button>
   );
 }
@@ -36,5 +44,5 @@ function OutlinePrimaryButton(props) {
 }
 
 export {
-  FilterButton, PrimaryButton, LightButton, OutlinePrimaryButton
+  FilterButton, PrimaryButton, LightButton, OutlinePrimaryButton, MpButton
 }

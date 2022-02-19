@@ -27,9 +27,9 @@ export default function Login(props) {
   const Validate = async (e) => {
 
 
-    const form = e.currentTarget;
+    // const form = e.currentTarget;
 
-    console.log(form);
+    // // console.log(form);
 
     e.preventDefault();
     //e.stopPropagation();
@@ -37,14 +37,14 @@ export default function Login(props) {
       email
     );
 
-    console.log("login called");
+    // // console.log("login called");
 
     //Validations
     if (username === false || password === "") {
-      console.log("login called 1");
+      // // console.log("login called 1");
       setValidated(true);
     } else {
-      console.log("login called 2");
+      // // console.log("login called 2");
 
       let item = {
         Email: email,
@@ -62,8 +62,8 @@ export default function Login(props) {
         ((resData) => {
           localStorage.setItem("LoginCredential", JSON.stringify(item));
           UserProfile.setSession(resData.Message, true);
-          console.log("Login API success");
-          console.log(resData)
+          // // console.log("Login API success");
+          // console.log(resData)
           let session = JSON.parse(resData.Message)
           if(session.Role === "S"){
             window.location.href= "/SupplierDashboard"

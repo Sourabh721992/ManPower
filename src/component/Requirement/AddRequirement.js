@@ -27,10 +27,10 @@ export default function AddRequirement() {
     const [Spinner, SetSpinner] = useState(false);
 
 
-    console.log(currencies.currencies);
+    // // console.log(currencies.currencies);
     var session = UserProfile.getSession();
     let Trades = getTrades();
-    console.log("Dashboard ", session);
+    // // console.log("Dashboard ", session);
 
     useEffect(() => {
         let newCurrency = JSON.parse(JSON.stringify(Currency));
@@ -38,7 +38,7 @@ export default function AddRequirement() {
             item.name = item.name + " (" + item.symbol + ") "
             return item
         })
-        console.log(newCurrency)
+        // // console.log(newCurrency)
         SetCurrencies(newCurrency);
         getSupplier();
     },[]);
@@ -47,10 +47,10 @@ export default function AddRequirement() {
     const Rating = [{ id: 1, Name: 1 }, { id: 2, Name: 2 }, { id: 3, Name: 3 }, { id: 4, Name: 4 }, { id: 5, Name: 5 }]
 
     const onChange = (e) => {
-        // console.log(e.target.name);
+        // // console.log(e.target.name);
         supplierSelectedValue[e.target.name] = e.target.value;
         const map = JSON.parse(JSON.stringify(supplierSelectedValue))
-        // console.log(map);
+        // // console.log(map);
         formStateValue(map);
     }
 
@@ -64,7 +64,7 @@ export default function AddRequirement() {
 
     const updateTradeItemValue = (e, index) => {
         let value = e.target.value;
-        console.log(value)
+        // // console.log(value)
         let key = e.target.name.split("_")[1];
         TradeStateValue[index][key] = value;
 
@@ -73,7 +73,7 @@ export default function AddRequirement() {
         }
 
         let arr = JSON.parse(JSON.stringify(TradeStateValue));
-        console.log(arr)
+        // // console.log(arr)
         SetTradeStateValue(arr);
     }
 
@@ -142,7 +142,7 @@ export default function AddRequirement() {
 
         e.preventDefault();
 
-        console.log("login called");
+        // // console.log("login called");
 
         let valTrade = TradeStateValue.filter(function (item) {
             return item.trade === "";
@@ -150,7 +150,7 @@ export default function AddRequirement() {
 
         //Validations
         if (supplierSelectedValue.supplier === "" || supplierSelectedValue.rating === "" || valTrade.length > 0) {
-            console.log("login called 1");
+            // // console.log("login called 1");
             setValidated(true);
         } else {
 
@@ -173,15 +173,15 @@ export default function AddRequirement() {
             })
             map["Trades"] = arr;
 
-            console.log("save Map", map);
+            // // console.log("save Map", map);
             RequirementInsert(map).then
                 ((resData) => {
-                    console.log("Requirement Inserted Successfully in Dashboard", resData);
+                    // // console.log("Requirement Inserted Successfully in Dashboard", resData);
                     SetAlert({ show: true, isDataSaved: true });
 
                     SetSpinner(false);
                     setTimeout(function () {
-                        console.log("Set Timeout Called");
+                        // // console.log("Set Timeout Called");
                         SetAlert({ show: false, isDataSaved: false });
                         ResetForm(true);
 
@@ -192,7 +192,7 @@ export default function AddRequirement() {
                     SetSpinner(false);
 
                     setTimeout(function () {
-                        console.log("Set Timeout Called");
+                        // // console.log("Set Timeout Called");
                         SetAlert({ show: false, isDataSaved: false });
 
                     }, 2000);

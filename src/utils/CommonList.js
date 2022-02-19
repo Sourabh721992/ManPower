@@ -1,5 +1,5 @@
 // import UserProfile from "./UserProfile";
-
+import { Base64 } from 'js-base64'
 
 var Trades = null
 // const session = UserProfile.getSession();
@@ -93,8 +93,26 @@ function filterDropdown(list, input) {
     }
 }
 
+function decodeBase64(b64){
+    if(b64){
+        var str = Base64.decode(b64);
+        return str;
+    }else{
+        return ""
+    }
+}
+
+function encodeBase64(data){
+    if(typeof(data) != 'string'){
+        data = JSON.stringify(data);
+    }
+
+    var b64 = Base64.encode(data);
+    return b64;
+}
+
 export {
-    setTrade, getTrades, getMoneyFormat, logger, formatShortDate, filterDropdown
+    setTrade, getTrades, getMoneyFormat, logger, formatShortDate, filterDropdown, decodeBase64, encodeBase64
 }
 
 

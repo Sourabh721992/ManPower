@@ -11,4 +11,30 @@ function FilterButton(props) {
   );
 }
 
-export default FilterButton;
+function PrimaryButton(props) {
+  return (
+    <Button disabled={props.disabled} variant="primary" onClick={props.onClickEvent}>
+      {props.text} 
+    </Button>
+  );
+}
+
+function LightButton(props) {
+  return (
+    <Button disabled={props.disabled} variant="light" onClick={props.onClickEvent}>
+      {props.text} 
+    </Button>
+  );
+}
+
+function OutlinePrimaryButton(props) {
+  return (
+    <Button className={props.className} disabled={props.disabled} variant="outline-primary" onClick={props.onClickEvent}>
+      {props.text} 
+    </Button>
+  );
+}
+
+export {
+  FilterButton, PrimaryButton, LightButton, OutlinePrimaryButton
+}

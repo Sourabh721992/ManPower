@@ -1,4 +1,5 @@
 import Client from "./ApiClient";
+import { logger } from "./CommonList";
 
 const SignupAPI = async (payload) => {
     return new Promise((resolve, reject) => {
@@ -17,11 +18,11 @@ const LoginAPI = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("User/LogIn", payload) //Login API Call
             .then((resData) => {
-                console.log("LoginAPI", resData);
+                logger.log("LoginAPI", resData);
                 resolve(resData);
             })
             .catch((error) => {
-                console.log(error);
+                logger.log(error)
                 reject(error);
             });
     })
@@ -31,11 +32,11 @@ const TradesApi = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("metainfo/trades", payload) //Login API Call
             .then((resData) => {
-                console.log("metainfo/trades", resData);
+                logger.log("metainfo/trades", resData);
                 resolve(resData);
             })
             .catch((error) => {
-                console.log(error);
+                logger.log(error)
                 reject(error);
             });
     })
@@ -45,11 +46,11 @@ const RequirementInsert = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("Requirement/Insert", payload) //Login API Call
             .then((resData) => {
-                console.log("Requirement/Insert", resData);
+                logger.log("Requirement/Insert", resData);
                 resolve(resData);
             })
             .catch((error) => {
-                console.log(error);
+                logger.log(error)
                 reject(error);
             });
     })
@@ -59,11 +60,11 @@ const AddSupplierApi = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("User/adduser", payload) //Login API Call
             .then((resData) => {
-                console.log("User/adduser", resData);
+                logger.log("User/adduser", resData);
                 resolve(resData);
             })
             .catch((error) => {
-                console.log(error);
+                logger.log(error)
                 reject(error);
             });
     })
@@ -73,11 +74,11 @@ const GetSupplierApi = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("Supplier/getSupplierList", payload) //Login API Call
             .then((resData) => {
-                console.log("Supplier/getSupplierList", resData);
+                logger.log("Supplier/getSupplierList", resData);
                 resolve(resData);
             })
             .catch((error) => {
-                console.log(error);
+                logger.log(error)
                 reject(error);
             });
     })
@@ -87,11 +88,11 @@ const GetUserProfileApi = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("User/GetUser", payload) //Login API Call
             .then((resData) => {
-                console.log("User/GetUser", resData);
+                logger.log("User/GetUser", resData);
                 resolve(resData);
             })
             .catch((error) => {
-                console.log(error);
+                logger.log(error)
                 reject(error);
             });
     })
@@ -101,11 +102,11 @@ const UpdateUserProfileApi = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("User/UpdateUser", payload) //Login API Call
             .then((resData) => {
-                console.log("User/UpdateUser", resData);
+                logger.log("User/UpdateUser", resData);
                 resolve(resData);
             })
             .catch((error) => {
-                console.log(error);
+                logger.log(error)
                 reject(error);
             });
     })
@@ -115,11 +116,11 @@ const GetPendingUsersApi = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("User/PendingUsers", payload) //Login API Call
             .then((resData) => {
-                console.log("User/PendingUsers", resData);
+                logger.log("User/PendingUsers", resData);
                 resolve(resData);
             })
             .catch((error) => {
-                console.log(error);
+                logger.log(error)
                 reject(error);
             });
     })
@@ -129,11 +130,11 @@ const DeletePendingUsersApi = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("User/DeletePendingUsers", payload) //Login API Call
             .then((resData) => {
-                console.log("User/DeletePendingUsers", resData);
+                logger.log("User/DeletePendingUsers", resData);
                 resolve(resData);
             })
             .catch((error) => {
-                console.log(error);
+                logger.log(error)
                 reject(error);
             });
     })
@@ -143,11 +144,11 @@ const DeleteSupplierApi = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("Supplier/RemoveSupplier", payload) //Login API Call
             .then((resData) => {
-                console.log("Supplier/RemoveSupplier", resData);
+                logger.log("Supplier/RemoveSupplier", resData);
                 resolve(resData);
             })
             .catch((error) => {
-                console.log(error);
+                logger.log(error)
                 reject(error);
             });
     })
@@ -157,11 +158,11 @@ const AddWorkerApi = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("Worker/Insert", payload) 
             .then((resData) => {
-                console.log("Worker/Insert", resData);
+                logger.log("Worker/Insert", resData);
                 resolve(resData);
             })
             .catch((error) => {
-                console.log(error);
+                logger.log(error)
                 reject(error);
             });
     })
@@ -171,11 +172,11 @@ const GetWorkerApi = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("Worker/FetchWorker", payload) 
             .then((resData) => {
-                console.log("Worker/FetchWorker", resData);
+                logger.log("Worker/FetchWorker", resData);
                 resolve(resData);
             })
             .catch((error) => {
-                console.log(error);
+                logger.log(error)
                 reject(error);
             });
     })
@@ -185,15 +186,44 @@ const GetWorkerListApi = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("Worker/FetchWorkers", payload) 
             .then((resData) => {
-                console.log("Worker/FetchWorkers", resData);
+                logger.log("Worker/FetchWorkers", resData);
                 resolve(resData);
             })
             .catch((error) => {
-                console.log(error);
+                logger.log(error)
                 reject(error);
             });
     })
 }
+
+const GetRequirementApi = (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("Requirement/Fetch", payload) 
+            .then((resData) => {
+                logger.log("Requirement/Fetch", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                logger.log(error)
+                reject(error);
+            });
+    })
+}
+
+const AddMapWorkersApi = (payload) => {
+    return new Promise((resolve, reject) => {
+        Client.post("Requirement/AddWorkers", payload) 
+            .then((resData) => {
+                logger.log("Requirement/AddWorkers", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                logger.log(error)
+                reject(error);
+            });
+    })
+}
+
 
 export {
     SignupAPI,
@@ -209,5 +239,7 @@ export {
     DeleteSupplierApi,
     AddWorkerApi,
     GetWorkerApi,
-    GetWorkerListApi
+    GetWorkerListApi,
+    GetRequirementApi,
+    AddMapWorkersApi
 }

@@ -44,8 +44,10 @@ const BasicInfo = (props) => {
                 basicDetailsCopy[name] = parseInt(target.value)
             }
             else if(name === "AdharNo"){
-                target.value = target.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim();
-                basicDetailsCopy[name] = target.value
+                if(target.value.replace(/\s/g, '').length <= 12){
+                    target.value = target.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim();
+                    basicDetailsCopy[name] = target.value
+                }
             }
             else {
                 basicDetailsCopy[name] = target.value
@@ -208,9 +210,10 @@ const BasicInfo = (props) => {
                                     className="form-control w-100"
                                     placeholder="Aadhaar Number"
                                     onChange={handleOnChange}
-                                    defaultValue={basicDetails.AdharNo}
+                                    value={basicDetails.AdharNo}
                                     pattern="^\d{4}\s\d{4}\s\d{4}$"
                                     required
+                                    max={"16"}
                                     errorMessage={{
                                         required: "Aadhaar number is required",
                                         pattern: "Required valid Aadhaar number"

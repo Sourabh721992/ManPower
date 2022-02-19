@@ -12,6 +12,8 @@ import AddRequirement from "../Requirement/AddRequirement.js";
 import SupplierDashboard from "../Dashboard/Supplier/SupplierDashboard";
 import WorkerList from "../Worker/WorkerList";
 import Worker from "../Worker/Worker"
+import Requirement from "../Requirement/Requirement";
+import MapWorker from "../Requirement/MapWorker"
 
 function App() {
   return (
@@ -28,9 +30,7 @@ function App() {
           <Route exact path="/Settings">
             <Settings />
           </Route>
-          <Route exact path="/worker">
-            <WorkerList />
-          </Route>
+          
           <PrivateRoute exact path="/Dashboard" component={Dashboard} />
           <PrivateRoute exact path="/Supplier" component={Supplier} />
           <PrivateRoute exact path="/Profile" component={Profile} />
@@ -38,6 +38,8 @@ function App() {
           <PrivateRoute exact path="/SupplierDashboard" component={SupplierDashboard} />
           <PrivateRoute exact path="/worker" component={WorkerList} />
           <PrivateRoute exact path="/addWorker" component={Worker} />
+          <PrivateRoute exact path="/requirement/:data" component={Requirement} />
+          <PrivateRoute exact path="/mapWorker" component={MapWorker} />
         </Switch>
         {/* <Footer /> */}
       </Router>

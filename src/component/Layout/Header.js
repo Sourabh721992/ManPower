@@ -49,7 +49,7 @@ export default function Header(props) {
 
     supplierNavBar = (
       <Navbar className="px-3" bg="light" variant="light">
-        <Navbar.Brand href="#home">Home</Navbar.Brand>
+        <Navbar.Brand href="/dashboard">Home</Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="#buyer">Buyer</Nav.Link>
           <Nav.Link href="/worker">Worker</Nav.Link>

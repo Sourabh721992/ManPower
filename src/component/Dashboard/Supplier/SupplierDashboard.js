@@ -4,14 +4,14 @@ import Header from '../../Layout/Header'
 import RequirementTable from '../RequirementTable';
 import { FiFilter } from "react-icons/fi";
 import StatusCounter from '../StatusCounter';
-import FilterButton from '../../Controls/Buttons/Buttons';
+import {FilterButton} from '../../Controls/Buttons/Buttons';
 
 export class SupplierDashboard extends Component {
 
     constructor(props) {
         super(props)
     
-        var session = UserProfile.getSession();
+        var session = UserProfile.getSession(); 
         this.state = {
             session
         }

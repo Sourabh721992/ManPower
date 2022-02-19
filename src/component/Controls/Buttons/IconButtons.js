@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
-import { FiUsers, FiSearch } from 'react-icons/fi'
+import { FiUsers, FiSearch, FiTrash2 } from 'react-icons/fi'
 import { MdOutlineAddCircle } from 'react-icons/md'
 
 function SearchIconBtn(props) {
@@ -28,6 +28,14 @@ function AddIconBtn(props) {
 }
 
 
+function DeleteIconBtn(props) {
+  return (
+    <Button variant="link" onClick={props.onClickEvent}>
+      <FiTrash2 className='text-danger' style={{ fontSize: "18px" }} />
+    </Button>
+  )
+}
+
 export {
-  SearchIconBtn, UsersIconBtn, AddIconBtn
+  SearchIconBtn, UsersIconBtn, AddIconBtn, DeleteIconBtn
 }

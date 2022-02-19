@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Col, Row, Table } from 'react-bootstrap'
 import { withRouter } from 'react-router-dom'
-import { formatShortDate, getMoneyFormat } from '../../utils/CommonList'
+import { getMoneyFormat } from '../../utils/CommonList'
 import { OutlinePrimaryButton } from '../Controls/Buttons/Buttons'
 
 const DetailedCard = (props) => {

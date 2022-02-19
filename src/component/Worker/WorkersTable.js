@@ -1,19 +1,19 @@
 import React, { useState, useEffect} from "react";
 import Table from 'react-bootstrap/Table'
 import { GetWorkerListApi } from "../../utils/ApiFunctions";
-import { formatShortDate, logger } from "../../utils/CommonList";
-// import UserProfile from "../../utils/UserProfile";
+import { formatShortDate, /*logger*/ } from "../../utils/CommonList";
+import UserProfile from "../../utils/UserProfile";
 // import { ToastSuccess } from "../Controls/Toast/Toast";
 
 const WorkersTable = (props) => {
 
-    // const session = UserProfile.getSession()
+    const session = UserProfile.getSession()
 
     const [workerList, setWorkerList] = useState([])
 
     useEffect(() => {
         // call get api
-        GetWorkerListApi({supplierId: "S8"})
+        GetWorkerListApi({supplierId: session.UserId /*"S8"*/})
         .then((response) => {
             let workerListCopy = [...workerList]
 

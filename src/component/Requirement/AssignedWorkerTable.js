@@ -1,15 +1,40 @@
-import React, {Fragment, useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import { Card, Table } from 'react-bootstrap'
+import { RemoveWorkerApi } from '../../utils/ApiFunctions'
 import { formatShortDate } from '../../utils/CommonList'
 import { DeleteIconBtn } from '../Controls/Buttons/IconButtons'
 
 
 const AssignedWorkerTable = (props) => {
 
-    const workerList = props.workerList
+    const [workerList, setWorkerList] = useState(props.details.Workers) 
+    const [details, setDetails] = useState(props.details) 
+    const [isLoading, setIsLoading] = useState(false)
 
-    const handleDelete = () => {
+    const handleDelete = (wCode) => {
+        if(wCode && details){
+            setIsLoading(true)
+            const Body = {
+                requirementCode: details.Code,
+                workerCode: wCode
+            }
 
+            RemoveWorkerApi(Body).then((response) => {
+                if (response.Code === 1) {
+                    let workerListCopy = [...workerList]
+
+                    workerListCopy = workerListCopy.filter(w => w.Code !== wCode)
+
+                    setWorkerList(workerListCopy)
+                    
+                }
+                setIsLoading(false)
+            }).catch(() => {
+                setIsLoading(false)
+            })
+        }
+
+        
     }
 
 
@@ -47,7 +72,7 @@ const AssignedWorkerTable = (props) => {
                                         <td>{item.ContactNo}</td>
                                         <td>{formatShortDate(item.AddedOn)}</td>
                                         <td>
-                                            <DeleteIconBtn onClickEvent={(e) => handleDelete(e)} />
+                                            <DeleteIconBtn disabled={isLoading} onClickEvent={() => handleDelete(item.Code)} />
                                         </td>
                                     </tr>
                                 )

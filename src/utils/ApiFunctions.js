@@ -183,6 +183,7 @@ const GetWorkerApi = (payload) => {
 }
 
 const GetWorkerListApi = (payload) => {
+    logger.log(payload)
     return new Promise((resolve, reject) => {
         Client.post("Worker/FetchWorkers", payload) 
             .then((resData) => {

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "../../Css/app.css";
-import Header from "../Layout/Header";
 import { RequirementInsert, LoginAPI } from "../../utils/ApiFunctions";
 import { Row, Col, Form} from "react-bootstrap";
 import "react-phone-number-input/style.css";
@@ -157,7 +156,7 @@ export default function Dashboard(props) {
 
     return (
         <>
-            <Header session={session} />
+            {/* <Header session={session} /> */}
             <div className="DashboardBody">
                 <StatusCounter detail={session.StatusCounter} />
                 <div className="clr"></div>

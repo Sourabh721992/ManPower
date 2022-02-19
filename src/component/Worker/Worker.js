@@ -6,16 +6,16 @@ import ExpertiseInfo from './ExpertiseInfo'
 import {AddWorkerApi} from '../../utils/ApiFunctions'
 import { withRouter } from 'react-router-dom'
 import UserProfile from '../../utils/UserProfile'
-import Header from '../Layout/Header'
+// import Header from '../Layout/Header'
 
 const Worker = (props) => {
 
+    const session = UserProfile.getSession()
+
     const [activeTab, setActiveTab] = useState("basicInfo")
     const [workerInfo, setWorkerInfo] = useState({
-        SupplierId: "S8"
+        SupplierId: session.UserId
     })
-
-    const session = UserProfile.getSession()
 
     // on select tab
     const changeTab = (tabKey) => {
@@ -32,7 +32,7 @@ const Worker = (props) => {
             if(action === "save-worker-api-call"){
                 // call save worker API
                 AddWorkerApi(workerInfoCopy).then(() => {
-                    props.history.push("/addWorker");
+                    props.history.push("/worker");
                 })
             }
             
@@ -47,7 +47,7 @@ const Worker = (props) => {
     return(
         <Fragment>
             
-            <Header session={session} />
+            {/* <Header session={session} /> */}
 
             <Tab.Container activeKey={activeTab}  /*onSelect={(k) => onSelectTab(k)}*/>
                 <Row className="mx-5 m-5">

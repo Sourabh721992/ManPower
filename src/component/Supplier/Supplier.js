@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../Css/app.css";
-import Header from "../Layout/Header";
+// import Header from "../Layout/Header";
 import { AddSupplierApi, GetSupplierApi, GetPendingUsersApi, DeletePendingUsersApi, DeleteSupplierApi } from "../../utils/ApiFunctions";
 import { Row, Col, Form, Tabs, Tab } from "react-bootstrap";
 import "react-phone-number-input/style.css";
@@ -204,7 +204,7 @@ export default function Supplier(props) {
 
     return (
         <>
-            <Header session={session} />
+            {/* <Header session={session} /> */}
             <div className="DashboardBody">
                 <Row>
                     <Col sm={3}>

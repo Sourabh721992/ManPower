@@ -3,7 +3,7 @@ import { Col, Tab, Tabs } from 'react-bootstrap';
 import { GetBuyerListApi, GetPendingUsersApi } from '../../utils/ApiFunctions';
 // import { logger } from '../../utils/CommonList';
 import UserProfile from '../../utils/UserProfile';
-import Header from '../Layout/Header'
+// import Header from '../Layout/Header'
 import TotalBuyerTab from './TotalBuyerTab';
 import PendingBuyerTab from './PendingBuyerTab';
 import { logger } from '../../utils/CommonList';
@@ -70,7 +70,7 @@ export default class Buyer extends Component {
     render() {
         return (
             <Fragment>
-                <Header session={this.state.session} />
+                {/* <Header session={this.state.session} /> */}
                 <h4 className='font-weight-bolder text-muted m-4'>Buyer Information</h4>
                 {/* <SuccessAlert show={this.state.showAlert} message={this.state.alertMessage} variant={this.state.showAlert === true ? "success" : "danger"} /> */}
                 {/* Tabs for Total Buyer and Pending Buyer */}

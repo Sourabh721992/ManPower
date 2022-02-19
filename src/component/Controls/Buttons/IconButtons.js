@@ -21,8 +21,9 @@ function UsersIconBtn(props) {
 
 function AddIconBtn(props) {
   return (
-    <Button variant="link" onClick={props.onClickEvent}>
-      <MdOutlineAddCircle className="mr-1" style={{ fontSize: "20px" }} /> {props.btnText}
+    <Button variant="link" className='bg-transparent text-dark rounded-0' 
+      style={{textDecoration:"none", borderBottomColor: "#3860C7"}} onClick={props.onClickEvent}>
+      <MdOutlineAddCircle className="mr-1 text-primary" style={{ fontSize: "20px" }} /> {props.btnText}
     </Button>
   )
 }

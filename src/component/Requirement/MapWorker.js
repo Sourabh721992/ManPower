@@ -2,16 +2,22 @@ import React, { useState, useEffect } from 'react'
 import { Card, Form, Table } from 'react-bootstrap'
 import { withRouter } from 'react-router-dom'
 import { AddMapWorkersApi, GetWorkerListApi } from '../../utils/ApiFunctions'
-import { encodeBase64, formatShortDate, logger } from '../../utils/CommonList'
+import { decodeBase64, encodeBase64, formatShortDate, logger } from '../../utils/CommonList'
+import UserProfile from '../../utils/UserProfile'
 import { LightButton, PrimaryButton } from '../Controls/Buttons/Buttons'
 import ReactSpinner from '../Controls/Loader/ReactSpinner'
 
 
 const MapWorker = (props) => {
 
-    let Id
-    if (props.location && props.location.requirementId ) {
-        Id = props.location.requirementId
+    const session = UserProfile.getSession()
+
+    let data, Id
+    if (props.match && props.match.params && props.match.params.data) {
+        data = JSON.parse(decodeBase64(props.match.params.data))
+        if (data && data.requirementId) {
+            Id = data.requirementId
+        }
     }
 
     const [workerList, setWorkerList] = useState([])
@@ -23,7 +29,7 @@ const MapWorker = (props) => {
     useEffect(() => {
         // call get api
         setIsLoading(true)
-        GetWorkerListApi({ supplierId: "S8" })
+        GetWorkerListApi({ supplierId: session.UserId })
             .then((response) => {
                 let workerListCopy = [...workerList]
 

@@ -13,12 +13,19 @@ import SupplierDashboard from "../Dashboard/Supplier/SupplierDashboard";
 import WorkerList from "../Worker/WorkerList";
 import Worker from "../Worker/Worker"
 import Buyer from "../Buyer/Buyer";
+import AddNewBuyer from "../Buyer/AddNewBuyer";
+import Header from "../Layout/Header";
+import UserProfile from "../../utils/UserProfile";
 
 function App() {
   return (
     <>
       <Router>
-        {/* <Header title="MANPOWER" searchBar={false} />{" "} */}
+        {
+          UserProfile.isLoggedOn() ?
+            <Header /> : ""
+        }
+        
         <Switch>
           <Route exact path="/">
             <Login />
@@ -32,12 +39,6 @@ function App() {
           <Route exact path="/worker">
             <WorkerList />
           </Route>
-          <Route exact path={"/SupplierDashboard"}>
-            <SupplierDashboard />
-          </Route>
-          <Route exact path={"/buyer"}>
-            <Buyer />
-          </Route>
           <PrivateRoute exact path="/Dashboard" component={Dashboard} />
           <PrivateRoute exact path="/Supplier" component={Supplier} />
           <PrivateRoute exact path="/Profile" component={Profile} />
@@ -45,6 +46,7 @@ function App() {
           <PrivateRoute exact path="/SupplierDashboard" component={SupplierDashboard} />
           <PrivateRoute exact path="/worker" component={WorkerList} />
           <PrivateRoute exact path="/buyer" component={Buyer} />
+          <PrivateRoute exact path="/addBuyer" component={AddNewBuyer} />
           <PrivateRoute exact path="/addWorker" component={Worker} />
         </Switch>
         {/* <Footer /> */}

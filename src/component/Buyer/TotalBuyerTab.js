@@ -1,13 +1,15 @@
 import React, { Fragment } from 'react'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { AddIconBtn } from '../Controls/Buttons/IconButtons'
 
 export default function TotalBuyerTab(props) {
 
     const count = props.count
     // const list = props.list
+    const history = useHistory();
 
     const onClickBtn = (e) => {
-
+        history.push("/addBuyer")
     }
 
     return (

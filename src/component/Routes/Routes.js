@@ -17,17 +17,23 @@ import Requirement from "../Requirement/Requirement";
 import MapWorker from "../Requirement/MapWorker"
 import Buyer from "../Buyer/Buyer";
 import AddNewBuyer from "../Buyer/AddNewBuyer";
-import Header from "../Layout/Header";
+/* import Header from "../Layout/Header";
 import UserProfile from "../../utils/UserProfile";
+import { logger } from "../../utils/CommonList"; */
 
 function App() {
+  /* logger.log(window.location)
+  var showHeader = true
+  if(window.location.pathname === "/" && !UserProfile.isLoggedOn()){
+    showHeader = false
+  } */
   return (
     <>
       <Router>
-        {
-          UserProfile.isLoggedOn() ?
+        {/* {
+          showHeader ?
             <Header /> : ""
-        }
+        } */}
         
         <Switch>
           <Route exact path="/">

@@ -211,8 +211,11 @@ const GetRequirementApi = (payload) => {
 }
 
 const GetBuyerListApi = (supplierId) => {
+    let data = {
+        supplierId:supplierId
+    }
     return new Promise((resolve, reject) => {
-        Client.post("Buyer/getBuyerList", supplierId) 
+        Client.post("Buyer/getBuyerList", data) 
             .then((resData) => {
                 logger.log("Buyer/getBuyerList response ->", resData);
                 resolve(resData);

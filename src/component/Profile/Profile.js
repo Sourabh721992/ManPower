@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../Css/app.css";
-// import Header from "../Layout/Header";
+import Header from "../Layout/Header";
 import { GetUserProfileApi, UpdateUserProfileApi } from "../../utils/ApiFunctions";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
@@ -99,7 +99,7 @@ export default function Profile(props) {
 
     return (
         <>
-            {/* <Header session={session} /> */}
+            <Header session={session} />
             <div className="DashboardBody">
                 <h2 className="RequireDetlHead"> Account Information </h2>
                 <div className="clr mt10px"></div>

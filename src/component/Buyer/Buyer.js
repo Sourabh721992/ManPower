@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from 'react'
 import { Tab, Tabs } from 'react-bootstrap';
-import { GetBuyerListApi } from '../../utils/ApiFunctions';
+import { GetBuyerListApi, GetPendingUsersApi } from '../../utils/ApiFunctions';
 // import { logger } from '../../utils/CommonList';
 import UserProfile from '../../utils/UserProfile';
-// import Header from '../Layout/Header'
+import Header from '../Layout/Header'
 import TotalBuyerTab from './TotalBuyerTab';
 import PendingBuyerTab from './PendingBuyerTab';
+import { logger } from '../../utils/CommonList';
+// import { logger } from '../../utils/CommonList';
 
 export default class Buyer extends Component {
     constructor(props) {
@@ -31,12 +33,26 @@ export default class Buyer extends Component {
                     this.setState({ totalBuyers: buyersResponse.Buyers, totalBuyersCount: buyersResponse.Count })
                 }
             })
+
+    
+        let item = {};
+        item.UserId = this.state.session.UserId.toString()
+
+        GetPendingUsersApi(item).then
+            ((resData) => {
+
+                let pendingUsers = JSON.parse(resData.Message)
+                this.setState({ pendingBuyers: pendingUsers, pendingBuyersCount: pendingUsers.length })
+                logger.log(pendingUsers)
+            }).catch((error) => {
+                console.log("catch Error found in GetSupplierApi", JSON.stringify(error));
+            })
     }
 
     render() {
         return (
             <Fragment>
-                {/* <Header session={this.state.session} /> */}
+                <Header session={this.state.session} />
                 <h4 className='font-weight-bolder text-muted m-4'>Buyer Information</h4>
 
                 {/* Tabs for Total Buyer and Pending Buyer */}

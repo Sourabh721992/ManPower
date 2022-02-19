@@ -293,3 +293,11 @@
   margin: 25px;
   width: 100%;
 }
+
+.buyer-user-card{
+  background-color: #E6EAF3;
+  color: #5A5D62;
+  margin: 2%;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}

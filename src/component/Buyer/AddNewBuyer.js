@@ -1,15 +1,18 @@
 import React, { Fragment, useState } from 'react'
 import { Button, Col, Row } from 'react-bootstrap';
 import { TextInput, ValidationForm } from 'react-bootstrap4-form-validation'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { AddBuyerUser } from '../../utils/ApiFunctions';
 import { logger } from '../../utils/CommonList';
 import UserProfile from '../../utils/UserProfile';
+import Header from '../Layout/Header'
 // import Label from '../Controls/Label/Label';
 
 export default function AddNewBuyer() {
 
   const [email, setEmail] = useState("")
   const session = UserProfile.getSession()
+  const history = useHistory()
 
   const onSubmitBtn = (e) => {
     e.preventDefault();
@@ -23,14 +26,14 @@ export default function AddNewBuyer() {
     AddBuyerUser(item)
       .then(() => {
         logger.log("buyer added....!")
-
+        history.push('/buyer')
         setEmail("")
       })
   }
 
   return (
     <Fragment>
-
+      <Header />
       <div className='d-flex justify-content-start'>
         <div className='vertical-divider'></div>
         <div className='add-buyer-form-div'>

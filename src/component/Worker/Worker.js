@@ -17,8 +17,6 @@ const Worker = (props) => {
         SupplierId: session.UserId
     })
 
-    const session = UserProfile.getSession()
-
     // on select tab
     const changeTab = (tabKey) => {
         setActiveTab(tabKey)

@@ -2,10 +2,11 @@ import React from "react";
 import "../../Css/app.css";
 import "react-phone-number-input/style.css";
 import Table from 'react-bootstrap/Table'
-import { formatShortDate, getMoneyFormat, logger } from "../../utils/CommonList";
+import { encodeBase64, formatShortDate, getMoneyFormat, logger } from "../../utils/CommonList";
 import {SearchIconBtn, UsersIconBtn} from "../Controls/Buttons/IconButtons";
+import { withRouter } from "react-router-dom";
 
-export default function RequirementTable(props) {
+function RequirementTable(props) {
     console.log(props.detail);
 
     function onSearchBtnClick(e){
@@ -14,6 +15,13 @@ export default function RequirementTable(props) {
 
     function onClickBtn(e) {
         logger.log(e)
+    }
+
+    function handleOnClick(rCode){
+        if(rCode){
+            var Data = encodeBase64({ requirementId: rCode });
+            props.history.push("/requirement/" + Data)
+        }
     }
 
     return (
@@ -35,7 +43,7 @@ export default function RequirementTable(props) {
                 <tbody className="text-center">
                     {props.detail.map((item, index) => {
                         return(
-                            <tr className="align-middle" key={"requirement_table_index_" + index}>
+                            <tr className="align-middle" style={{cursor: "pointer"}} key={item.Code} onClick={() => handleOnClick(item.Code)}>
                                 <td>{item.Code}</td>
                                 <td>{item.WorkersCount}</td>
                                 <td>{item.Trades.map((s, i) => {
@@ -67,3 +75,5 @@ export default function RequirementTable(props) {
         </div>
     )
 }
+
+export default withRouter(RequirementTable)

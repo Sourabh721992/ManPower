@@ -49,7 +49,7 @@ const Requirement = (props) => {
                 <DetailedCard details={requirementData}/>
     
                 {/* assigned worker table */}
-                <AssignedWorkerTable workerList={requirementData.Workers} updateParent={handleSuccess}/>
+                <AssignedWorkerTable details={requirementData} workerList={requirementData.Workers} updateParent={handleSuccess}/>
             </div>
         )
     

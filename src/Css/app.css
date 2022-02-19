@@ -280,3 +280,15 @@
   margin-right: 5px;
   font-size: 20px;
 }
+
+.vertical-divider{
+  border-right: 1px solid gray;
+  width: 30vh;
+  height: 75vh;
+  margin-top: 25px;
+}
+
+.add-buyer-form-div{
+  margin: 25px;
+  width: 100%;
+}

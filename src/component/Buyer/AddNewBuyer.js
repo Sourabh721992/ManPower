@@ -60,7 +60,7 @@ export default function AddNewBuyer() {
                 <Button type="submit" variant='warning'>Insert</Button>
               </Col>
               <Col sm={8} style={{marginTop:"20px"}}>
-                <Button variant='light'>Cancel</Button>
+                <Button variant='light' onClick={() => { history.push("/buyer")}}>Cancel</Button>
               </Col>
             </Row>
           </ValidationForm>

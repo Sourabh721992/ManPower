@@ -269,9 +269,23 @@ const RemoveWorkerApi = (payload) => {
     })
 }
 
+const RemoveBuyer = (data) => {
+    return new Promise((resolve, reject) => {
+        Client.post("Buyer/RemoveBuyer", data) 
+            .then((resData) => {
+                logger.log("Buyer/RemoveBuyer", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                logger.log(error)
+                reject(error);
+            });
+    })
+}
+
 
 export {
     SignupAPI, LoginAPI, TradesApi, RequirementInsert, AddSupplierApi, GetSupplierApi, GetUserProfileApi, UpdateUserProfileApi, GetPendingUsersApi,
     DeletePendingUsersApi, DeleteSupplierApi, AddWorkerApi, GetWorkerApi, GetWorkerListApi, GetRequirementApi, AddMapWorkersApi,
-    GetBuyerListApi, RemoveWorkerApi, AddBuyerUser
+    GetBuyerListApi, RemoveWorkerApi, AddBuyerUser, RemoveBuyer
 }

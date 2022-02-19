@@ -1,11 +1,31 @@
 import React, { Fragment } from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
 import { MdDelete } from 'react-icons/md'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { RemoveBuyer } from '../../utils/ApiFunctions'
 import { formatShortDate, logger } from '../../utils/CommonList'
+import UserProfile from '../../utils/UserProfile'
 import { DeleteIconBtn, EditIconBtn } from '../Controls/Buttons/IconButtons'
 
 export default function BuyerList(props) {
     logger.log(props)
+
+    const session = UserProfile.getSession()
+    const history = useHistory()
+
+    const onDeleteBtn = (item) => {
+        let data = {
+            supplierId: session.UserId,
+            buyerId: item.Id
+        }
+
+        RemoveBuyer(data)
+        .then((resp) => {
+            logger.log("deleted...")
+            history.push("/buyer")
+        })
+    }  
+
     return (
         <Fragment>
             <Row>
@@ -35,11 +55,11 @@ export default function BuyerList(props) {
                                                 </Col>
                                             </Col>
                                             <Col sm={4}>
+                                                {/* <Col sm={12}>
+                                                    <EditIconBtn btnText="Edit"/>
+                                                </Col> */}
                                                 <Col sm={12}>
-                                                <EditIconBtn btnText="Edit"/>
-                                                </Col>
-                                                <Col sm={12}>
-                                                <DeleteIconBtn btnText="Delete" />
+                                                    <DeleteIconBtn btnText="Delete" onClickEvent={() => onDeleteBtn(item)}/>
                                                 </Col>
                                                 
                                             </Col>

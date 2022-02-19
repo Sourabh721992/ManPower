@@ -30,8 +30,8 @@ function AddIconBtn(props) {
 
 function DeleteIconBtn(props) {
   return (
-    <Button disabled={props.disabled} variant="link" onClick={props.onClickEvent}>
-      <FiTrash2 className='text-danger' style={{ fontSize: "18px" }} /> <span>{props.btnText}</span>
+    <Button disabled={props.disabled} variant="link" onClick={props.onClickEvent} style={{textDecoration:"none"}}>
+      <FiTrash2 className='text-danger' style={{ fontSize: "18px", marginBottom:"4px" }} /> <span style={{color:"#dc3545"}}>{props.btnText}</span>
     </Button>
   )
 }

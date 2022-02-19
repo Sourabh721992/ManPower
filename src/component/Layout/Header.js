@@ -29,7 +29,7 @@ export default function Header(props) {
   const logout = async (e) => {
     e.preventDefault();
     UserProfile.logout();
-    history.push("");
+    window.location.href=""
   }
 
   if (session) {

@@ -1,14 +1,31 @@
 import React, { Fragment, useState } from 'react'
 import { Button, Col, Row } from 'react-bootstrap';
 import { TextInput, ValidationForm } from 'react-bootstrap4-form-validation'
-import Label from '../Controls/Label/Label';
+import { AddBuyerUser } from '../../utils/ApiFunctions';
+import { logger } from '../../utils/CommonList';
+import UserProfile from '../../utils/UserProfile';
+// import Label from '../Controls/Label/Label';
 
 export default function AddNewBuyer() {
 
   const [email, setEmail] = useState("")
+  const session = UserProfile.getSession()
 
   const onSubmitBtn = (e) => {
     e.preventDefault();
+    logger.log(email)
+
+
+    let item = {};
+    item.AuthorisedById = session.UserId
+    item.Email = email
+
+    AddBuyerUser(item)
+      .then(() => {
+        logger.log("buyer added....!")
+
+        setEmail("")
+      })
   }
 
   return (
@@ -20,7 +37,7 @@ export default function AddNewBuyer() {
           <h4 className='mt-4'>Add New Buyer</h4>
           <ValidationForm onSubmit={onSubmitBtn}>
             <Row className='form-group'>
-              <Col sm={2}><h6 className='text-muted mt-4'>Email</h6></Col>
+              <Col sm={2}><h6 className='text-muted mt-4 f-24'>Email</h6></Col>
               <Col>
                 <TextInput
                   id="add-buyer-email-text"

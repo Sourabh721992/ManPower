@@ -238,6 +238,20 @@ const AddMapWorkersApi = (payload) => {
     })
 }
 
+const AddBuyerUser = (body) => {
+    return new Promise((resolve, reject) => {
+        Client.post("User/AddBuyer", body) //Login API Call
+            .then((resData) => {
+                logger.log("User/AddBuyer", resData);
+                resolve(resData);
+            })
+            .catch((error) => {
+                logger.log(error)
+                reject(error);
+            });
+    })
+}
+
 
 export {
     SignupAPI,
@@ -256,5 +270,6 @@ export {
     GetWorkerListApi,
     GetRequirementApi,
     AddMapWorkersApi,
-    GetBuyerListApi
+    GetBuyerListApi,
+    AddBuyerUser
 }

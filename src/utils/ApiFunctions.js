@@ -99,6 +99,7 @@ const GetUserProfileApi = (payload) => {
 }
 
 const UpdateUserProfileApi = (payload) => {
+    logger.log("Updated User Model", payload);
     return new Promise((resolve, reject) => {
         Client.post("User/UpdateUser", payload) //Login API Call
             .then((resData) => {

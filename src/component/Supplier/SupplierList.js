@@ -3,8 +3,8 @@ import "../../Css/app.css";
 import { Row, Col } from "react-bootstrap";
 import "react-phone-number-input/style.css";
 // import UserProfile from "../../utils/UserProfile";
-import { AiTwotoneDelete } from "react-icons/ai";
-import { IconContext } from "react-icons";
+import { formatShortDate } from '../../utils/CommonList'
+import { DeleteIconBtn } from '../Controls/Buttons/IconButtons'
 
 export default function SupplierList(props) {
 
@@ -36,7 +36,7 @@ export default function SupplierList(props) {
                         <div className="fl mt5px" style={{ backgroundColor: "#5A5D62", width: "96%", marginLeft: "2%", height: "1px" }}></div>
                         <Row className="mt20px mb10px">
                             <Col sm={1} style={{ width: "4%" }}></Col>
-                            <Col sm={7}>
+                            <Col sm={8}>
                                 <div className="fs15px fl mt5px fw500">Requirement Cleared :&nbsp;</div>
                                 <div className="fs15px fl mt5px fw500" style={{ color: "#4361A1" }}>{item.RequirementCleared}</div>
                                 <div className="clr"></div>
@@ -44,9 +44,11 @@ export default function SupplierList(props) {
                                 <div className="fs15px fl mt5px fw500" style={{ color: "#4361A1" }}>{item.TotalWorkersProvided}</div>
                                 <div className="clr"></div>
                                 <div className="fs15px fl mt5px fw500">Last Engagement :&nbsp;</div>
-                                <div className="fs15px fl mt5px fw500" style={{ color: "#4361A1" }}>{item.LastEngagement}</div>
+                                <div className="fs15px fl mt5px fw500" style={{ color: "#4361A1" }}>
+                                    {formatShortDate(item.LastEngagement)}
+                                </div>
                             </Col>
-                            <Col sm={4}>
+                            <Col sm={3}>
                                 {/* <div className="fl">
                                     <div className="fl" style={{ width: "30px" }}>
                                         <IconContext.Provider value={{ color: "#4361A1", size: "1.8em" }} >
@@ -58,7 +60,7 @@ export default function SupplierList(props) {
                                     <div className="fs15px fl mt5px fw500" style={{ color: "#4361A1", width: "20px" }}>Edit</div>
                                 </div>
                                 <div className="clr"></div> */}
-                                <div className="fl mt20px cupointer" onClick={() => onClickDeleteSupplier(item.Id)}>
+                                {/* <div className="fl mt20px cupointer" onClick={() => onClickDeleteSupplier(item.Id)}>
                                     <div className="fl" style={{ width: "30px" }}>
                                         <IconContext.Provider value={{ color: "#F3464C", size: "1.8em" }} >
                                             <div>
@@ -67,7 +69,9 @@ export default function SupplierList(props) {
                                         </IconContext.Provider>
                                     </div>
                                     <div className="fs15px fl mt5px fw500" style={{ color: "#F3464C", width: "20px" }}>Delete</div>
-                                </div>
+                                </div> */}
+
+                                <DeleteIconBtn btnText="Delete" onClickEvent={() => onClickDeleteSupplier(item.Id)}/>
                             </Col>
                         </Row>
                     </div>

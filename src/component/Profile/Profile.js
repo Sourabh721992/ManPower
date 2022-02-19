@@ -35,7 +35,7 @@ export default function Profile(props) {
     useEffect(() => {
         // // console.log("component Did Mount called in Profile")
         getUserProfilefromAPI();
-    })
+    }, [])
 
     const getUserProfilefromAPI = async () => {
 
@@ -101,9 +101,9 @@ export default function Profile(props) {
         <>
             {/* <Header session={session} /> */}
             <div className="DashboardBody">
-                <h2 className="RequireDetlHead"> Account Information </h2>
-                <div className="clr mt10px"></div>
-                <div className="fl" style={{ marginLeft: "10%", width: "85%" }}>
+                {/* <h2 className="RequireDetlHead"> Account Information </h2> */}
+                <div className="clr"></div>
+                <div className="fl ml-2" style={{ marginLeft: "3%", width: "85%" }}>
                     <Form noValidate validated={validated} onSubmit={Validate}>
                         <Row className="mb-4 mt-4">
                             <Col sm={2}>
@@ -194,9 +194,13 @@ export default function Profile(props) {
                             </Col>
                         </Row>
                         <Row style={{ marginTop: "25px" }}>
-                            <Col sm={2}>
-                                <button type="submit" className="btn btn-primary float-right">Update</button>
+                            <Col sm={7}>
+                                <div className="w-100" align="right">
+                                        <button type="submit" className="btn btn-primary">Update Details</button>
+                                </div>
                             </Col>
+                        </Row>
+                        <Row>
                             <Col sm={4}>
                                 <SuccessAlert show={showAlert.show} message={showAlert.message} variant={showAlert.isDataSaved === true ? "success" : "danger"} />
                             </Col>

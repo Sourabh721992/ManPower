@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { AddSupplierApi } from '../../utils/ApiFunctions'
 import { logger } from '../../utils/CommonList'
 import UserProfile from '../../utils/UserProfile'
-import Header from '../Layout/Header'
+// import Header from '../Layout/Header'
 
 export default function AddSupplier() {
     const [email, setEmail] = useState("")
@@ -24,7 +24,7 @@ export default function AddSupplier() {
     // console.log(item);
     AddSupplierApi(item).then
         ((resData) => {
-            console.log("Supplier Inserted Successfully", resData);
+            console.log("Supplier Added Successfully", resData);
             // SetAlert({ show: true, isDataSaved: true, message: resData.Message });
             history.push("/Supplier")
             
@@ -36,7 +36,7 @@ export default function AddSupplier() {
   
     return (
       <Fragment>
-        <Header />
+        {/* <Header /> */}
         <div className='d-flex justify-content-start'>
           <div className='vertical-divider'></div>
           <div className='add-buyer-form-div'>
@@ -44,7 +44,7 @@ export default function AddSupplier() {
             <ValidationForm onSubmit={onSubmitBtn}>
               <Row className='form-group'>
                 <Col sm={2}><h6 className='text-muted mt-4 f-24'>Email</h6></Col>
-                <Col>
+                <Col sm= {10}>
                   <TextInput
                     id="add-supplier-email-text"
                     type="email"
@@ -55,15 +55,19 @@ export default function AddSupplier() {
                     onChange={(e) => setEmail(e.target.value)}
                     errorMessage={{ required: "Email is required", validator: "Please enter a valid email address" }}
                   />
-  
                 </Col>
               </Row>
-              <Row>
-                <Col sm={{ offset:3 }} style={{marginTop:"20px"}}>
-                  <Button type="submit" variant='warning'>Insert</Button>
-                </Col>
-                <Col sm={8} style={{marginTop:"20px"}}>
-                  <Button variant='light' onClick={() => { history.push("/Supplier")}}>Cancel</Button>
+              <Row className="mt-3">
+                <Col sm={2}></Col>
+                <Col sm={5}>
+                    <div className="d-flex justify-content-end">
+                      <div>
+                        <Button variant="secondary" onClick={() => { history.push("/Supplier")}}>Cancel</Button>
+                      </div>
+                      <div style={{marginLeft:"15px"}}>
+                        <Button type="submit" className="btn btn-primary">Add</Button>
+                      </div>
+                    </div>
                 </Col>
               </Row>
             </ValidationForm>

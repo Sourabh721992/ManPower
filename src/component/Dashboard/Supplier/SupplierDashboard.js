@@ -38,7 +38,7 @@ export class SupplierDashboard extends Component {
                 <div className='mx-5'>
                     
                     <div className='d-flex justify-content-between align-items-end'>
-                        <h5 className='mb-0'>Recent Requirements</h5>
+                        <h5 className='mb-0 text-muted'>Recent Requirements</h5>
                         {/* <h6 className='mb-0'><FiFilter className='f-24 mr-2' /> Filter</h6> */}
                         <FilterButton />
                     </div>

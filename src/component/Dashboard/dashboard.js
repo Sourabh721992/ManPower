@@ -161,8 +161,8 @@ export default function Dashboard(props) {
                 <StatusCounter detail={session.StatusCounter} />
                 <div className="clr"></div>
                 <div style={{ marginTop: "45px" }}>
-                    <h2 className="RequireDetlHead"> Requirement Details </h2>
-                    <div className="fl" style={{ marginLeft: "60%", cursor: "pointer", marginTop: "15px" }} onClick={handleShow}>
+                    <h4 className="RequireDetlHead text-muted"> Requirement Details </h4>
+                    <div className="fl" style={{ marginLeft: "67%", cursor: "pointer", marginTop: "15px" }} onClick={handleShow}>
                         <div className="fl" style={{ width: "25px", marginTop: "8px" }}>
                             <IconContext.Provider value={{ color: "#3860C7", size: "1.4em" }} >
                                 <div>
@@ -364,7 +364,7 @@ export default function Dashboard(props) {
                                 </button>
                             </Col>
                             <Col sm={2}>
-                                <SuccessAlert show={showAlert.show} message={showAlert.isDataSaved === true ? "Saved Successfully !" : "Error Occured"} variant={showAlert.isDataSaved === true ? "success" : "danger"} />
+                                <SuccessAlert show={showAlert.show} message={showAlert.isDataSaved === true ? "Saved Successfully !" : "Error Occurred"} variant={showAlert.isDataSaved === true ? "success" : "danger"} />
                             </Col>
                         </Row>
                     </Form>

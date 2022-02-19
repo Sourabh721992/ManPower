@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "../../Css/app.css";
 // import "../../Css/_app.scss"
 import Login from "../Login/Login";
-import Signup from "../Sign_up/Signup";
+import Signup from "../Signup/Signup";
 import Settings from "../Settings/Settings";
 import Dashboard from "../Dashboard/dashboard";
 import PrivateRoute from "./privateRoute";
@@ -20,7 +20,6 @@ import AddNewBuyer from "../Buyer/AddNewBuyer";
 import Header from "../Layout/Header";
 import UserProfile from "../../utils/UserProfile";
 import AddSupplier from "../Supplier/AddSupplier";
-import { logger } from "../../utils/CommonList"; 
 
 function App() {
   var showHeader = true

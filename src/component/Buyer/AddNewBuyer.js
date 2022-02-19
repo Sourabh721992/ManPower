@@ -56,11 +56,16 @@ export default function AddNewBuyer() {
               </Col>
             </Row>
             <Row>
-              <Col sm={{ offset:3 }} style={{marginTop:"20px"}}>
-                <Button type="submit" variant='warning'>Insert</Button>
-              </Col>
-              <Col sm={8} style={{marginTop:"20px"}}>
-                <Button variant='light' onClick={() => { history.push("/buyer")}}>Cancel</Button>
+              <Col sm={2}></Col>
+              <Col sm={5}>
+                    <div className="d-flex justify-content-end mt-3">
+                      <div>
+                      <Button variant='secondary' onClick={() => { history.push("/buyer")}}>Cancel</Button>
+                      </div>
+                      <div style={{marginLeft:"15px"}}>
+                        <Button type="submit" className="btn btn-primary">Add</Button>
+                      </div>
+                    </div>
               </Col>
             </Row>
           </ValidationForm>

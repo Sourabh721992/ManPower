@@ -1,24 +1,21 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
 // import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-import { DeletePendingUsersApi, RemoveBuyer } from '../../utils/ApiFunctions'
-import { formatShortDate, logger } from '../../utils/CommonList'
+import { DeletePendingUsersApi } from '../../utils/ApiFunctions'
+import { formatShortDate } from '../../utils/CommonList'
 import UserProfile from '../../utils/UserProfile'
 import SuccessAlert from '../Controls/alert/successAlert'
 import { DeleteIconBtn } from '../Controls/Buttons/IconButtons'
 
 export default function PendingList(props) {
-
     const session = UserProfile.getSession()
     const [showAlert, setShowAlert] = useState(false)
     const [alertMessage, setAlertMessage] = useState("")
-    // const history = useHistory()
+    
+    let pendingList = props.pendingList
 
-
-    const onDeleteBtn = (email) => {
-
+    const onDeleteBtn = (email, index) => {
         // SetSupplierList({ SupplierList: [], ShouldUpdate: false });
-
         let data = { 
             UserId: session.UserId.toString(),
             Email: email
@@ -27,17 +24,14 @@ export default function PendingList(props) {
         DeletePendingUsersApi(data).then
             ((resData) => {
                 //resData.Message = JSON.parse(resData.Message);
-
                 // SetAlert({ show: true, isDataSaved: true, message: resData.Message });
+                pendingList = pendingList.splice(index, 1)
                 setAlertMessage(resData.Message)
                 setShowAlert(true);
                 // getPendingUser();
-
             }).catch((error) => {
                 // console.log("catch Error found in GetSupplierApi", JSON.stringify(error));
                 // SetAlert({ show: true, isDataSaved: true, message: error.Message });
-
-
             })
     }
 
@@ -47,13 +41,13 @@ export default function PendingList(props) {
                 props.from === "supplier"
                 ?
                 <Row>
-                    <h5 className="RequireDetlHead">{"Pending Supplier Count : " + props.pendingList.length}</h5>
+                    <h5 className="RequireDetlHead">{"Pending Supplier Count : " + pendingList.length}</h5>
                 </Row>
                     
                     : ""
             }
             <Row>
-                {props.pendingList.map((item, index) => {
+                {pendingList.map((item, index) => {
                     return (
                         <Col key={"pending-buyer-user-card-" + index} sm={4}>
                                 <Card className="buyer-user-card">
@@ -63,25 +57,31 @@ export default function PendingList(props) {
                                     <Card.Body>
                                         <Row>
                                             <Col sm={8}>
-                                            <Col sm={12}>
-                                                <label className='m-2'>Email:</label>
-                                                <span style={{ color: "#4361A1", fontWeight:"bold" }}>{item.Email}</span>
-                                            </Col>
-                                            <Col sm={12}>
-                                                <label className='m-2'>Created Date:</label>
-                                                <span style={{ color: "#4361A1", fontWeight:"bold" }}>{formatShortDate(item.CreatedDt)}</span>
-                                            </Col>
-                                            <Col sm={12}>
-                                                <label className='m-2'>Modify Date:</label>
-                                                <span style={{ color: "#4361A1", fontWeight:"bold" }}>{formatShortDate(item.ModifyDt)}</span>
-                                            </Col>
+                                                <Row>
+                                                    <Col sm={12}>
+                                                        <label className="fs15px fl mt5px fw500">Email:&nbsp;</label>
+                                                        <span className="fs15px fl mt5px fw500" style={{ color: "#4361A1" }}>{item.Email}</span>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col sm={12}>
+                                                        <label className="fs15px fl mt5px fw500">Created Date:&nbsp;</label>
+                                                        <span className="fs15px fl mt5px fw500" style={{ color: "#4361A1" }}>{formatShortDate(item.CreatedDt)}</span>
+                                                    </Col>
+                                                </Row>
+                                                {/* <Row>
+                                                    <Col sm={12}>
+                                                        <label className="fs15px fl mt5px fw500">Modify Date:&nbsp;</label>
+                                                        <span className="fs15px fl mt5px fw500" style={{ color: "#4361A1" }}>{formatShortDate(item.ModifyDt)}</span>
+                                                    </Col>
+                                                </Row> */}
                                             </Col>
                                             <Col sm={4}>
                                                 {/* <Col sm={12}>
                                                     <EditIconBtn btnText="Edit"/>
                                                 </Col> */}
                                                 <Col sm={12}>
-                                                    <DeleteIconBtn btnText="Delete" onClickEvent={() => onDeleteBtn(item.Email)}/>
+                                                    <DeleteIconBtn btnText="Delete" onClickEvent={() => onDeleteBtn(item.Email, index)}/>
                                                 </Col>
                                                 
                                             </Col>
@@ -92,7 +92,7 @@ export default function PendingList(props) {
                     )
                 })}
             </Row>
-            <Col sm={8}>
+            <Col sm={4}>
                 <SuccessAlert show={showAlert} message={alertMessage} variant={showAlert === true ? "success" : "danger"} />
             </Col>
             

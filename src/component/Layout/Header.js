@@ -3,6 +3,7 @@ import { Navbar, Nav, NavDropdown/* , Container */ } from "react-bootstrap";
 import UserProfile from "../../utils/UserProfile";
 // import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { /* AiOutlineUser, */ AiFillHome, AiOutlineUsergroupAdd } from "react-icons/ai";
+import { GiMonoWheelRobot } from 'react-icons/gi';
 import {FaUserCircle} from "react-icons/fa"
 import { IconContext } from "react-icons";
 
@@ -72,35 +73,52 @@ export default function Header(props) {
     OrgName = (<Navbar.Brand className="text-white"> {session.OrgName} </Navbar.Brand>)
 
     supplierNavBar = (
-      <Navbar className="px-3" bg="light" variant="light">
-        <Navbar.Brand href="/dashboard">Home</Navbar.Brand>
-        {/* <Navbar.Brand href="/SupplierDashboard">Home</Navbar.Brand> */}
-        <Nav className="me-auto">
-          <Nav.Link href="/buyer">Buyer</Nav.Link>
-          <Nav.Link href="/worker">Worker</Nav.Link>
-          <Nav.Link href="#requirements">Requirements</Nav.Link>
-        </Nav>
-      </Navbar>
-    )
-
-    navbar = (
       <nav style={{ backgroundColor: "#f3f5fc" }} className="navbar navbar-expand-lg">
         <div className="container-fluid ml-8">
           <Nav className="me-auto">
-
             <IconContext.Provider value={{ color: "#6c757d", size: "1.4em" }} >
               <div style={{ width: "7px", float: "left", marginTop: "5px" }}>
                 <AiFillHome />
               </div>
             </IconContext.Provider>
-            <Nav.Link className="text-secondary" href="/Dashboard">Home</Nav.Link>
+            <Nav.Link className="text-secondary" href="/supplierdashboard">Home</Nav.Link>
 
             <IconContext.Provider value={{ color: "#6c757d", size: "1.4em" }} >
               <div style={{ width: "7px", float: "left", marginTop: "5px" }}>
                 <AiOutlineUsergroupAdd />
               </div>
             </IconContext.Provider>
-            <Nav.Link className="text-secondary" href="/Supplier">Supplier</Nav.Link>
+            <Nav.Link className="text-secondary" href="/buyer">Buyer</Nav.Link>
+
+            <IconContext.Provider value={{ color: "#6c757d", size: "1.4em" }} >
+              <div style={{ width: "7px", float: "left", marginTop: "5px" }}>
+                <GiMonoWheelRobot/>
+              </div>
+            </IconContext.Provider>
+            <Nav.Link className="text-secondary" href="/worker">Worker</Nav.Link>
+          {/* <Nav.Link className="text-secondary" href="#requirements">Requirements</Nav.Link> */}
+          </Nav>
+        </div>
+      </nav>
+    )
+
+    navbar = (
+      <nav style={{ backgroundColor: "#f3f5fc" }} className="navbar navbar-expand-lg">
+        <div className="container-fluid ml-8">
+          <Nav className="me-auto">
+            <IconContext.Provider value={{ color: "#6c757d", size: "1.4em" }} >
+              <div style={{ width: "7px", float: "left", marginTop: "5px" }}>
+                <AiFillHome />
+              </div>
+            </IconContext.Provider>
+            <Nav.Link className="text-secondary" href="/dashboard">Home</Nav.Link>
+
+            <IconContext.Provider value={{ color: "#6c757d", size: "1.4em" }} >
+              <div style={{ width: "7px", float: "left", marginTop: "5px" }}>
+                <AiOutlineUsergroupAdd />
+              </div>
+            </IconContext.Provider>
+            <Nav.Link className="text-secondary" href="/supplier">Supplier</Nav.Link>
           </Nav>
         </div>
       </nav>

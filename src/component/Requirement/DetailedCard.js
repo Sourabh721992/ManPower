@@ -112,16 +112,16 @@ const DetailedCard = (props) => {
                                                     <th>Timing</th>
                                                     <th>Working Days</th>
                                                     <th>Food Expense</th>
-                                                    <th>Accomodation & Transport</th>
+                                                    <th>Accommodation & Transport</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="text-center">
                                                 {
                                                     RequirementData.Trades.map((item, index) => {
                                                         return (
-                                                            <tr style={{ borderRadius: "5px" }} key={item.Code}>
+                                                            <tr style={{ borderRadius: "5px" }} key={RequirementData.Code + "_" + index}>
                                                                 <td>{
-                                                                    item.Code ? item.Code : "-"
+                                                                    RequirementData.Code ? RequirementData.Code : "-"
                                                                 }</td>
                                                                 <td>{item.TradeName}</td>
                                                                 <td>{

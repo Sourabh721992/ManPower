@@ -208,16 +208,14 @@ export default function Supplier(props) {
             <div className="DashboardBody">
                 <Row>
                     <Col sm={3}>
-                        <h3 className="RequireDetlHead"> Supplier Information </h3>
+                        <h5 className="RequireDetlHead text-muted ml-4"> Supplier Information </h5>
                     </Col>
+                    <br></br>
                     <Col sm={3}>
                         <SuccessAlert show={showAlert.show} message={showAlert.message} variant={showAlert.isDataSaved === true ? "success" : "danger"} />
                     </Col>
-                </Row>
-                <div className="clr"></div>
-                <h5 className="RequireDetlHead">{"Total Supplier Count : " + SupplierData.SupplierList.Count}</h5>
-
-                <div className="fl" style={{ marginLeft: "67%", cursor: "pointer" }} onClick={handleShow}>
+                    <Col sm={6} className="mt-2">
+                    <div className="fl" style={{ marginLeft: "74%", cursor: "pointer" }} onClick={handleShow}>
                     <div className="fl" style={{ width: "25px", marginTop: "8px" }}>
                         <IconContext.Provider value={{ color: "#3860C7", size: "1.4em" }} >
                             <div>
@@ -229,10 +227,18 @@ export default function Supplier(props) {
                         Add New Supplier
                     </button>
                 </div>
+                    </Col>
+                </Row>
+                <div className="clr"></div>
+                {/* <h5 className="RequireDetlHead">
+                    {"Total Supplier Count : " + SupplierData.SupplierList.Count}
+                </h5> */}
+
+                
                 <div className="clr"></div>
                 
                 {/* Tabs for Total Buyer and Pending Buyer */}
-                <Tabs activeKey={activeTab} onSelect={(t) => setActiveTab(t)}>
+                <Tabs className="mt-2" activeKey={activeTab} onSelect={(t) => setActiveTab(t)}>
                     <Tab eventKey="totalSupplier" title="Total Buyers">
                         <SupplierList data={SupplierData.SupplierList.Suppliers ? SupplierData.SupplierList.Suppliers : []} DeleteApi={DeleteSelectedSupplier} />
                     </Tab>

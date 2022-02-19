@@ -205,7 +205,7 @@ export default function AddRequirement() {
             {/* <Header session={session} /> */}
             <div className="DashboardBody" style={{ marginBottom: "35px" }}>
                 <div>
-                    <h2 className="RequireDetlHead"> Add New Requirement </h2>
+                    <h4 className="RequireDetlHead text-muted"> Add New Requirement </h4>
                 </div>
             </div>
             <div className="clr"></div>
@@ -406,7 +406,7 @@ export default function AddRequirement() {
                             </button>
                         </Col>
                         <Col sm={2}>
-                            <SuccessAlert show={showAlert.show} message={showAlert.isDataSaved === true ? "Saved Successfully !" : "Error Occured"} variant={showAlert.isDataSaved === true ? "success" : "danger"} />
+                            <SuccessAlert show={showAlert.show} message={showAlert.isDataSaved === true ? "Requirement shared with supplier !" : "Error occurred"} variant={showAlert.isDataSaved === true ? "success" : "danger"} />
                         </Col>
                     </Row>
                 </div>

@@ -99,7 +99,7 @@ export default function Login(props) {
                     Find premium quality solutions in software - with the best
                     minds in the industry
                   </h2>
-                  <p className="grey-text">Landing page *.png, *.html</p>
+                  {/* <p className="grey-text">Landing page *.png, *.html</p> */}
                 </div>
               </Col>
             </Row>
@@ -123,7 +123,7 @@ export default function Login(props) {
                 />
               </InputGroup>
               <Form.Control.Feedback type="invalid">
-                Pleae Enter Email
+                Please Enter Email
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-4" controlId="formBasicPassword">
@@ -141,7 +141,7 @@ export default function Login(props) {
                 />
               </InputGroup>
               <Form.Control.Feedback type="invalid">
-                Pleae Enter Password
+                Please Enter Password
               </Form.Control.Feedback>
             </Form.Group>
             {/*  <button onClick={Validate} className="btn button">
@@ -155,7 +155,7 @@ export default function Login(props) {
               </h6>
             </Col> */}
             <Col sm={12}>
-              <h5>
+              <h5 className ="mt-3">
                 New to manV?{" "}
                 <Link to="/Signup" className="red-text">
                   SIGN UP

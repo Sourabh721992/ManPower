@@ -9,10 +9,12 @@ import {getTrades} from "../../utils/CommonList";
 import Label from "../Controls/Label/Label";
 import Dropdown from "../Controls/Dropdown/Dropdown";
 import Text from "../Controls/Text/Text";
-import SuccessAlert from "../Controls/alert/successAlert";
+// import SuccessAlert from "../Controls/alert/successAlert";
 import { FcDeleteRow, FcAddRow } from "react-icons/fc";
 // import { IconContext } from "react-icons";
 import ReactSpinner from "../Controls/Loader/ReactSpinner";
+import { ErrorNotify, SuccessNotify } from "../Controls/Toast/Toast";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const currencies = require('currencies.json');
 
 export default function AddRequirement() {
@@ -21,10 +23,11 @@ export default function AddRequirement() {
     const [supplierSelectedValue, formStateValue] = useState(InitialStateValues);
     const [TradeStateValue, SetTradeStateValue] = useState([InitialTradeValue]);
     const [validated, setValidated] = useState(false);
-    const [showAlert, SetAlert] = useState({ show: false, isDataSaved: false });
+    // const [showAlert, SetAlert] = useState({ show: false, isDataSaved: false });
     const [Currency, SetCurrencies] = useState(currencies.currencies);
     const [SupplierData, SetSupplierList] = useState([]);
     const [Spinner, SetSpinner] = useState(false);
+    const history = useHistory()
 
 
     // // console.log(currencies.currencies);
@@ -135,7 +138,7 @@ export default function AddRequirement() {
         setValidated(false);
         formStateValue(InitialStateValues);
         SetTradeStateValue([InitialTradeValue])
-        SetAlert({ show: false, isDataSaved: false });
+        // SetAlert({ show: false, isDataSaved: false });
     }
 
     const Validate = async (e) => {
@@ -177,25 +180,31 @@ export default function AddRequirement() {
             RequirementInsert(map).then
                 ((resData) => {
                     // // console.log("Requirement Inserted Successfully in Dashboard", resData);
-                    SetAlert({ show: true, isDataSaved: true });
+                    // SetAlert({ show: true, isDataSaved: true });
 
                     SetSpinner(false);
-                    setTimeout(function () {
+
+                    SuccessNotify("New requirement added successfully!")
+                    history.push("/dashboard")
+                    ResetForm(true);
+                    /* setTimeout(function () {
                         // // console.log("Set Timeout Called");
                         SetAlert({ show: false, isDataSaved: false });
                         ResetForm(true);
 
-                    }, 4000);
+                    }, 4000); */
                 }).catch((error) => {
                     alert("catch error found requirement in Dashboard", JSON.stringify(error));
-                    SetAlert({ show: true, isDataSaved: false });
+                    // SetAlert({ show: true, isDataSaved: false });
                     SetSpinner(false);
 
-                    setTimeout(function () {
+                    ErrorNotify("Failed to add new requirement.")
+
+                    /* setTimeout(function () {
                         // // console.log("Set Timeout Called");
                         SetAlert({ show: false, isDataSaved: false });
 
-                    }, 2000);
+                    }, 2000); */
                 })
         }
     };
@@ -405,9 +414,9 @@ export default function AddRequirement() {
                                 clear
                             </button>
                         </Col>
-                        <Col sm={2}>
+                        {/* <Col sm={2}>
                             <SuccessAlert show={showAlert.show} message={showAlert.isDataSaved === true ? "Requirement shared with supplier !" : "Error occurred"} variant={showAlert.isDataSaved === true ? "success" : "danger"} />
-                        </Col>
+                        </Col> */}
                     </Row>
                 </div>
             </Form>

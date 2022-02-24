@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../Css/app.css";
 // import Header from "../Layout/Header";
-import { GetUserProfileApi, UpdateUserProfileApi } from "../../utils/ApiFunctions";
+import { GetUserProfileApi, LoginAPI, UpdateUserProfileApi } from "../../utils/ApiFunctions";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { Row, Col, Form, InputGroup } from "react-bootstrap";
@@ -47,7 +47,6 @@ export default function Profile(props) {
         GetUserProfileApi(item).then
             ((resData) => {
                 resData.Message = JSON.parse(resData.Message);
-                // // console.log("API called");
                 SetUserProfile(resData.Message);
                 setMobileNumber(resData.Message.UserInfo.CountryCode + " " + resData.Message.UserInfo.MobileNo);
                 SetAlert({ show: false, isDataSaved: false, message: "" });
@@ -82,8 +81,17 @@ export default function Profile(props) {
             UpdateUserProfileApi(UserProfileAPIData.UserInfo).then
                 ((resData) => {
                     // // console.log("Supplier Inserted Successfully", resData);
-                    SetAlert({ show: true, isDataSaved: true, message: resData.Message });
+                    // SetAlert({ show: true, isDataSaved: true, message: resData.Message });
 
+                    let item = JSON.parse(localStorage.getItem("LoginCredential"));
+                    LoginAPI(item, true).then
+                        ((loginRes) => {
+                            UserProfile.setSession(loginRes.Message, true);
+                            // Refresh the page
+                            window.location.href="/Profile"
+                        })
+
+                        
                     setTimeout(function () {
                         getUserProfilefromAPI();
                     }, 1000);

@@ -18,7 +18,7 @@ const Localization = {
 
 const logger = {
     log: (message, ...args) => {
-        // console.log(message, args);
+        console.log(message, args);
     },
     error: (message, ...args) => {
         console.error(message, args);

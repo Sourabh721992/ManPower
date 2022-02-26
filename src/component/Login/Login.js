@@ -29,8 +29,6 @@ export default function Login(props) {
 
     // const form = e.currentTarget;
 
-    // // console.log(form);
-
     e.preventDefault();
     //e.stopPropagation();
     let username = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(
@@ -51,7 +49,7 @@ export default function Login(props) {
         Password: password,
       };
 
-      TradesApi({}).then
+      TradesApi({}, true).then
         ((resData) => {
           setTrade(resData.Message, true);
         }).catch((error) => {

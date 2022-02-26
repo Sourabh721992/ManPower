@@ -77,7 +77,7 @@ export default function Dashboard(props) {
 
             let item = JSON.parse(localStorage.getItem("LoginCredential"));
 
-            LoginAPI(item).then
+            LoginAPI(item, true).then
                 ((resData) => {
                     console.warn("res1 : ", JSON.stringify(resData.Message));
                     UserProfile.setSession(resData.Message, true);

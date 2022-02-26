@@ -21,17 +21,17 @@ export default function AddSupplier() {
       item.AuthorisedById = session.UserId
       item.Email = email
 
-    // console.log(item);
-    AddSupplierApi(item).then
-        ((resData) => {
-            console.log("Supplier Added Successfully", resData);
-            // SetAlert({ show: true, isDataSaved: true, message: resData.Message });
-            history.push("/Supplier")
-            
-        }).catch((error) => {
-            //alert("catch error found Supplier in Dashboard", JSON.stringify(error));
-            // SetAlert({ show: true, isDataSaved: false, message: error.Message });
-        })
+      // console.log(item);
+      AddSupplierApi(item).then
+          ((resData) => {
+              console.log("Supplier Added Successfully", resData);
+              // SetAlert({ show: true, isDataSaved: true, message: resData.Message });
+              history.push("/Supplier")
+              
+          }).catch((error) => {
+              //alert("catch error found Supplier in Dashboard", JSON.stringify(error));
+              // SetAlert({ show: true, isDataSaved: false, message: error.Message });
+          })
     }
   
     return (

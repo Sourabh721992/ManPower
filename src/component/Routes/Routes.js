@@ -20,6 +20,7 @@ import AddNewBuyer from "../Buyer/AddNewBuyer";
 import Header from "../Layout/Header";
 import UserProfile from "../../utils/UserProfile";
 import AddSupplier from "../Supplier/AddSupplier";
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   var showHeader = true
@@ -29,6 +30,7 @@ function App() {
   return (
     <>
       <Router>
+      <Toaster />
         {
           showHeader ?
             <Header /> : ""

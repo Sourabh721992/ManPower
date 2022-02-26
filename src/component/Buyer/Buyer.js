@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Col, Tab, Tabs } from 'react-bootstrap';
+import { Tab, Tabs } from 'react-bootstrap';
 import { GetBuyerListApi, GetPendingUsersApi } from '../../utils/ApiFunctions';
 // import { logger } from '../../utils/CommonList';
 import UserProfile from '../../utils/UserProfile';
@@ -7,7 +7,7 @@ import UserProfile from '../../utils/UserProfile';
 import TotalBuyerTab from './TotalBuyerTab';
 import PendingBuyerTab from './PendingBuyerTab';
 import { logger } from '../../utils/CommonList';
-import SuccessAlert from '../Controls/alert/successAlert';
+// import SuccessAlert from '../Controls/alert/successAlert';
 // import { logger } from '../../utils/CommonList';
 
 export default class Buyer extends Component {

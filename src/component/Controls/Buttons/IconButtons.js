@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import { FiUsers, FiSearch, FiTrash2, FiEdit } from 'react-icons/fi'
-import { MdOutlineAddCircle } from 'react-icons/md'
+import { MdOutlineAddCircle, MdOutlineNavigateNext } from 'react-icons/md'
 
 function SearchIconBtn(props) {
   return (
@@ -28,6 +28,14 @@ function AddIconBtn(props) {
   )
 }
 
+function ProceedIconBtn(props) {
+  return (
+    <Button variant="link" className='bg-transparent text-dark rounded-0' 
+      style={{textDecoration:"none", borderBottomColor: "#3860C7"}} onClick={props.onClickEvent}>
+      <MdOutlineNavigateNext className="mr-1 text-primary" style={{ fontSize: "20px" }} /> {props.btnText}
+    </Button>
+  )
+}
 
 function DeleteIconBtn(props) {
   return (
@@ -46,5 +54,5 @@ function EditIconBtn(props){
 }
 
 export {
-  SearchIconBtn, UsersIconBtn, AddIconBtn, DeleteIconBtn, EditIconBtn
+  SearchIconBtn, UsersIconBtn, AddIconBtn, DeleteIconBtn, EditIconBtn, ProceedIconBtn
 }

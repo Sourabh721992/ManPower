@@ -1,18 +1,28 @@
-import React, { Fragment } from 'react'
-import { Card, Col, Row, Table } from 'react-bootstrap'
+import React, { Fragment, useState, useEffect } from 'react'
+import { Card, Col, Row, /*Spinner,*/ Table } from 'react-bootstrap'
 import { withRouter } from 'react-router-dom'
-import { Role } from '../../master-data'
+import { RequirementStatus, Role } from '../../master-data'
+import { RequirementUpdateStatusApi } from '../../utils/ApiFunctions'
 import { encodeBase64, getMoneyFormat, trimCutString } from '../../utils/CommonList'
 import UserProfile from '../../utils/UserProfile'
-import { AddIconBtn } from '../Controls/Buttons/IconButtons'
+import { AddIconBtn, ProceedIconBtn } from '../Controls/Buttons/IconButtons'
+
 
 const DetailedCard = (props) => {
 
     const session = UserProfile.getSession()
 
-    const RequirementData = props.details
+    const [RequirementData, setRequirementData] = useState(props.details)
 
     const mapStatusWithColor = { "First": "#96E2A1", "Second": "#FF9190", "Third": "#80A8FF", "Fourth": "#F7D166", "Fifth": "#C1A7FE" };
+
+    // const [isProceedLoading, setProceedLoading] = useState(true)
+
+    useEffect(() => {
+        if(JSON.stringify(RequirementData) !== JSON.stringify(props.details)){
+            setRequirementData(props.details)
+        }
+    }, [props.details])
 
     const handleMapWorkerBtn = () => {
         var Data = encodeBase64({ requirementId: RequirementData.Code });
@@ -20,6 +30,30 @@ const DetailedCard = (props) => {
         props.history.push({
             pathname: '/mapWorker/'+ Data,
         });
+    }
+
+    const handleProceedAheadBtn = () => {
+        var Body = {
+            requirementCode: RequirementData.Code,
+            status: RequirementStatus.PROCESSING
+        }
+
+        // setProceedLoading(true)
+        RequirementUpdateStatusApi(Body)
+        .then(()=>{
+            // setProceedLoading(false)
+            let requirementDataCopy = Object.assign({}, RequirementData);
+                requirementDataCopy.Status = RequirementStatus.PROCESSING
+            
+            setRequirementData(requirementDataCopy)
+            // UPDATE TO PARENT
+            if (props.updateParent) {
+                props.updateParent("update-requirement-details", requirementDataCopy)
+            }
+        })
+        .catch(() => {
+            // setProceedLoading(false)
+        })
     }
 
     function RequirementDetailsCard(text, bg_colour, label, title) {
@@ -69,6 +103,18 @@ const DetailedCard = (props) => {
                     }
                     
                 </Row>
+                {
+                    RequirementData.Status === RequirementStatus.PENDING ?
+                        <Row>
+                            <Col className='d-flex justify-content-end'>
+                                <ProceedIconBtn btnText={"Proceed Ahead"} onClickEvent={handleProceedAheadBtn} />
+                                {/* {
+                                    isProceedLoading ? <Spinner animation="border" size="sm" className='mb-0'/> : null
+                                } */}
+                            </Col>
+                        </Row>
+                        : null
+                }
 
                 <Card className='shadow-sm mt-4'>
                     <Card.Header className='d-flex align-items-center justify-content-between'>
@@ -77,26 +123,12 @@ const DetailedCard = (props) => {
                         </h5>
                         {/* Map Worker Button */}
                         {
-                            session.Role === Role.Supplier ?
-                        //     <button className="btn addbtn">
-                        //     Map Workers
-                        // </button>
+                            session.Role === Role.Supplier &&  RequirementData.Status === RequirementStatus.PENDING ?
                                 <AddIconBtn btnText={"Map Workers"} onClickEvent={handleMapWorkerBtn} />
                                 : null
                         }
                     </Card.Header>
                     <Card.Body>
-                        {/* <Row>
-                            <Col className='d-flex align-items-center justify-content-end'> */}
-                                {/* Map Worker Button */}
-                                {/* {
-                                    session.Role === Role.Supplier ?
-                                        <AddIconBtn btnText={"Map Workers"} onClickEvent={handleMapWorkerBtn} />
-                                        : null
-                                }
-                            </Col>
-                        </Row> */}
-                        {/* <div className='border-top mt-3'></div> */}
                         {/* multiple trade info */}
                         {
                             RequirementData.Trades && RequirementData.Trades.length > 0 ?

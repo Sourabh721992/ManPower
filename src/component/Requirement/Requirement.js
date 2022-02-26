@@ -47,15 +47,26 @@ const Requirement = (props) => {
     
     }, [Id])
 
+    const handleFromChild = (action, data) => {
+        if(data){
+            let requirementDataCopy = Object.assign({}, requirementData);
+            if(action === "update-requirement-details"){
+                requirementDataCopy = data
+            }
+            
+            setRequirementData(requirementDataCopy)
+        }
+    }
+
     if(requirementData){
         return (
             <div className='my-3 mx-5'>
                 <ReactSpinner loading={isLoading} />
                 {/* requirement details */}
-                <DetailedCard details={requirementData}/>
+                <DetailedCard details={requirementData} updateParent={handleFromChild}/>
     
                 {/* assigned worker table */}
-                <AssignedWorkerTable details={requirementData}/>
+                <AssignedWorkerTable details={requirementData} updateParent={handleFromChild}/>
             </div>
         )
     

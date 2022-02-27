@@ -1,11 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { Card, Col, Row, /*Spinner,*/ Table } from 'react-bootstrap'
+import { Button, Card, Col, Modal, Row, /*Spinner,*/ Table } from 'react-bootstrap'
 import { withRouter } from 'react-router-dom'
 import { RequirementStatus, Role } from '../../master-data'
 import { RequirementUpdateStatusApi } from '../../utils/ApiFunctions'
 import { encodeBase64, getMoneyFormat, trimCutString } from '../../utils/CommonList'
 import UserProfile from '../../utils/UserProfile'
-import { AddIconBtn, ProceedIconBtn } from '../Controls/Buttons/IconButtons'
+import { PrimaryButton } from '../Controls/Buttons/Buttons'
+import { AddIconBtn } from '../Controls/Buttons/IconButtons'
 
 
 const DetailedCard = (props) => {
@@ -13,6 +14,7 @@ const DetailedCard = (props) => {
     const session = UserProfile.getSession()
 
     const [RequirementData, setRequirementData] = useState(props.details)
+    const [ConfirmBox, setConfirmBox] = useState(false)
 
     const mapStatusWithColor = { "First": "#96E2A1", "Second": "#FF9190", "Third": "#80A8FF", "Fourth": "#F7D166", "Fifth": "#C1A7FE" };
 
@@ -32,6 +34,14 @@ const DetailedCard = (props) => {
         });
     }
 
+    const handleProceedAheadConfirm = () => {
+        setConfirmBox(true)
+    }
+
+    const closeConfirmModal = () => {
+        setConfirmBox(false)
+    }
+
     const handleProceedAheadBtn = () => {
         var Body = {
             requirementCode: RequirementData.Code,
@@ -46,6 +56,7 @@ const DetailedCard = (props) => {
                 requirementDataCopy.Status = RequirementStatus.PROCESSING
             
             setRequirementData(requirementDataCopy)
+            setConfirmBox(false)
             // UPDATE TO PARENT
             if (props.updateParent) {
                 props.updateParent("update-requirement-details", requirementDataCopy)
@@ -53,6 +64,7 @@ const DetailedCard = (props) => {
         })
         .catch(() => {
             // setProceedLoading(false)
+            setConfirmBox(false)
         })
     }
 
@@ -93,21 +105,21 @@ const DetailedCard = (props) => {
                             mapStatusWithColor["Third"],
                             "Status")}
                     </Col>
-                    {
-                        session.Role === Role.Buyer &&
+                    {/* {
+                        session.Role === Role.Buyer && */}
                         <Col sm={2}>
                             {RequirementDetailsCard(RequirementData.Rating,
                                 mapStatusWithColor["Fourth"],
                                 "Rating")}
                         </Col>
-                    }
+                    {/* } */}
                     
                 </Row>
                 {
-                    RequirementData.Status === RequirementStatus.PENDING ?
+                    RequirementData.Status === RequirementStatus.PENDING && RequirementData.Workers && RequirementData.Workers.length > 0  ?
                         <Row>
                             <Col className='d-flex justify-content-end'>
-                                <ProceedIconBtn btnText={"Proceed Ahead"} onClickEvent={handleProceedAheadBtn} />
+                                <PrimaryButton text={"Proceed Ahead"} onClickEvent={handleProceedAheadConfirm} />
                                 {/* {
                                     isProceedLoading ? <Spinner animation="border" size="sm" className='mb-0'/> : null
                                 } */}
@@ -180,6 +192,20 @@ const DetailedCard = (props) => {
 
                     </Card.Body>
                 </Card>
+
+                {/* proceed ahead confirm box */}
+                <Modal show={ConfirmBox} onHide={closeConfirmModal}>
+                    <Modal.Header>
+                        <Modal.Title as="h5">Confirm Proceed Ahead </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>Are you sure you want proceed ahead?<br/>Delete and map worker actions will be freezed.</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="light" onClick={closeConfirmModal}>No</Button>
+                        <Button variant="primary" onClick={handleProceedAheadBtn}>Yes</Button>
+                    </Modal.Footer>
+                </Modal>
             </Fragment>
         )
     }

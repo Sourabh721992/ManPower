@@ -1,15 +1,19 @@
 import React, {useState, useEffect} from 'react'
-import { ButtonGroup, Card, Dropdown, DropdownButton, Table } from 'react-bootstrap'
-import { FiEdit } from 'react-icons/fi'
-import { RequirementStatus, WorkerStatusDropdownList } from '../../master-data'
-import { RemoveWorkerApi, WorkerUpdateStatusApi } from '../../utils/ApiFunctions'
-import { filterDropdown, formatShortDate } from '../../utils/CommonList'
-import { DeleteIconBtn } from '../Controls/Buttons/IconButtons'
-import Select from 'react-select'
+import { Card, Dropdown, Table } from 'react-bootstrap'
+import { FiTrash2 } from 'react-icons/fi'
+import { RequirementStatus, Role } from '../../master-data'
+import { RemoveWorkerApi } from '../../utils/ApiFunctions'
+import { encodeBase64, formatShortDate } from '../../utils/CommonList'
 import Remark from '../Worker/Remark'
+import { BsFileText, BsThreeDotsVertical } from 'react-icons/bs'
+import { withRouter } from 'react-router-dom'
+import UserProfile from '../../utils/UserProfile'
+import UpdateWorkerStatus from './UpdateWorkerStatus'
 
 
 const AssignedWorkerTable = (props) => {
+
+    const session = UserProfile.getSession()
 
     const [details, setDetails] = useState(props.details)
     const [isLoading, setIsLoading] = useState(false)
@@ -23,7 +27,7 @@ const AssignedWorkerTable = (props) => {
 
     const handleDelete = (wCode) => {
         if(wCode && details){
-            setIsLoading(true)
+            // setIsLoading(true)
             const Body = {
                 requirementCode: details.Code,
                 workerCode: wCode
@@ -47,34 +51,29 @@ const AssignedWorkerTable = (props) => {
         }
     }
 
-    const handleStatusChangeDropDown = (e, wCode) => {
-        if (e.value && wCode) {
-            setIsLoading(true)
-            const Body = {
-                status: e.value,
-                workerCode: wCode
-            }
-            WorkerUpdateStatusApi(Body)
-                .then(() => {
-                    let requirementDataCopy = Object.assign({}, details);
+    const handleUpdateProgress = (wCode) => {
+        if(wCode && details){
 
-                    let worker = requirementDataCopy.Workers.find(w => w.Code === wCode)
-                    worker.Status = e.value
-                    let index = requirementDataCopy.Workers.indexOf(worker)
-                    requirementDataCopy.Workers[index] = worker
+            var Data = encodeBase64({ requirementId: details.Code, workerCode: wCode });
+            props.history.push("/workerProgress/" + Data)
 
-                    setDetails(requirementDataCopy)
-
-                    if (props.updateParent) {
-                        props.updateParent("update-requirement-details", requirementDataCopy)
-                    }
-                    setIsLoading(false)
-                }).catch(() => {
-                    setIsLoading(false)
-                })
-            
         }
-    };
+    }
+
+    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+
+        <span
+            ref={ref}
+            onClick={(e) => {
+                e.preventDefault();
+                onClick(e);
+            }}
+            className="text-primary"
+            style={{cursor:"pointer"}}
+        >
+            {children}
+        </span>
+    ));
 
 
     if (details.Workers && details.Workers.length > 0) {
@@ -86,7 +85,7 @@ const AssignedWorkerTable = (props) => {
                     </h5>
                 </Card.Header>
                 <Card.Body>
-                    <Table responsive striped borderless>
+                    <Table responsive striped borderless hover>
                         <thead className="text-center">
                             <tr>
                                 <th>Code</th>
@@ -101,49 +100,40 @@ const AssignedWorkerTable = (props) => {
                         <tbody className="text-center">
                             {details.Workers.map((item, index) => {
                                 return (
-                                    <tr style={{ borderRadius: "5px" }} key={item.Code}>
+                                    <tr style={session.Role === Role.Supplier ? { borderRadius: "5px", cursor: "pointer" } : {borderRadius: "5px"}} key={item.Code} onClick={session.Role === Role.Supplier ? () => handleUpdateProgress(item.Code): null}>
                                         <td>{item.Code}</td>
                                         <td>{item.Name}</td>
                                         <td>{
                                             item.Reference ? item.Reference : "-"
                                         }</td>
-                                        <td >{
-                                            // UPDATE WORKER STATUS
-                                            <Select
-                                                name="statusValue"
-                                                placeholder="Assign Status"
-                                                options={WorkerStatusDropdownList}
-                                                onChange={(e) => handleStatusChangeDropDown(e,item.Code)}
-                                                value={filterDropdown(WorkerStatusDropdownList, item.Status)}
-                                                // isLoading={isLoading}
-                                                // components={{ LoadingIndicator }}
-                                                // isDisabled={statusValue === ApplicantStatusData.JOINED}
-                                            ></Select>
-                                        }</td>
+                                        <td ><UpdateWorkerStatus details={details} workerDetails={item}/> </td>
                                         <td>{item.ContactNo}</td>
                                         <td>{formatShortDate(item.AddedOn)}</td>
                                         <td>
-                                            {/* dropdown actions */}
-                                            <DropdownButton
-                                                as={ButtonGroup}
-                                                drop="left"
-                                                // key={variant}
-                                                id={`dropdown-${item.Code}`}
-                                                variant="link"
-                                                title={""}
-                                            >
-                                                {/* DROPDOWN ITEM - REMARKS */}
-                                                <Remark workerCode={item.Code} SellerRemarks={item.SellerRemarks} BuyerRemarks={item.BuyerRemarks} />
+                                            <Dropdown drop="left">
+                                                <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+                                                    <BsThreeDotsVertical />
+                                                </Dropdown.Toggle>
 
-                                                <Dropdown.Item eventKey="edit_worker"><FiEdit/> Edit</Dropdown.Item>
-                                            </DropdownButton>
-                                            {/* delete assigned worker */}
-                                            {
-                                                details.Status === RequirementStatus.PENDING ?
-                                                    <DeleteIconBtn disabled={isLoading} onClickEvent={() => handleDelete(item.Code)} />
-                                                : null
-                                            }
-                                            
+                                                <Dropdown.Menu>
+                                                    {/* DROPDOWN ITEM - REMARKS */}
+                                                    <Remark requirementCode={details.Code} workerCode={item.Code} SellerRemarks={item.SellerRemarks} BuyerRemarks={item.BuyerRemarks} />
+
+                                                    {/* delete assigned worker */}
+                                                    {
+                                                        details.Status === RequirementStatus.PENDING ?
+                                                            <Dropdown.Item eventKey="update_worker_progress" onClick={() => handleDelete(item.Code)}>
+                                                                <FiTrash2 className='text-danger' /> Delete
+                                                            </Dropdown.Item>
+                                                            :
+                                                            // {/* Update Worker Progress only for supplier */}
+                                                            session.Role === Role.Supplier &&
+                                                            <Dropdown.Item eventKey="update_worker_progress" onClick={() => handleUpdateProgress(item.Code)}>
+                                                                <BsFileText className='text-primary' /> Edit Progress
+                                                            </Dropdown.Item>
+                                                    }
+                                                </Dropdown.Menu>
+                                            </Dropdown>
                                         </td>
                                     </tr>
                                 )
@@ -169,4 +159,4 @@ const AssignedWorkerTable = (props) => {
 
 }
 
-export default (AssignedWorkerTable)
+export default withRouter(AssignedWorkerTable)

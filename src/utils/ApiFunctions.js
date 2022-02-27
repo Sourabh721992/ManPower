@@ -1,8 +1,8 @@
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 import { DismissThisToast, ErrorNotify, LoadingNotify, SuccessNotify } from "../component/Controls/Toast/Toast";
 import Client from "./ApiClient";
 import { logger } from "./CommonList";
-import UserProfile from "./UserProfile";
+// import UserProfile from "./UserProfile";
 
 
 const SignupAPI = async (payload) => {
@@ -411,42 +411,99 @@ const RemoveBuyer = (data) => {
 }
 
 const RequirementUpdateStatusApi = (payload) => {
+    const loadingToast = LoadingNotify("Updating requirement status...")
+
     return new Promise((resolve, reject) => {
         Client.post("Requirement/UpdateStatus", payload) 
             .then((resData) => {
                 logger.log("Requirement/UpdateStatus", resData);
+                DismissThisToast(loadingToast)
+                SuccessNotify("Requirement Status Updated!")
                 resolve(resData);
             })
             .catch((error) => {
                 logger.log(error)
+                DismissThisToast(loadingToast)
+                ErrorNotify(error.Message)
                 reject(error);
             });
     })
 }
 
 const WorkerUpdateStatusApi = (payload) => {
+    const loadingToast = LoadingNotify("Updating worker status...")
+
     return new Promise((resolve, reject) => {
         Client.post("Worker/UpdateStatus", payload) 
             .then((resData) => {
                 logger.log("Worker/UpdateStatus", resData);
+                DismissThisToast(loadingToast)
+                SuccessNotify("Worker Status Updated!")
                 resolve(resData);
             })
             .catch((error) => {
                 logger.log(error)
+                DismissThisToast(loadingToast)
+                ErrorNotify(error.Message)
                 reject(error);
             });
     })
 }
 
 const UpdateBuyerSupplierRemarks = (payload) => {
+    const loadingToast = LoadingNotify("Adding remarks...")
+
     return new Promise((resolve, reject) => {
         Client.post("Worker/UpdateRemarks", payload) 
             .then((resData) => {
                 logger.log("Worker/UpdateRemarks", resData);
+                DismissThisToast(loadingToast)
+                SuccessNotify("Remark Added!")
                 resolve(resData);
             })
             .catch((error) => {
                 logger.log(error)
+                DismissThisToast(loadingToast)
+                ErrorNotify(error.Message)
+                reject(error);
+            });
+    })
+}
+
+const FetchWorkerProgressApi = (body) => {
+    const loadingToast = LoadingNotify("Getting worker progress...")
+
+    return new Promise((resolve, reject) => {
+        Client.post("Worker/FetchWorkerProgress", body) 
+            .then((resData) => {
+                logger.log("Worker/FetchWorkerProgress", resData);
+                DismissThisToast(loadingToast)
+                resolve(resData);
+            })
+            .catch((error) => {
+                logger.log(error)
+                DismissThisToast(loadingToast)
+                ErrorNotify(error.Message)
+                reject(error);
+            });
+    })
+}
+
+const UpdateWorkerProgressApi = (body) => {
+    const loadingToast = LoadingNotify("Updating worker progress...")
+
+    return new Promise((resolve, reject) => {
+        Client.post("Worker/UpdateWorkerProgress", body) 
+            .then((resData) => {
+                logger.log("Worker/UpdateWorkerProgress", resData);
+                DismissThisToast(loadingToast)
+                SuccessNotify("Worker Progress Updated!")
+                resolve(resData);
+            })
+            .catch((error) => {
+                logger.log(error)
+                DismissThisToast(loadingToast)
+                ErrorNotify(error.Message)
                 reject(error);
             });
     })
@@ -455,5 +512,6 @@ const UpdateBuyerSupplierRemarks = (payload) => {
 export {
     SignupAPI, LoginAPI, TradesApi, RequirementInsert, AddSupplierApi, GetSupplierApi, GetUserProfileApi, UpdateUserProfileApi, GetPendingUsersApi,
     DeletePendingUsersApi, DeleteSupplierApi, AddWorkerApi, GetWorkerApi, GetWorkerListApi, GetRequirementApi, AddMapWorkersApi,
-    GetBuyerListApi, RemoveWorkerApi, AddBuyerUser, RemoveBuyer, RequirementUpdateStatusApi, WorkerUpdateStatusApi, UpdateBuyerSupplierRemarks
+    GetBuyerListApi, RemoveWorkerApi, AddBuyerUser, RemoveBuyer, RequirementUpdateStatusApi, WorkerUpdateStatusApi, UpdateBuyerSupplierRemarks,
+    FetchWorkerProgressApi, UpdateWorkerProgressApi
 }

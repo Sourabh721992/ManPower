@@ -35,6 +35,14 @@ function LightButton(props) {
   );
 }
 
+function LinkButton(props) {
+  return (
+    <Button className={props.className} disabled={props.disabled} variant="link" onClick={props.onClickEvent}>
+      {props.text} 
+    </Button>
+  );
+}
+
 function OutlinePrimaryButton(props) {
   return (
     <Button className={props.className} disabled={props.disabled} variant="outline-primary" onClick={props.onClickEvent}>
@@ -44,5 +52,5 @@ function OutlinePrimaryButton(props) {
 }
 
 export {
-  FilterButton, PrimaryButton, LightButton, OutlinePrimaryButton, MpButton
+  FilterButton, PrimaryButton, LightButton, OutlinePrimaryButton, MpButton, LinkButton
 }

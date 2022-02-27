@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
+import { BsThreeDotsVertical } from 'react-icons/bs'
 import { FiUsers, FiSearch, FiTrash2, FiEdit } from 'react-icons/fi'
 import { MdOutlineAddCircle, MdOutlineNavigateNext } from 'react-icons/md'
 
@@ -53,6 +54,14 @@ function EditIconBtn(props){
   )
 }
 
+function ThreeDotButton(props){
+  return(
+    <Button variant="link" ref={props.ref} onClick={props.onClickEvent}>
+      <BsThreeDotsVertical style={{ fontSize: "18px" }} />
+    </Button>
+  )
+}
+
 export {
-  SearchIconBtn, UsersIconBtn, AddIconBtn, DeleteIconBtn, EditIconBtn, ProceedIconBtn
+  SearchIconBtn, UsersIconBtn, AddIconBtn, DeleteIconBtn, EditIconBtn, ProceedIconBtn, ThreeDotButton
 }

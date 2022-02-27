@@ -2,7 +2,7 @@ import React from "react";
 import "../../Css/app.css";
 import "react-phone-number-input/style.css";
 import Table from 'react-bootstrap/Table'
-import { encodeBase64, formatShortDate, getMoneyFormat, /*logger*/ } from "../../utils/CommonList";
+import { encodeBase64, formatShortDate, getMoneyFormat, setItemToLocalStorage, /*logger*/ } from "../../utils/CommonList";
 // import {SearchIconBtn, UsersIconBtn} from "../Controls/Buttons/IconButtons";
 import { withRouter } from "react-router-dom";
 
@@ -19,7 +19,10 @@ function RequirementTable(props) {
 
     function handleOnClick(rCode, bName, sName){
         if(rCode){
-            var Data = encodeBase64({ requirementId: rCode, buyerName: bName, supplierName: sName  });
+            //set to local storage
+            setItemToLocalStorage(rCode, {buyerName: bName, supplierName: sName})
+
+            var Data = encodeBase64({ requirementId: rCode  });
             props.history.push("/requirement/" + Data)
         }
     }

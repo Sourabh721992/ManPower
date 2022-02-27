@@ -1,26 +1,27 @@
 import React, {useState, useEffect} from 'react'
 import { withRouter } from 'react-router-dom'
 import { GetRequirementApi } from '../../utils/ApiFunctions'
-import { decodeBase64, logger } from '../../utils/CommonList'
+import { decodeBase64, logger, getItemFromLocalStorage } from '../../utils/CommonList'
 import ReactSpinner from '../Controls/Loader/ReactSpinner'
 import AssignedWorkerTable from './AssignedWorkerTable'
 import DetailedCard from './DetailedCard'
 
 const Requirement = (props) => {
 
-    let data, Id, BuyerName = '', Supplier = ''
+    let data, Id
+    // BuyerName = '', Supplier = ''
     if (props.match && props.match.params && props.match.params.data) {
         data = JSON.parse(decodeBase64(props.match.params.data))
         if (data && data.requirementId) {
             if(data.requirementId){
                 Id = data.requirementId
             }
-            if(data.buyerName){
-                BuyerName = data.buyerName
-            }
-            if(data.supplierName){
-                Supplier = data.supplierName
-            }
+            // if(data.buyerName){
+            //     BuyerName = data.buyerName
+            // }
+            // if(data.supplierName){
+            //     Supplier = data.supplierName
+            // }
         }
         
     }
@@ -36,6 +37,14 @@ const Requirement = (props) => {
             GetRequirementApi({requirementCode: Id}).then((response) => {
                 if (response.Code === 1 && response.Message) {
                     let data = JSON.parse(response.Message)
+
+                    var rData = getItemFromLocalStorage(Id)
+                    let BuyerName, Supplier
+                    if(rData !== null){
+                        BuyerName = rData.buyerName ? rData.buyerName : ""
+                        Supplier = rData.supplierName ? rData.supplierName : ""
+                    }
+
                     setRequirementData({...data, BuyerName, Supplier})
                     logger.log(JSON.parse(response.Message))
                 }

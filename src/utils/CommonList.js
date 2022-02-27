@@ -118,8 +118,29 @@ function trimCutString(string, length){
     return string
 }
 
+function setItemToLocalStorage(key, value){
+    if (localStorage.getItem(key) !== null) {
+        removeItemFromLocalStorage(key)
+    }
+    value = encodeBase64(value)
+    localStorage.setItem(key, value)
+}
+
+function getItemFromLocalStorage(key){
+    var data
+    var value = localStorage.getItem(key)
+    data = JSON.parse(decodeBase64(value)) 
+
+    return data
+}
+
+function removeItemFromLocalStorage(key){
+    localStorage.removeItem(key)
+}
+
 export {
-    setTrade, getTrades, getMoneyFormat, logger, formatShortDate, filterDropdown, decodeBase64, encodeBase64, trimCutString
+    setTrade, getTrades, getMoneyFormat, logger, formatShortDate, filterDropdown, decodeBase64, encodeBase64, trimCutString,
+    setItemToLocalStorage, getItemFromLocalStorage, removeItemFromLocalStorage
 }
 
 

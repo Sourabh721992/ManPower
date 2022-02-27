@@ -4,6 +4,7 @@ import { BsChatSquareText } from 'react-icons/bs'
 import { MdSend } from 'react-icons/md'
 import { Role } from '../../master-data'
 import { UpdateBuyerSupplierRemarks } from '../../utils/ApiFunctions'
+import { getItemFromLocalStorage } from '../../utils/CommonList'
 import UserProfile from '../../utils/UserProfile'
 
 const Remark = (props) => {
@@ -11,6 +12,7 @@ const Remark = (props) => {
     const session = UserProfile.getSession()
 
     const workerCode = props.workerCode
+    const requirementCode = props.requirementCode
     const [showModal, setShowModal] = useState(false)
     const [buyerRemark, setBuyerRemark] = useState(props.BuyerRemarks)
     const [supplierRemark, setSupplierRemark] = useState(props.SellerRemarks)
@@ -58,12 +60,24 @@ const Remark = (props) => {
         }
     }
 
-    function RemarkPill(bg_colour, justify_content, content, user_name) {
+    function RemarkPill(bg_colour, justify_content, content, name) {
+        let user_name = name
+        if(!name){
+            var rData = getItemFromLocalStorage(requirementCode)
+            if (rData) {
+                if (session.Role === Role.Buyer) {
+                    user_name = rData.supplierName ? rData.supplierName : ""
+                }
+                else {
+                    user_name = rData.buyerName ? rData.buyerName : ""
+                }
+            }
+        }
 
         return (
             <li key={"buyer_remark"} className={'list-group-item border-0 px-0 py-1 d-flex ' + justify_content}>
 
-                <div className={"rounded-top w-75 px-2 py-1 text-white " + bg_colour} style={{ borderBottomLeftRadius: '.25rem' }}>
+                <div className={"rounded-top w-100 px-2 py-1 text-white " + bg_colour} style={{ borderBottomLeftRadius: '.25rem' }}>
                     <div className={"w-100 d-flex justify-content-start text-white"}>
                         <small className="f-10">{user_name}</small>
                     </div>
@@ -75,10 +89,10 @@ const Remark = (props) => {
 
     return (
         <Fragment>
-            <Dropdown.Item eventKey="chat" onClick={handleRemarkModal}><BsChatSquareText /> Chat</Dropdown.Item>
+            <Dropdown.Item eventKey="chat" onClick={handleRemarkModal}><BsChatSquareText className='text-primary' /> Remarks</Dropdown.Item>
             <Modal scrollable show={showModal} onHide={closeRemarkModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title as="h5">Remarks</Modal.Title>
+                <Modal.Header>
+                    <Modal.Title as="h5">Recent Remarks</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Card.Body style={{ height: "250px", display: "contents" }}>
@@ -92,13 +106,13 @@ const Remark = (props) => {
                                     <Fragment>
                                         {
                                             supplierRemark ?
-                                                RemarkPill("bg-secondary", "justify-content-start", supplierRemark, "Supplier Name")
+                                                RemarkPill("bg-secondary", "justify-content-start", supplierRemark)
                                                 : null
                                         }
 
                                         {
                                             buyerRemark ?
-                                                RemarkPill("bg-primary", "justify-content-end", buyerRemark, "You")
+                                                RemarkPill("bg-primary", "justify-content-start", buyerRemark, "You")
                                                 : null
                                         }
 
@@ -108,13 +122,13 @@ const Remark = (props) => {
                                         <Fragment>
                                             {
                                                 buyerRemark ?
-                                                    RemarkPill("bg-secondary", "justify-content-start", buyerRemark, "Buyer Name")
+                                                    RemarkPill("bg-secondary", "justify-content-start", buyerRemark)
                                                     : null
                                             }
 
                                             {
                                                 supplierRemark ?
-                                                    RemarkPill("bg-primary", "justify-content-end", supplierRemark, "You")
+                                                    RemarkPill("bg-primary", "justify-content-starts", supplierRemark, "You")
                                                     : null
                                             }
 

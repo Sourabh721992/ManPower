@@ -344,6 +344,7 @@ const AddMapWorkersApi = (payload) => {
         Client.post("Requirement/AddWorkers", payload) 
             .then((resData) => {
                 logger.log("Requirement/AddWorkers", resData);
+                SuccessNotify("Added successfully!")
                 DismissThisToast(loadingToast)
                 resolve(resData);
             })

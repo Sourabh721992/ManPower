@@ -12,7 +12,7 @@ const Notify = (text) => toast(text, {
     position: 'top-right',
 });
 
-const SuccessNotify = (text) => toast.success(notifyMsgBody("Success", text),{
+const SuccessNotify = (text) => toast.success(text,{
     duration: 4000,
     position: 'top-right',
 })

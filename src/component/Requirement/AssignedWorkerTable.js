@@ -100,7 +100,9 @@ const AssignedWorkerTable = (props) => {
                         <tbody className="text-center">
                             {details.Workers.map((item, index) => {
                                 return (
-                                    <tr style={session.Role === Role.Supplier ? { borderRadius: "5px", cursor: "pointer" } : {borderRadius: "5px"}} key={item.Code} onClick={session.Role === Role.Supplier ? () => handleUpdateProgress(item.Code): null}>
+                                    <tr style={{borderRadius: "5px"}} key={item.Code} 
+                                    // onClick={session.Role === Role.Supplier ? () => handleUpdateProgress(item.Code): null}
+                                    >
                                         <td>{item.Code}</td>
                                         <td>{item.Name}</td>
                                         <td>{

@@ -56,11 +56,11 @@ const UpdateWorkerStatus = (props) => {
             {/* update status modal */}
             <Modal show={updateStatusModal} onHide={closeStatusModal}>
                 <Modal.Header>
-                    <Modal.Title as="h5">{workerDetails.Name} - Update Worker Status </Modal.Title>
+                    <Modal.Title as="h5" className='text-capitalize'>{workerDetails.Name} - Update Worker Status </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Row>
-                        <Col>
+                        <Col sm={8}>
                             <label><b>Worker Status</b></label>
                             <Select
                                 name="statusValue"

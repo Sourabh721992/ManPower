@@ -85,7 +85,7 @@ const RequirementInsert = (payload) => {
             .then((resData) => {
                 logger.log("Requirement/Insert", resData);
                 DismissThisToast(loadingToast)
-                SuccessNotify("Requirement inserted successfully!")
+                SuccessNotify(resData.Message)
                 resolve(resData);
             })
             .catch((error) => {

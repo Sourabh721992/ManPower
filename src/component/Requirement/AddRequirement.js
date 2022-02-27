@@ -13,7 +13,6 @@ import Text from "../Controls/Text/Text";
 import { FcDeleteRow, FcAddRow } from "react-icons/fc";
 // import { IconContext } from "react-icons";
 import ReactSpinner from "../Controls/Loader/ReactSpinner";
-import { ErrorNotify, SuccessNotify } from "../Controls/Toast/Toast";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const currencies = require('currencies.json');
 
@@ -196,8 +195,6 @@ export default function AddRequirement() {
                     alert("catch error found requirement in Dashboard", JSON.stringify(error));
                     // SetAlert({ show: true, isDataSaved: false });
                     SetSpinner(false);
-
-                    ErrorNotify("Failed to add new requirement.")
 
                     /* setTimeout(function () {
                         // // console.log("Set Timeout Called");

@@ -17,7 +17,7 @@ const SuccessNotify = (text) => toast.success(notifyMsgBody("Success", text),{
     position: 'top-right',
 })
 
-const ErrorNotify = (text) => toast.error(notifyMsgBody("Success", text),{
+const ErrorNotify = (text) => toast.error(notifyMsgBody("Error", text),{
     duration: 4000,
     position: 'top-right',
 })

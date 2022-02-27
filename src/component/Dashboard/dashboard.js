@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "../../Css/app.css";
 import { RequirementInsert, LoginAPI } from "../../utils/ApiFunctions";
@@ -26,6 +26,7 @@ export default function Dashboard(props) {
     const [validated, setValidated] = useState(false);
     const [showAlert, SetAlert] = useState({ show: false, isDataSaved: false });
     const history = useHistory();
+    
 
     const handleClose = () => {
         setShowRequirement(false); ResetForm();
@@ -34,6 +35,10 @@ export default function Dashboard(props) {
     var session = UserProfile.getSession();
     let Trades = getTrades();
     // console.log("Dashboard ", session);
+
+    useEffect(() => {
+        updateSession()
+    }, [])
 
     const Rating = [{ id: 1, Name: 1 }, { id: 2, Name: 2 }, { id: 3, Name: 3 }, { id: 4, Name: 4 }, { id: 5, Name: 5 }]
 
@@ -84,7 +89,7 @@ export default function Dashboard(props) {
                     SetInitialState();
 
                 }).catch((error) => {
-                    alert("catch error found 1", error);
+                    // alert("catch error found 1", error);
                 })
         }
         else {
@@ -153,6 +158,20 @@ export default function Dashboard(props) {
                 })
         }
     };
+
+    const updateSession = () => {
+        let item = JSON.parse(localStorage.getItem("LoginCredential"));
+
+            LoginAPI(item, true).then
+                ((resData) => {
+                    UserProfile.setSession(resData.Message, true);
+                    session = UserProfile.getSession()
+                    SetInitialState();
+
+                }).catch((error) => {
+                    // alert("catch error found 1", error);
+                })
+    }
 
     return (
         <>

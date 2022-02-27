@@ -146,7 +146,7 @@ export default function Login(props) {
               Log-In
             </button> */}
             <button type="submit" className="btn button">Login</button>
-            <SuccessAlert show={showAlert.show} message={showAlert.isDataSaved === true ? "Login Successfully !" : showAlert.message} variant={showAlert.isDataSaved === true ? "success" : "danger"} />
+            {/* <SuccessAlert show={showAlert.show} message={showAlert.isDataSaved === true ? "Login Successfully !" : showAlert.message} variant={showAlert.isDataSaved === true ? "success" : "danger"} /> */}
             {/* <Col sm={12} className="mb-4 mt-4">
               <h6>
                 Forgot Password ? <Link to="">Click here</Link>

@@ -78,7 +78,7 @@ const TradesApi = (payload, disableToast) => {
 }
 
 const RequirementInsert = (payload) => {
-    const loadingToast = LoadingNotify("Please wait while we are inserting your requirement...")
+    const loadingToast = LoadingNotify("Inserting requirement...")
 
     return new Promise((resolve, reject) => {
         Client.post("Requirement/Insert", payload) //Login API Call

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { BsFillPlusCircleFill } from 'react-icons/bs';
 import { IconContext } from 'react-icons/lib';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { AddIconBtn } from '../Controls/Buttons/IconButtons'
+// import { AddIconBtn } from '../Controls/Buttons/IconButtons'
 import BuyerList from './BuyerList';
 
 export default function TotalBuyerTab(props) {

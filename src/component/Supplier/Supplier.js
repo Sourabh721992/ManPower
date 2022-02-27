@@ -8,7 +8,7 @@ import UserProfile from "../../utils/UserProfile";
 import Modal from 'react-bootstrap/Modal'
 import Label from "../Controls/Label/Label";
 import Text from "../Controls/Text/Text";
-import SuccessAlert from "../Controls/alert/successAlert";
+// import SuccessAlert from "../Controls/alert/successAlert";
 import SupplierList from "./SupplierList";
 import Table from 'react-bootstrap/Table'
 import { BsFillPlusCircleFill } from "react-icons/bs";
@@ -19,7 +19,7 @@ import PendingList from "../Buyer/PendingList";
 export default function Supplier(props) {
     const [showRequirementPopup, setShowRequirement] = useState(false);
     const [SupplierEmail, SetSupplierEmail] = useState("");
-    const [showAlert, SetAlert] = useState({ show: false, isDataSaved: false, message: "" });
+    // const [showAlert, SetAlert] = useState({ show: false, isDataSaved: false, message: "" });
     const [validated, setValidated] = useState(false);
     const [SupplierData, SetSupplierList] = useState({ SupplierList: {}, ShouldUpdate: true });
     const [PendingUserData, SetPendingUserList] = useState([]);
@@ -42,7 +42,7 @@ export default function Supplier(props) {
 
     const ResetForm = () => {
         SetSupplierEmail("");
-        SetAlert({ show: false, isDataSaved: false, message: "" });
+        // SetAlert({ show: false, isDataSaved: false, message: "" });
     }
 
     // component Did Mount
@@ -111,21 +111,21 @@ export default function Supplier(props) {
             ((resData) => {
                 //resData.Message = JSON.parse(resData.Message);
 
-                SetAlert({ show: true, isDataSaved: true, message: resData.Message });
+                // SetAlert({ show: true, isDataSaved: true, message: resData.Message });
 
-                setTimeout(function () {
+                /* setTimeout(function () {
                     SetAlert({ show: false, isDataSaved: false, message: "" });
-                }, 3000);
+                }, 3000); */
 
                 getPendingUser();
 
             }).catch((error) => {
                 // console.log("catch Error found in GetSupplierApi", JSON.stringify(error));
-                SetAlert({ show: true, isDataSaved: true, message: error.Message });
+                // SetAlert({ show: true, isDataSaved: true, message: error.Message });
 
-                setTimeout(function () {
+                /* setTimeout(function () {
                     SetAlert({ show: false, isDataSaved: false, message: error.Message });
-                }, 3000);
+                }, 3000); */
 
             })
     }
@@ -142,21 +142,21 @@ export default function Supplier(props) {
             ((resData) => {
                 //resData.Message = JSON.parse(resData.Message);
 
-                SetAlert({ show: true, isDataSaved: true, message: resData.Message });
+                // SetAlert({ show: true, isDataSaved: true, message: resData.Message });
 
-                setTimeout(function () {
-                    SetAlert({ show: false, isDataSaved: false, message: "" });
-                    getSupplier();
-                }, 3000);
+                // setTimeout(function () {
+                //     SetAlert({ show: false, isDataSaved: false, message: "" });
+                //     getSupplier();
+                // }, 3000);
 
 
             }).catch((error) => {
                 // console.log("catch Error found in GetSupplierApi", JSON.stringify(error));
-                SetAlert({ show: true, isDataSaved: true, message: error.Message });
+                // SetAlert({ show: true, isDataSaved: true, message: error.Message });
 
-                setTimeout(function () {
+                /* setTimeout(function () {
                     SetAlert({ show: false, isDataSaved: false, message: error.Message });
-                }, 3000);
+                }, 3000); */
 
             })
     }
@@ -185,19 +185,20 @@ export default function Supplier(props) {
             AddSupplierApi(item).then
                 ((resData) => {
                     // console.log("Supplier Inserted Successfully", resData);
-                    SetAlert({ show: true, isDataSaved: true, message: resData.Message });
+                    // SetAlert({ show: true, isDataSaved: true, message: resData.Message });
 
                     getPendingUser();
-                    setTimeout(function () {
+                    ResetForm();
+                    /* setTimeout(function () {
                         ResetForm();
-                    }, 5000);
+                    }, 5000); */
                 }).catch((error) => {
                     //alert("catch error found Supplier in Dashboard", JSON.stringify(error));
-                    SetAlert({ show: true, isDataSaved: false, message: error.Message });
-
-                    setTimeout(function () {
+                    // SetAlert({ show: true, isDataSaved: false, message: error.Message });
+                    ResetForm();
+                    /* setTimeout(function () {
                         ResetForm();
-                    }, 5000);
+                    }, 5000); */
                 })
         }
     };
@@ -211,9 +212,9 @@ export default function Supplier(props) {
                         <h5 className="RequireDetlHead text-muted ml-4"> Supplier Information </h5>
                     </Col>
                     <br></br>
-                    <Col sm={3}>
+                    {/* <Col sm={3}>
                         <SuccessAlert show={showAlert.show} message={showAlert.message} variant={showAlert.isDataSaved === true ? "success" : "danger"} />
-                    </Col>
+                    </Col> */}
                     <Col sm={6} className="mt-2">
                     <div className="fl" style={{ marginLeft: "74%", cursor: "pointer" }} onClick={handleShow}>
                     <div className="fl" style={{ width: "25px", marginTop: "8px" }}>
@@ -274,9 +275,9 @@ export default function Supplier(props) {
                                             Close
                                         </button>
                                     </Col>
-                                    <Col sm={4}>
+                                    {/* <Col sm={4}>
                                         <SuccessAlert show={showAlert.show} message={showAlert.message} variant={showAlert.isDataSaved === true ? "success" : "danger"} />
-                                    </Col>
+                                    </Col> */}
                                 </Row>
                             </Col>
                             <Col sm={6} className="RequirementTable" style={{ marginTop: "-10px" }}>

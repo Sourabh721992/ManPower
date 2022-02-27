@@ -1,16 +1,23 @@
 import toast from 'react-hot-toast'
 
+var notifyMsgBody = (title, subTitle) => {
+    return (<>
+        <label style={{fontWeight:"bold", marginRight:"4px"}}>{title}</label>
+        <span>{subTitle}</span>
+    </>)
+}
+
 const Notify = (text) => toast(text, {
     duration: 4000,
     position: 'top-right',
 });
 
-const SuccessNotify = (text) => toast.success(text,{
+const SuccessNotify = (text) => toast.success(notifyMsgBody("Success", text),{
     duration: 4000,
     position: 'top-right',
 })
 
-const ErrorNotify = (text) => toast.error(text,{
+const ErrorNotify = (text) => toast.error(notifyMsgBody("Success", text),{
     duration: 4000,
     position: 'top-right',
 })

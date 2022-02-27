@@ -81,7 +81,6 @@ export default class Buyer extends Component {
                     </Tab>
 
                     <Tab eventKey="pendingBuyer" title="Pending Buyers">
-                    <h5>test tab1</h5>
                         <PendingBuyerTab count={this.state.pendingBuyersCount} list={this.state.pendingBuyers} response={(res) => this.handleResponse(res)} />
                     </Tab>
                 </Tabs>

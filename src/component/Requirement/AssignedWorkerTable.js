@@ -75,6 +75,18 @@ const AssignedWorkerTable = (props) => {
         </span>
     ));
 
+    const showDescription = (wCode) => {
+        let requirementDataCopy = Object.assign({}, details);
+
+        requirementDataCopy.Workers.forEach(w => {
+            if (w.Code === wCode) {
+                w.showMoreRemark = !w.showMoreRemark
+            }
+        })
+
+        setDetails(requirementDataCopy)
+    }
+
 
     if (details.Workers && details.Workers.length > 0) {
         return (
@@ -94,11 +106,13 @@ const AssignedWorkerTable = (props) => {
                                 <th>Status</th>
                                 <th>Contact No.</th>
                                 <th>Created Date</th>
+                                <th>Remark</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody className="text-center">
                             {details.Workers.map((item, index) => {
+                                let Remarks = session.Role === Role.Supplier ? item.BuyerRemarks : item.SellerRemarks
                                 return (
                                     <tr style={{borderRadius: "5px"}} key={item.Code} 
                                     // onClick={session.Role === Role.Supplier ? () => handleUpdateProgress(item.Code): null}
@@ -111,6 +125,34 @@ const AssignedWorkerTable = (props) => {
                                         <td ><UpdateWorkerStatus details={details} workerDetails={item}/> </td>
                                         <td>{item.ContactNo}</td>
                                         <td>{formatShortDate(item.AddedOn)}</td>
+                                        <td style={{ "whiteSpace": "normal", "wordBreak": "break-word", "maxWidth": "160px" }}>
+                                            {
+                                                Remarks.length > 40 && !item.showMoreRemark
+                                                    ?
+                                                    <>
+                                                        {Remarks.slice(0, 40)}...
+                                                        <span
+                                                            className="text-primary"
+                                                            style={{ "cursor": "pointer" }}
+                                                            onClick={() => showDescription(item.Code)}
+                                                        >more</span>
+                                                    </>
+                                                    :
+                                                    Remarks.length > 40
+                                                        ?
+                                                        <>
+                                                            {Remarks}
+                                                            <span
+                                                                className="text-primary"
+                                                                style={{ "cursor": "pointer" }}
+                                                                onClick={() => showDescription(item.Code)}
+                                                            > hide</span>
+                                                        </>
+                                                        :
+                                                        Remarks
+
+                                            }
+                                        </td>
                                         <td>
                                             <Dropdown drop="left">
                                                 <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">

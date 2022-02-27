@@ -1,8 +1,21 @@
 import React, {Fragment, useState}  from 'react'
 import { Button, Card, Col, Row } from 'react-bootstrap'
 import { TextInput, ValidationForm } from 'react-bootstrap4-form-validation'
+import Select from 'react-select'
+import { filterDropdown, getTrades } from '../../utils/CommonList'
 
 const ExpertiseInfo = (props) => {
+
+    let Trades = getTrades();
+    let TradeOptions = []
+    if(Trades){
+        Trades.forEach(element => {
+            TradeOptions.push({
+                value: element.name,
+                label: element.name
+            })
+        });
+    }
 
     const [expertiseDetails, setExpertiseDetails] = useState({
         Trade1: '',
@@ -16,6 +29,7 @@ const ExpertiseInfo = (props) => {
         VidLink3: '',
         CVLink: ''
     })
+    const [isTradeError, setIsTradeError] = useState(false) 
 
     const handleOnChange = (e, data) => {
 
@@ -50,6 +64,11 @@ const ExpertiseInfo = (props) => {
     const onNextButton = (e) => {
         e.preventDefault();
 
+        if(!expertiseDetails.Trade1){
+            setIsTradeError(true)
+            return
+        }
+
         // update into parent
         props.handleOnChange(expertiseDetails, "save-worker-api-call")
 
@@ -59,6 +78,17 @@ const ExpertiseInfo = (props) => {
     const onPrevButton = () => {
         // update into parent
         props.handleOnChange(expertiseDetails, "update-parent", "contactInfo")
+    }
+
+    const handleSelect = (e, field) => {
+        let expertiseDetailsCopy = Object.assign({}, expertiseDetails);
+
+        expertiseDetailsCopy[field] = e.value
+        setExpertiseDetails(expertiseDetailsCopy)
+        if(field === "Trade1"){
+            setIsTradeError(false)
+        }
+        
     }
 
     return (
@@ -73,29 +103,35 @@ const ExpertiseInfo = (props) => {
                         <Row className='form-group'>
                             <Col>
                                 <label className="col-form-label font-weight-bolder">Trade<span style={{ color: 'red' }}>*</span></label>
-                                <TextInput
-                                    id="workerTrade1"
-                                    type="text"
+                                <Select
+                                    className="basic-single"
+                                    classNamePrefix="select"
                                     name="Trade1"
-                                    className="form-control w-100"
-                                    placeholder="Enter Trade"
-                                    onChange={handleOnChange}
-                                    defaultValue={expertiseDetails.Trade1}
+                                    id="workerTrade1"
+                                    options={TradeOptions}
+                                    placeholder="Select Trade"
+                                    onChange={(e) => handleSelect(e, "Trade1")}
+                                    value={filterDropdown(TradeOptions, expertiseDetails.Trade1)}
                                     required
-                                    // disabled
                                 />
+                                {isTradeError &&
+                                    <small className='text-danger'>
+                                    Please enter worker trade
+                                    </small>
+                                }
                             </Col>
                             <Col>
-                                <label className="col-form-label font-weight-bolder">Trade<span style={{ color: 'red' }}>*</span></label>
-                                <TextInput
-                                    type="text"
+                                <label className="col-form-label font-weight-bolder">Trade</label>
+                                <Select
+                                    className="basic-single"
+                                    classNamePrefix="select"
                                     name="Trade2"
-                                    className="form-control w-100"
-                                    placeholder="Enter Trade"
-                                    onChange={handleOnChange}
-                                    defaultValue={expertiseDetails.Trade2}
+                                    id="workerTrade2"
+                                    options={TradeOptions}
+                                    placeholder="Select Trade"
+                                    onChange={(e) => handleSelect(e, "Trade2")}
+                                    value={filterDropdown(TradeOptions, expertiseDetails.Trade2)}
                                     required
-                                    // disabled
                                 />
                             </Col>
                         </Row>

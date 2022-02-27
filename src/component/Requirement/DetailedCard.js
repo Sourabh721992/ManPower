@@ -1,12 +1,14 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { Button, Card, Col, Modal, Row, /*Spinner,*/ Table } from 'react-bootstrap'
+import { IconContext } from 'react-icons'
+import { BsFillPlusCircleFill } from 'react-icons/bs'
 import { withRouter } from 'react-router-dom'
 import { RequirementStatus, Role } from '../../master-data'
 import { RequirementUpdateStatusApi } from '../../utils/ApiFunctions'
 import { encodeBase64, getMoneyFormat, trimCutString } from '../../utils/CommonList'
 import UserProfile from '../../utils/UserProfile'
 import { PrimaryButton } from '../Controls/Buttons/Buttons'
-import { AddIconBtn } from '../Controls/Buttons/IconButtons'
+// import { AddIconBtn } from '../Controls/Buttons/IconButtons'
 
 
 const DetailedCard = (props) => {
@@ -135,8 +137,20 @@ const DetailedCard = (props) => {
                         </h5>
                         {/* Map Worker Button */}
                         {
-                            session.Role === Role.Supplier &&  RequirementData.Status === RequirementStatus.PENDING ?
-                                <AddIconBtn btnText={"Map Workers"} onClickEvent={handleMapWorkerBtn} />
+                            session.Role === Role.Supplier && RequirementData.Status === RequirementStatus.PENDING ?
+                                // <AddIconBtn btnText={"Map Workers"} onClickEvent={handleMapWorkerBtn} />
+                                <div className="fl" style={{ cursor: "pointer" }} onClick={handleMapWorkerBtn}>
+                                    <div className="fl" style={{ width: "25px", marginTop: "8px" }}>
+                                        <IconContext.Provider value={{ color: "#3860C7", size: "1.4em" }} >
+                                            <div>
+                                                <BsFillPlusCircleFill />
+                                            </div>
+                                        </IconContext.Provider>
+                                    </div>
+                                    <button className="btn addbtn" style={{backgroundColor: "transparent"}}>
+                                        Map Workers
+                                    </button>
+                                </div>
                                 : null
                         }
                     </Card.Header>

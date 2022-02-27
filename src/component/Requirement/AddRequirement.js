@@ -184,7 +184,6 @@ export default function AddRequirement() {
 
                     SetSpinner(false);
 
-                    SuccessNotify("New requirement added successfully!")
                     history.push("/dashboard")
                     ResetForm(true);
                     /* setTimeout(function () {

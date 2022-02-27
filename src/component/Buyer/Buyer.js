@@ -76,10 +76,12 @@ export default class Buyer extends Component {
                 {/* Tabs for Total Buyer and Pending Buyer */}
                 <Tabs activeKey={this.state.activeTab} onSelect={(t) => this.setState({activeTab:t})}>
                     <Tab eventKey="totalBuyer" title="Total Buyers">
+                        {/* <h5>test tab1</h5> */}
                         <TotalBuyerTab count={this.state.totalBuyersCount} list={this.state.totalBuyers}/>
                     </Tab>
 
                     <Tab eventKey="pendingBuyer" title="Pending Buyers">
+                    <h5>test tab1</h5>
                         <PendingBuyerTab count={this.state.pendingBuyersCount} list={this.state.pendingBuyers} response={(res) => this.handleResponse(res)} />
                     </Tab>
                 </Tabs>

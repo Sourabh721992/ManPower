@@ -51,20 +51,26 @@ const LoginAPI = (payload, disableToast) => {
     })
 }
 
-const TradesApi = (payload) => {
-    const loadingToast = LoadingNotify("Fetching trades...")
+const TradesApi = (payload, disableToast) => {
+    let loadingToast = null
+    if(!disableToast){
+        loadingToast = LoadingNotify("Logging In...")
+    }
 
     return new Promise((resolve, reject) => {
         Client.post("metainfo/trades", payload) //Login API Call
             .then((resData) => {
                 logger.log("metainfo/trades", resData);
-                DismissThisToast(loadingToast)
+
+                if (loadingToast)
+                    DismissThisToast(loadingToast)
                 // SuccessNotify("Signed up successfully!")
                 resolve(resData);
             })
             .catch((error) => {
                 logger.log(error)
-                DismissThisToast(loadingToast)
+                if (loadingToast)
+                    DismissThisToast(loadingToast)
                 ErrorNotify(error.Message)
                 reject(error);
             });
@@ -72,7 +78,7 @@ const TradesApi = (payload) => {
 }
 
 const RequirementInsert = (payload) => {
-    const loadingToast = LoadingNotify("Please wait while we are inserting your requirement...")
+    const loadingToast = LoadingNotify("Inserting requirement...")
 
     return new Promise((resolve, reject) => {
         Client.post("Requirement/Insert", payload) //Login API Call
@@ -199,7 +205,7 @@ const DeletePendingUsersApi = (payload) => {
             .then((resData) => {
                 logger.log("User/DeletePendingUsers", resData);
                 DismissThisToast(loadingToast)
-                SuccessNotify("User deleted.")
+                SuccessNotify(resData.Message)
                 resolve(resData);
             })
             .catch((error) => {
@@ -255,7 +261,7 @@ const GetWorkerApi = (payload) => {
     const loadingToast = LoadingNotify("Fetching worker...")
 
     return new Promise((resolve, reject) => {
-        Client.post("Worker/FetchWorker", payload) 
+        Client.post("GetWorkerApi - Worker/FetchWorker", payload) 
             .then((resData) => {
                 logger.log("Worker/FetchWorker", resData);
                 DismissThisToast(loadingToast)
@@ -277,7 +283,7 @@ const GetWorkerListApi = (payload) => {
     return new Promise((resolve, reject) => {
         Client.post("Worker/FetchWorkers", payload) 
             .then((resData) => {
-                logger.log("Worker/FetchWorkers", resData);
+                logger.log("GetWorkerListApi - Worker/FetchWorkers", resData);
                 DismissThisToast(loadingToast)
                 resolve(resData);
             })

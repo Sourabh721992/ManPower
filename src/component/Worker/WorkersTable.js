@@ -1,8 +1,9 @@
 import React, { useState, useEffect} from "react";
 import Table from 'react-bootstrap/Table'
-import { GetWorkerListApi } from "../../utils/ApiFunctions";
-import { formatShortDate, /*logger*/ } from "../../utils/CommonList";
+import { GetWorkerApi, GetWorkerListApi } from "../../utils/ApiFunctions";
+import { formatShortDate, logger, /*logger*/ } from "../../utils/CommonList";
 import UserProfile from "../../utils/UserProfile";
+import { SuccessNotify } from "../Controls/Toast/Toast";
 // import { ToastSuccess } from "../Controls/Toast/Toast";
 
 const WorkersTable = (props) => {
@@ -17,12 +18,20 @@ const WorkersTable = (props) => {
         .then((response) => {
             let workerListCopy = [...workerList]
 
+            if(response.Code === 0){
+                SuccessNotify(response.Message)
+            }
             if(response.Code === 1 && response.Message){
                 workerListCopy = JSON.parse(response.Message)
                 setWorkerList(workerListCopy)
                 // logger.log(workerListCopy)
             }
         })
+
+        /* GetWorkerApi({supplierId: session.UserId})
+        .then((response) => {
+            logger.log("workerliisst- ", response)
+        }) */
 
       }, [])
 

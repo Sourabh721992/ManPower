@@ -29,8 +29,6 @@ export default function Login(props) {
 
     // const form = e.currentTarget;
 
-    // // console.log(form);
-
     e.preventDefault();
     //e.stopPropagation();
     let username = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(
@@ -51,7 +49,7 @@ export default function Login(props) {
         Password: password,
       };
 
-      TradesApi({}).then
+      TradesApi({}, true).then
         ((resData) => {
           setTrade(resData.Message, true);
         }).catch((error) => {
@@ -148,7 +146,7 @@ export default function Login(props) {
               Log-In
             </button> */}
             <button type="submit" className="btn button">Login</button>
-            <SuccessAlert show={showAlert.show} message={showAlert.isDataSaved === true ? "Login Successfully !" : showAlert.message} variant={showAlert.isDataSaved === true ? "success" : "danger"} />
+            {/* <SuccessAlert show={showAlert.show} message={showAlert.isDataSaved === true ? "Login Successfully !" : showAlert.message} variant={showAlert.isDataSaved === true ? "success" : "danger"} /> */}
             {/* <Col sm={12} className="mb-4 mt-4">
               <h6>
                 Forgot Password ? <Link to="">Click here</Link>

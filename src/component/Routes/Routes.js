@@ -36,7 +36,6 @@ function App() {
           showHeader ?
             <Header /> : ""
         }
-        
         <Switch>
           <Route exact path="/">
             <Login />

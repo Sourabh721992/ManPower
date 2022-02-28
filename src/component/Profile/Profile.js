@@ -51,7 +51,7 @@ export default function Profile(props) {
                 setMobileNumber(resData.Message.UserInfo.CountryCode + " " + resData.Message.UserInfo.MobileNo);
                 SetAlert({ show: false, isDataSaved: false, message: "" });
             }).catch((error) => {
-                alert("catch Error found in getUserProfile", JSON.stringify(error));
+                // alert("catch Error found in getUserProfile", JSON.stringify(error));
                 SetUserProfile({});
             })
     }

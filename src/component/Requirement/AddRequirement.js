@@ -100,7 +100,7 @@ export default function AddRequirement() {
                 SetSupplierList(resData.Message.Suppliers);
 
             }).catch((error) => {
-                alert("catch Error found in GetSupplierApi", JSON.stringify(error));
+                // alert("catch Error found in GetSupplierApi", JSON.stringify(error));
                 SetSupplierList([]);
             })
     }
@@ -125,7 +125,7 @@ export default function AddRequirement() {
                     SetInitialState();
 
                 }).catch((error) => {
-                    alert("catch error found 1", error);
+                    // alert("catch error found 1", error);
                 })
         }
         else {
@@ -192,7 +192,7 @@ export default function AddRequirement() {
 
                     }, 4000); */
                 }).catch((error) => {
-                    alert("catch error found requirement in Dashboard", JSON.stringify(error));
+                    // alert("catch error found requirement in Dashboard", JSON.stringify(error));
                     // SetAlert({ show: true, isDataSaved: false });
                     SetSpinner(false);
 

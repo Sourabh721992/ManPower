@@ -78,7 +78,7 @@ const TradesApi = (payload, disableToast) => {
 }
 
 const RequirementInsert = (payload) => {
-    const loadingToast = LoadingNotify("Inserting requirement...")
+    const loadingToast = LoadingNotify("Saving requirement...")
 
     return new Promise((resolve, reject) => {
         Client.post("Requirement/Insert", payload) //Login API Call
@@ -179,20 +179,20 @@ const UpdateUserProfileApi = (payload) => {
 }
 
 const GetPendingUsersApi = (payload) => {
-    const loadingToast = LoadingNotify("Fetching pending users...")
+    // const loadingToast = LoadingNotify("Fetching pending users...")
 
     return new Promise((resolve, reject) => {
         Client.post("User/PendingUsers", payload) //Login API Call
             .then((resData) => {
                 logger.log("User/PendingUsers", resData);
-                DismissThisToast(loadingToast)
+                // DismissThisToast(loadingToast)
 
                 resolve(resData);
             })
             .catch((error) => {
                 logger.log(error)
-                DismissThisToast(loadingToast)
-                ErrorNotify(error.Message)
+                // DismissThisToast(loadingToast)
+                // ErrorNotify(error.Message)
                 reject(error);
             });
     })
@@ -378,7 +378,7 @@ const AddBuyerUser = (body) => {
 }
 
 const RemoveWorkerApi = (payload) => {
-    const loadingToast = LoadingNotify("Removing worker...")
+    const loadingToast = LoadingNotify("Deleting worker...")
 
     return new Promise((resolve, reject) => {
         Client.post("Requirement/RemoveWorker", payload) 
@@ -398,7 +398,7 @@ const RemoveWorkerApi = (payload) => {
 }
 
 const RemoveBuyer = (data) => {
-    const loadingToast = LoadingNotify("Remover buyer...")
+    const loadingToast = LoadingNotify("Deleting buyer...")
 
     return new Promise((resolve, reject) => {
         Client.post("Buyer/RemoveBuyer", data) 
@@ -458,7 +458,7 @@ const WorkerUpdateStatusApi = (payload) => {
 }
 
 const UpdateBuyerSupplierRemarks = (payload) => {
-    const loadingToast = LoadingNotify("Adding remarks...")
+    const loadingToast = LoadingNotify("Saving and sharing remarks...")
 
     return new Promise((resolve, reject) => {
         Client.post("Worker/UpdateRemarks", payload) 
@@ -478,7 +478,7 @@ const UpdateBuyerSupplierRemarks = (payload) => {
 }
 
 const FetchWorkerProgressApi = (body) => {
-    const loadingToast = LoadingNotify("Getting worker progress...")
+    const loadingToast = LoadingNotify("Fetching worker progress...")
 
     return new Promise((resolve, reject) => {
         Client.post("Worker/FetchWorkerProgress", body) 

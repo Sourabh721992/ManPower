@@ -148,7 +148,7 @@ export default function Dashboard(props) {
                         ResetForm(true);
                     }, 2000);
                 }).catch((error) => {
-                    alert("catch error found requirement in Dashboard", JSON.stringify(error));
+                    // alert("catch e/rror found requirement in Dashboard", JSON.stringify(error));
                     SetAlert({ show: true, isDataSaved: false });
 
                     setTimeout(function () {

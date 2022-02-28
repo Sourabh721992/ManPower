@@ -85,7 +85,7 @@ export default function Dashboard(props) {
                     SetInitialState();
 
                 }).catch((error) => {
-                    alert("catch error found 1", error);
+                    // alert("catch error found 1", error);
                 })
         }
         else {
@@ -145,7 +145,7 @@ export default function Dashboard(props) {
                         ResetForm(true);
                     }, 2000);
                 }).catch((error) => {
-                    alert("catch error found requirement in Dashboard", JSON.stringify(error));
+                    // alert("catch error found requirement in Dashboard", JSON.stringify(error));
                     SetAlert({ show: true, isDataSaved: false });
 
                     setTimeout(function () {

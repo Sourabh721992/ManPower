@@ -67,7 +67,7 @@ export default function Supplier(props) {
                     SetSupplierList({ SupplierList: JSON.parse(resData.Message), ShouldUpdate: true });
 
                 }).catch((error) => {
-                    alert("catch Error found in GetSupplierApi", JSON.stringify(error));
+                    // alert("catch Error found in GetSupplierApi", JSON.stringify(error));
                     SetSupplierList({ SupplierList: {}, ShouldUpdate: true });
                 })
         }
@@ -240,11 +240,11 @@ export default function Supplier(props) {
                 
                 {/* Tabs for Total Buyer and Pending Buyer */}
                 <Tabs className="mt-2" activeKey={activeTab} onSelect={(t) => setActiveTab(t)}>
-                    <Tab eventKey="totalSupplier" title="Total Buyers">
+                    <Tab eventKey="totalSupplier" title="Total Suppliers">
                         <SupplierList data={SupplierData.SupplierList.Suppliers ? SupplierData.SupplierList.Suppliers : []} DeleteApi={DeleteSelectedSupplier} />
                     </Tab>
 
-                    <Tab eventKey="pendingSupplier" title="Pending Buyers">
+                    <Tab eventKey="pendingSupplier" title="Pending Suppliers">
                         <PendingList from={"supplier"} pendingList={PendingUserData} response={(email) => onClickDelete(email)} />
                     </Tab>
                 </Tabs>

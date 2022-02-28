@@ -86,7 +86,7 @@ export default function Signup() {
 
 
         }).catch((error) => {
-          alert("catch error found", error);
+          // alert("catch error found", error);
 
           SetAlert({ show: true, isDataSaved: true, message: error.Message });
 

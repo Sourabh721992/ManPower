@@ -87,7 +87,7 @@ const AssignedWorkerTable = (props) => {
         setDetails(requirementDataCopy)
     }
 
-
+console.log(details)
     if (details.Workers && details.Workers.length > 0) {
         return (
             <Card className='shadow-sm mt-4'>
@@ -127,6 +127,7 @@ const AssignedWorkerTable = (props) => {
                                         <td>{formatShortDate(item.AddedOn)}</td>
                                         <td style={{ "whiteSpace": "normal", "wordBreak": "break-word", "maxWidth": "160px" }}>
                                             {
+                                                Remarks != null ?
                                                 Remarks.length > 40 && !item.showMoreRemark
                                                     ?
                                                     <>
@@ -150,6 +151,8 @@ const AssignedWorkerTable = (props) => {
                                                         </>
                                                         :
                                                         Remarks
+                                                        : 
+                                                        ''
 
                                             }
                                         </td>

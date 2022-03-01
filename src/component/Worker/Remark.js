@@ -151,7 +151,7 @@ const Remark = (props) => {
                         onKeyPress={(e) => handleEnterKey(e)}
                         autocomplete="false"
                     />
-                    <Button className="btn-icon" variant="link" onClick={() => handleUpdateRemark()}>
+                    <Button disabled={tempRemark.length === 0} className="btn-icon" variant="link" onClick={() => handleUpdateRemark()}>
                         <MdSend />
                     </Button>
                 </Modal.Footer>

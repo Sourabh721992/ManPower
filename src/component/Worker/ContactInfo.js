@@ -113,6 +113,10 @@ const ContactInfo = (props) => {
                                     onChange={handleOnChange}
                                     defaultValue={contactDetails.FatherName}
                                     required
+                                    pattern="^([^0-9]*)$"
+                                    errorMessage={{
+                                        pattern: "Please enter valid name"
+                                    }}
                                     // disabled
                                 />
                             </Col>
@@ -128,6 +132,10 @@ const ContactInfo = (props) => {
                                     placeholder="Enter Spouse Name"
                                     onChange={handleOnChange}
                                     defaultValue={contactDetails.SpouseName}
+                                    pattern="^([^0-9]*)$"
+                                    errorMessage={{
+                                        pattern: "Please enter valid name"
+                                    }}
                                     // required
                                     // disabled
                                 />
@@ -142,7 +150,7 @@ const ContactInfo = (props) => {
                                     className="form-control w-100"
                                     onChange={handleOnChange}
                                     defaultValue={moment(contactDetails.SpouseDOB).format('YYYY-MM-DD')}
-                                    max={moment(Date.now()).format("YYYY-MM-DD")}
+                                    max={moment(new Date().setFullYear(new Date().getFullYear() - 18)).format("YYYY-MM-DD")}
                                     // required
                                 />
                             </Col>

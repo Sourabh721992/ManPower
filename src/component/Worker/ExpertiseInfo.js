@@ -109,7 +109,7 @@ const ExpertiseInfo = (props) => {
                                     name="Trade1"
                                     id="workerTrade1"
                                     options={TradeOptions}
-                                    placeholder="Select Trade"
+                                    placeholder="Select Trade 1"
                                     onChange={(e) => handleSelect(e, "Trade1")}
                                     value={filterDropdown(TradeOptions, expertiseDetails.Trade1)}
                                     required
@@ -128,7 +128,7 @@ const ExpertiseInfo = (props) => {
                                     name="Trade2"
                                     id="workerTrade2"
                                     options={TradeOptions}
-                                    placeholder="Select Trade"
+                                    placeholder="Select Trade 2"
                                     onChange={(e) => handleSelect(e, "Trade2")}
                                     value={filterDropdown(TradeOptions, expertiseDetails.Trade2)}
                                     required

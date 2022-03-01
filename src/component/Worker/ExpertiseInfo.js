@@ -102,7 +102,7 @@ const ExpertiseInfo = (props) => {
                     <ValidationForm onSubmit={onNextButton}>
                         <Row className='form-group'>
                             <Col>
-                                <label className="col-form-label font-weight-bolder">Trade<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder">Trade 1<span style={{ color: 'red' }}>*</span></label>
                                 <Select
                                     className="basic-single"
                                     classNamePrefix="select"
@@ -121,7 +121,7 @@ const ExpertiseInfo = (props) => {
                                 }
                             </Col>
                             <Col>
-                                <label className="col-form-label font-weight-bolder">Trade</label>
+                                <label className="col-form-label font-weight-bolder">Trade 2</label>
                                 <Select
                                     className="basic-single"
                                     classNamePrefix="select"

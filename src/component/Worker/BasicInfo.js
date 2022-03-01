@@ -119,7 +119,11 @@ const BasicInfo = (props) => {
                                     onChange={handleOnChange}
                                     defaultValue={basicDetails.Name}
                                     required
+                                    pattern="^([^0-9]*)$"
                                     // disabled
+                                    errorMessage={{
+                                        pattern: "Please enter valid worker name"
+                                    }}
                                 />
                             </Col>
                             <Col>
@@ -143,7 +147,7 @@ const BasicInfo = (props) => {
                                     className="form-control w-100"
                                     onChange={handleOnChange}
                                     defaultValue={moment(basicDetails.DOB).format('YYYY-MM-DD')}
-                                    max={moment(Date.now()).format("YYYY-MM-DD")}
+                                    max={moment(new Date().setFullYear(new Date().getFullYear() - 18)).format("YYYY-MM-DD")}
                                     required
                                 />
                             </Col>
@@ -157,6 +161,11 @@ const BasicInfo = (props) => {
                                     className="form-control w-100"
                                     onChange={handleOnChange}
                                     defaultValue={basicDetails.Age}
+                                    min={18}
+                                    errorMessage={{
+                                        required: "Worker age is required",
+                                        min: "Age can not be less than 18"
+                                    }}
                                     required
                                 />
                             </Col>

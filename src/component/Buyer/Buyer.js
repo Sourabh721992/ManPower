@@ -71,7 +71,7 @@ export default class Buyer extends Component {
         return (
             <Fragment>
                 {/* <Header session={this.state.session} /> */}
-                <h4 className='font-weight-bolder text-muted m-4'>Buyer Information</h4>
+                <h5 className='font-weight-bolder text-muted m-3'>Buyer Information</h5>
                 {/* <SuccessAlert show={this.state.showAlert} message={this.state.alertMessage} variant={this.state.showAlert === true ? "success" : "danger"} /> */}
                 {/* Tabs for Total Buyer and Pending Buyer */}
                 <Tabs activeKey={this.state.activeTab} onSelect={(t) => this.setState({activeTab:t})}>

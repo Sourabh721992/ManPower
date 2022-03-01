@@ -26,9 +26,7 @@ function RequirementTable(props) {
             props.history.push("/requirement/" + Data)
         }
     }
-
     return (
-
         <div className='my-3 mx-5 '>
             <Table responsive striped borderless hover>
                 <thead className="text-center">
@@ -48,7 +46,15 @@ function RequirementTable(props) {
                         return(
                             <tr className="align-middle" style={{cursor: "pointer"}} key={item.Code} onClick={() => handleOnClick(item.Code, item.BuyerName, item.SupplierName)}>
                                 <td>{item.Code}</td>
-                                <td>{item.WorkersCount}</td>
+                                <td>
+                                {item.Trades.map((s, i) => {
+                                    return (
+                                        <div key={"req_worker_cell_ " + i}><label>
+                                            {s.WorkerCount}
+                                        </label><br /></div>
+                                    )
+                                })}
+                                </td>
                                 <td>{item.Trades.map((s, i) => {
                                     return (
                                         <div key={"req_trade_cell_ " + i}><label>

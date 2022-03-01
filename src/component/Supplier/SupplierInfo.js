@@ -23,16 +23,15 @@ export default class SupplierInfo extends Component {
   render() {
     return (
         <Fragment>
-        <Header session={this.state.session} />
+        {/* <Header session={this.state.session} /> */}
         <h4 className='font-weight-bolder text-muted m-4'>Supplier Information</h4>
 
         {/* Tabs for Total Buyer and Pending Buyer */}
         <Tabs activeKey={this.state.activeTab} onSelect={(t) => this.setState({activeTab:t})}>
-            <Tab eventKey="totalSupplier" title="Total Buyers">
-                
+            <Tab eventKey="totalSupplier" title="Total Suppliers">
             </Tab>
 
-            <Tab eventKey="pendingSupplier" title="Pending Buyers">
+            <Tab eventKey="pendingSupplier" title="Pending Suppliers">
                 <PendingBuyerTab count={this.state.pendingSuppliersCount} list={this.state.pendingSuppliers} />
             </Tab>
         </Tabs>

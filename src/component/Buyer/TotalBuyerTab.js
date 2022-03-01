@@ -18,7 +18,7 @@ export default function TotalBuyerTab(props) {
     return (
         <Fragment>
             <div className='d-flex justify-content-between p-4'>
-                <h6>Total Buyers Count: {count}</h6>
+                <h5>Total Buyers Count: {count}</h5>
                 <div className="fl" style={{ marginLeft: "67%", cursor: "pointer" }} onClick={(e) => onClickBtn(e)}>
                     <div className="fl" style={{ width: "25px", marginTop: "8px" }}>
                         <IconContext.Provider value={{ color: "#3860C7", size: "1.4em" }} >

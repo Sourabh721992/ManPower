@@ -29,8 +29,9 @@ function App() {
     showHeader = false
   }
   return (
-    <>
+    <div style={{overflow:"auto"}}>
       <Router>
+      
       <Toaster />
         {
           showHeader ?
@@ -63,7 +64,7 @@ function App() {
         </Switch>
         {/* <Footer /> */}
       </Router>
-    </>
+    </div>
   );
 }
 

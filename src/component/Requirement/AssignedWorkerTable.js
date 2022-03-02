@@ -107,7 +107,10 @@ console.log(details)
                                 <th>Contact No.</th>
                                 <th>Created Date</th>
                                 <th>Remark</th>
-                                <th>Action</th>
+                                {
+                                    details.Status !== RequirementStatus.COMPLETED ? <th>Action</th> : null
+                                }
+                                
                             </tr>
                         </thead>
                         <tbody className="text-center">
@@ -119,69 +122,71 @@ console.log(details)
                                     >
                                         <td>{item.Code}</td>
                                         <td>{item.Name}</td>
-                                        <td>{
-                                            item.Reference ? item.Reference : "-"
-                                        }</td>
+                                        <td>{ item.Reference ? item.Reference : "-" }</td>
                                         <td ><UpdateWorkerStatus details={details} workerDetails={item}/> </td>
                                         <td>{item.ContactNo}</td>
                                         <td>{formatShortDate(item.AddedOn)}</td>
                                         <td style={{ "whiteSpace": "normal", "wordBreak": "break-word", "maxWidth": "160px" }}>
                                             {
                                                 Remarks != null ?
-                                                Remarks.length > 40 && !item.showMoreRemark
-                                                    ?
-                                                    <>
-                                                        {Remarks.slice(0, 40)}...
-                                                        <span
-                                                            className="text-primary"
-                                                            style={{ "cursor": "pointer" }}
-                                                            onClick={() => showDescription(item.Code)}
-                                                        >more</span>
-                                                    </>
-                                                    :
-                                                    Remarks.length > 40
+                                                    Remarks.length > 40 && !item.showMoreRemark
                                                         ?
                                                         <>
-                                                            {Remarks}
+                                                            {Remarks.slice(0, 40)}...
                                                             <span
                                                                 className="text-primary"
                                                                 style={{ "cursor": "pointer" }}
                                                                 onClick={() => showDescription(item.Code)}
-                                                            > hide</span>
+                                                            >more</span>
                                                         </>
                                                         :
-                                                        Remarks
-                                                        : 
-                                                        ''
-
+                                                        Remarks.length > 40
+                                                            ?
+                                                            <>
+                                                                {Remarks}
+                                                                <span
+                                                                    className="text-primary"
+                                                                    style={{ "cursor": "pointer" }}
+                                                                    onClick={() => showDescription(item.Code)}
+                                                                > hide</span>
+                                                            </>
+                                                            :
+                                                            Remarks
+                                                    :
+                                                    ''
                                             }
                                         </td>
-                                        <td>
-                                            <Dropdown drop="left">
-                                                <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-                                                    <BsThreeDotsVertical />
-                                                </Dropdown.Toggle>
+                                        {
+                                            details.Status !== RequirementStatus.COMPLETED ?
+                                                <td>
+                                                    <Dropdown drop="left">
+                                                        <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+                                                            <BsThreeDotsVertical />
+                                                        </Dropdown.Toggle>
 
-                                                <Dropdown.Menu>
-                                                    {/* DROPDOWN ITEM - REMARKS */}
-                                                    <Remark requirementCode={details.Code} workerCode={item.Code} SellerRemarks={item.SellerRemarks} BuyerRemarks={item.BuyerRemarks} />
+                                                        <Dropdown.Menu>
+                                                            {/* DROPDOWN ITEM - REMARKS */}
+                                                            <Remark requirementCode={details.Code} workerCode={item.Code} SellerRemarks={item.SellerRemarks} BuyerRemarks={item.BuyerRemarks} />
 
-                                                    {/* delete assigned worker */}
-                                                    {
-                                                        details.Status === RequirementStatus.PENDING ?
-                                                            <Dropdown.Item eventKey="update_worker_progress" onClick={() => handleDelete(item.Code)}>
-                                                                <FiTrash2 className='text-danger' /> Delete
-                                                            </Dropdown.Item>
-                                                            :
-                                                            // {/* Update Worker Progress only for supplier */}
-                                                            session.Role === Role.Supplier &&
-                                                            <Dropdown.Item eventKey="update_worker_progress" onClick={() => handleUpdateProgress(item.Code)}>
-                                                                <BsFileText className='text-primary' /> Edit Progress
-                                                            </Dropdown.Item>
-                                                    }
-                                                </Dropdown.Menu>
-                                            </Dropdown>
-                                        </td>
+                                                            {/* delete assigned worker */}
+                                                            {
+                                                                details.Status === RequirementStatus.PENDING ?
+                                                                    <Dropdown.Item eventKey="update_worker_progress" onClick={() => handleDelete(item.Code)}>
+                                                                        <FiTrash2 className='text-danger' /> Delete
+                                                                    </Dropdown.Item>
+                                                                    :
+                                                                    // {/* Update Worker Progress only for supplier */}
+                                                                    session.Role === Role.Supplier &&
+                                                                    <Dropdown.Item eventKey="update_worker_progress" onClick={() => handleUpdateProgress(item.Code)}>
+                                                                        <BsFileText className='text-primary' /> Edit Progress
+                                                                    </Dropdown.Item>
+                                                            }
+                                                        </Dropdown.Menu>
+                                                    </Dropdown>
+                                                </td>
+                                            : null
+                                        }
+                                        
                                     </tr>
                                 )
                             })}

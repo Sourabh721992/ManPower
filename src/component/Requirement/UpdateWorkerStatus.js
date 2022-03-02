@@ -8,10 +8,11 @@ import { LinkButton } from '../Controls/Buttons/Buttons'
 
 const UpdateWorkerStatus = (props) => {
 
-    const [requirementDetails, setRequirementDetails] = useState(props.details)
+    const requirementStatus = props.details && props.details.Status ? props.details.Status : ""
     const [workerDetails, setWorkerDetails] = useState(props.workerDetails)
     const [tempStatus, setTempStatus] = useState("")
     const [updateStatusModal, setUpdateStatusModal] = useState(false)
+
 
     const handleOpenStatusModal = () => {
         setUpdateStatusModal(true)
@@ -47,7 +48,7 @@ const UpdateWorkerStatus = (props) => {
     return (
         <Fragment>
             {
-                requirementDetails.Status === RequirementStatus.PENDING ?
+                requirementStatus === RequirementStatus.PENDING || requirementStatus === RequirementStatus.COMPLETED ?
                     workerDetails.Status
                 :
                 <LinkButton onClickEvent={handleOpenStatusModal} text={workerDetails.Status} className="p-0"/>

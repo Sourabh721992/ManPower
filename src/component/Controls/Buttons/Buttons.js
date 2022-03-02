@@ -27,6 +27,14 @@ function PrimaryButton(props) {
   );
 }
 
+function SuccessButton(props) {
+  return (
+    <Button disabled={props.disabled} variant="success" onClick={props.onClickEvent}>
+      {props.text} 
+    </Button>
+  );
+}
+
 function LightButton(props) {
   return (
     <Button disabled={props.disabled} variant="light" onClick={props.onClickEvent}>
@@ -52,5 +60,5 @@ function OutlinePrimaryButton(props) {
 }
 
 export {
-  FilterButton, PrimaryButton, LightButton, OutlinePrimaryButton, MpButton, LinkButton
+  FilterButton, PrimaryButton, LightButton, OutlinePrimaryButton, MpButton, LinkButton, SuccessButton
 }

@@ -7,7 +7,7 @@ import { RequirementStatus, Role } from '../../master-data'
 import { RequirementUpdateStatusApi } from '../../utils/ApiFunctions'
 import { encodeBase64, getMoneyFormat, trimCutString } from '../../utils/CommonList'
 import UserProfile from '../../utils/UserProfile'
-import { PrimaryButton } from '../Controls/Buttons/Buttons'
+import { PrimaryButton, SuccessButton } from '../Controls/Buttons/Buttons'
 // import { AddIconBtn } from '../Controls/Buttons/IconButtons'
 
 
@@ -17,6 +17,7 @@ const DetailedCard = (props) => {
 
     const [RequirementData, setRequirementData] = useState(props.details)
     const [ConfirmBox, setConfirmBox] = useState(false)
+    const [CompleteConfirmBox, setCompleteConfirmBox] = useState(false)
 
     const mapStatusWithColor = { "First": "#96E2A1", "Second": "#FF9190", "Third": "#80A8FF", "Fourth": "#F7D166", "Fifth": "#C1A7FE" };
 
@@ -42,6 +43,7 @@ const DetailedCard = (props) => {
 
     const closeConfirmModal = () => {
         setConfirmBox(false)
+        setCompleteConfirmBox(false)
     }
 
     const handleProceedAheadBtn = () => {
@@ -68,6 +70,36 @@ const DetailedCard = (props) => {
             // setProceedLoading(false)
             setConfirmBox(false)
         })
+    }
+
+    const handleCompleteConfirm = () => {
+        setCompleteConfirmBox(true)
+    }
+
+    const handleCompleteBtn = () => {
+        var Body = {
+            requirementCode: RequirementData.Code,
+            status: RequirementStatus.COMPLETED
+        }
+
+        // setProceedLoading(true)
+        RequirementUpdateStatusApi(Body)
+            .then(() => {
+                // setProceedLoading(false)
+                let requirementDataCopy = Object.assign({}, RequirementData);
+                requirementDataCopy.Status = RequirementStatus.COMPLETED
+
+                setRequirementData(requirementDataCopy)
+                setCompleteConfirmBox(false)
+                // UPDATE TO PARENT
+                if (props.updateParent) {
+                    props.updateParent("update-requirement-details", requirementDataCopy)
+                }
+            })
+            .catch(() => {
+                // setProceedLoading(false)
+                setCompleteConfirmBox(false)
+            })
     }
 
     function RequirementDetailsCard(text, bg_colour, label, title) {
@@ -118,13 +150,19 @@ const DetailedCard = (props) => {
                     
                 </Row>
                 {
-                    RequirementData.Status === RequirementStatus.PENDING && RequirementData.Workers && RequirementData.Workers.length > 0  ?
+                    RequirementData.Workers && RequirementData.Workers.length > 0 
+                    && (RequirementData.Status === RequirementStatus.PENDING || RequirementData.Status === RequirementStatus.PROCESSING)  ?
+                    
                         <Row>
                             <Col className='d-flex justify-content-end'>
-                                <PrimaryButton text={"Proceed Ahead"} onClickEvent={handleProceedAheadConfirm} />
-                                {/* {
-                                    isProceedLoading ? <Spinner animation="border" size="sm" className='mb-0'/> : null
-                                } */}
+                                {
+                                    RequirementData.Status === RequirementStatus.PENDING ?
+                                        <PrimaryButton text={"Proceed Ahead"} onClickEvent={handleProceedAheadConfirm} />
+                                    :
+                                    RequirementData.Status === RequirementStatus.PROCESSING ?
+                                        <SuccessButton text={"Complete Requirement"} onClickEvent={handleCompleteConfirm} />
+                                        : null
+                                }
                             </Col>
                         </Row>
                         : null
@@ -151,7 +189,7 @@ const DetailedCard = (props) => {
                                         Map Workers
                                     </button>
                                 </div>
-                                : null
+                            : null
                         }
                     </Card.Header>
                     <Card.Body>
@@ -218,6 +256,20 @@ const DetailedCard = (props) => {
                     <Modal.Footer>
                         <Button variant="light" onClick={closeConfirmModal}>No</Button>
                         <Button variant="primary" onClick={handleProceedAheadBtn}>Yes</Button>
+                    </Modal.Footer>
+                </Modal>
+
+                {/* COMPLETE confirm box */}
+                <Modal show={CompleteConfirmBox} onHide={closeConfirmModal}>
+                    <Modal.Header>
+                        <Modal.Title as="h5">Confirm Complete Requirement </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>Are you sure you want complete this requirement?</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="light" onClick={closeConfirmModal}>No</Button>
+                        <Button variant="primary" onClick={handleCompleteBtn}>Yes</Button>
                     </Modal.Footer>
                 </Modal>
             </Fragment>

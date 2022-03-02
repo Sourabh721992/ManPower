@@ -42,6 +42,10 @@ const RequirementStatus = {
 
     get PROCESSING(){
         return "Processing"
+    },
+
+    get COMPLETED(){
+        return "Completed"
     }
 }
 

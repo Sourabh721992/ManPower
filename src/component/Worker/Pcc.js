@@ -3,9 +3,12 @@ import { Card, Row, Col, Button } from 'react-bootstrap'
 import { ValidationForm, TextInput, Radio } from 'react-bootstrap4-form-validation';
 import moment from "moment";
 import { usePrevious } from '../../utils/CustomHook';
+import UserProfile from '../../utils/UserProfile';
+import { Role } from '../../master-data';
 
 const Pcc = (props) => {
 
+    const session = UserProfile.getSession()
     const [pccDetails, setPCCInfo] = useState({
         PCCDate: new Date(),
         PCCAppliedDate: new Date(),
@@ -68,7 +71,7 @@ const Pcc = (props) => {
         e.preventDefault();
         
         // update into parent
-        props.handleOnChange(pccDetails, "update-parent", "flight")
+        props.handleOnChange(pccDetails, "update-progress-api")
     }
 
     const onPrevButton = (e) => {
@@ -87,7 +90,7 @@ const Pcc = (props) => {
                     <ValidationForm onSubmit={onNextButton}>
                         <Row className='form-group'>
                             <Col>
-                                <label className="col-form-label font-weight-bolder">Police Clearance Certificate Date<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder">Police Clearance Certificate Date</label>
                                 <TextInput
                                     id="PCCDate-input"
                                     name="PCCDate"
@@ -95,13 +98,14 @@ const Pcc = (props) => {
                                     placeholder="Select PCC Date"
                                     className="form-control w-100"
                                     onChange={handleOnChange}
-                                    defaultValue={moment(pccDetails.PCCDate).format('YYYY-MM-DD')}
+                                    value={moment(pccDetails.PCCDate).format('YYYY-MM-DD')}
+                                    disabled={session.Role === Role.Buyer}
                                     // max={moment(Date.now()).format("YYYY-MM-DD")}
-                                    required
+                                    // required
                                 />
                             </Col>
                             <Col>
-                                <label className="col-form-label font-weight-bolder">PCC Applied Date<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder">PCC Applied Date</label>
                                 <TextInput
                                     id="Pcc-applied-date-input"
                                     name="PCCAppliedDate"
@@ -109,108 +113,141 @@ const Pcc = (props) => {
                                     placeholder="Select PCC Applied Date"
                                     className="form-control w-100"
                                     onChange={handleOnChange}
-                                    defaultValue={moment(pccDetails.PCCAppliedDate).format('YYYY-MM-DD')}
+                                    value={moment(pccDetails.PCCAppliedDate).format('YYYY-MM-DD')}
+                                    disabled={session.Role === Role.Buyer}
                                     // max={moment(Date.now()).format("YYYY-MM-DD")}
-                                    required
+                                    // required
                                 />
                             </Col>
+                            {
+                                // show to supplier not to buyer/client
+                                session.Role === Role.Supplier ?
+                                    <Col>
+                                        <label className="col-form-label font-weight-bolder">PCC Appointment Date</label>
+                                        <TextInput
+                                            id="PCCAppointmentDate-input"
+                                            name="PCCAppointmentDate"
+                                            type="date"
+                                            placeholder="Select PCC Appointment Date"
+                                            className="form-control w-100"
+                                            onChange={handleOnChange}
+                                            value={moment(pccDetails.PCCAppointmentDate).format('YYYY-MM-DD')}
+                                        // max={moment(Date.now()).format("YYYY-MM-DD")}
+                                        // required
+                                        />
+                                    </Col>
+                                    : null
+                            }
+                            
+                        </Row>
+                        {
+                            // show to supplier not to buyer/client
+                            session.Role === Role.Supplier ?
+                                <Row className="form-group">
+                                    <Col>
+                                        <label className="col-form-label font-weight-bolder">PCC Login Username</label>
+                                        <TextInput
+                                            id="PCCLoginUsername-input"
+                                            type="text"
+                                            name="PCCLoginUsername"
+                                            className="form-control w-100"
+                                            placeholder="PCC Login Username"
+                                            onChange={handleOnChange}
+                                            value={pccDetails.PCCLoginUsername}
+                                        // required
+                                        // disabled
+                                        />
+                                    </Col>
+                                    <Col>
+                                        <label className="col-form-label font-weight-bolder">PCC Login Password</label>
+                                        <TextInput
+                                            id="PCCLoginPassword-input"
+                                            type="text"
+                                            name="PCCLoginPassword"
+                                            className="form-control w-100"
+                                            placeholder="PCC Login Password"
+                                            onChange={handleOnChange}
+                                            value={pccDetails.PCCLoginPassword}
+                                        // required
+                                        // disabled
+                                        />
+                                    </Col>
+                                </Row>
+                                : null
+                        }
+                        
+                        <Row className='form-group'>
                             <Col>
-                                <label className="col-form-label font-weight-bolder">PCC Appointment Date<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder">PCC All Document Received?</label>
+                                <Radio.RadioGroup name="PCCAllDocsReceived" valueSelected={pccDetails.PCCAllDocsReceived.toString()}
+                                    onChange={handleOnChange}>
+                                    <Radio.RadioItem id="yes" label="Yes" value="true" />
+                                    <Radio.RadioItem id="no" label="No" value="false" />
+                                </Radio.RadioGroup>
+                            </Col>
+                            <Col>
+                                <label className="col-form-label font-weight-bolder">WP File Submitted?</label>
+                                <Radio.RadioGroup name="WPFileSubmitted" valueSelected={pccDetails.WPFileSubmitted.toString()}
+                                    onChange={handleOnChange}>
+                                    <Radio.RadioItem id="yes" label="Yes" value="true" />
+                                    <Radio.RadioItem id="no" label="No" value="false" />
+                                </Radio.RadioGroup>
+                            </Col>
+                            <Col sm={6}>
+                                <label className="col-form-label font-weight-bolder">Expected Date Of Work Permit</label>
                                 <TextInput
-                                    id="PCCAppointmentDate-input"
-                                    name="PCCAppointmentDate"
+                                    id="WorkPermitExpectedDt-input"
+                                    name="WorkPermitExpectedDt"
                                     type="date"
                                     placeholder="Select PCC Appointment Date"
                                     className="form-control w-100"
                                     onChange={handleOnChange}
-                                    defaultValue={moment(pccDetails.PCCAppointmentDate).format('YYYY-MM-DD')}
+                                    value={moment(pccDetails.WorkPermitExpectedDt).format('YYYY-MM-DD')}
                                     // max={moment(Date.now()).format("YYYY-MM-DD")}
-                                    required
+                                    // required
                                 />
                             </Col>
                         </Row>
-                        <Row className="form-group">
-                            <Col>
-                                <label className="col-form-label font-weight-bolder">PCC Login Username<span style={{ color: 'red' }}>*</span></label>
-                                <TextInput
-                                    id="PCCLoginUsername-input"
-                                    type="text"
-                                    name="PCCLoginUsername"
-                                    className="form-control w-100"
-                                    placeholder="PCC Login Username"
-                                    onChange={handleOnChange}
-                                    defaultValue={pccDetails.PCCLoginUsername}
-                                    required
-                                    // disabled
-                                />
-                            </Col>
-                            <Col>
-                                <label className="col-form-label font-weight-bolder">PCC Login Password<span style={{ color: 'red' }}>*</span></label>
-                                <TextInput
-                                    id="PCCLoginPassword-input"
-                                    type="text"
-                                    name="PCCLoginPassword"
-                                    className="form-control w-100"
-                                    placeholder="PCC Login Password"
-                                    onChange={handleOnChange}
-                                    defaultValue={pccDetails.PCCLoginPassword}
-                                    required
-                                    // disabled
-                                />
-                            </Col>
-                        </Row>
-                        <Row className='form-group'>
-                            <Col>
-                                <label className="col-form-label font-weight-bolder">PCC All Document Received?<span style={{ color: 'red' }}>*</span></label>
-                                <Radio.RadioGroup name="PCCAllDocsReceived" required valueSelected={pccDetails.PCCAllDocsReceived.toString()}
-                                    onChange={handleOnChange}>
-                                    <Radio.RadioItem id="yes" label="Yes" value="true" />
-                                    <Radio.RadioItem id="no" label="No" value="false" />
-                                </Radio.RadioGroup>
-                            </Col>
-                            <Col>
-                                <label className="col-form-label font-weight-bolder">WP File Submitted?<span style={{ color: 'red' }}>*</span></label>
-                                <Radio.RadioGroup name="WPFileSubmitted" required valueSelected={pccDetails.WPFileSubmitted.toString()}
-                                    onChange={handleOnChange}>
-                                    <Radio.RadioItem id="yes" label="Yes" value="true" />
-                                    <Radio.RadioItem id="no" label="No" value="false" />
-                                </Radio.RadioGroup>
-                            </Col>
-                        </Row>
-                        <Row className="form-group">
-                            <Col>
-                                <label className="col-form-label font-weight-bolder">PCC Status<span style={{ color: 'red' }}>*</span></label>
-                                <TextInput
-                                    id="PCCStatus-input"
-                                    type="text"
-                                    name="PCCStatus"
-                                    className="form-control w-100"
-                                    placeholder="Enter PCC Status"
-                                    onChange={handleOnChange}
-                                    defaultValue={pccDetails.PCCStatus}
-                                    required
-                                    // disabled
-                                />
-                            </Col>
-                            <Col>
-                                <label className="col-form-label font-weight-bolder">PCC Advance Status<span style={{ color: 'red' }}>*</span></label>
-                                <TextInput
-                                    id="AdvanceStatus-input"
-                                    type="text"
-                                    name="AdvanceStatus"
-                                    className="form-control w-100"
-                                    placeholder="Enter PCC Advance Status"
-                                    onChange={handleOnChange}
-                                    defaultValue={pccDetails.AdvanceStatus}
-                                    required
-                                    // disabled
-                                />
-                            </Col>
-                        </Row>
+                        {
+                            // show to supplier not to buyer/client
+                            session.Role === Role.Supplier ?
+                                <Row className="form-group">
+                                    <Col>
+                                        <label className="col-form-label font-weight-bolder">PCC Status</label>
+                                        <TextInput
+                                            id="PCCStatus-input"
+                                            type="text"
+                                            name="PCCStatus"
+                                            className="form-control w-100"
+                                            placeholder="Enter PCC Status"
+                                            onChange={handleOnChange}
+                                            value={pccDetails.PCCStatus}
+                                        // required
+                                        // disabled
+                                        />
+                                    </Col>
+                                    <Col>
+                                        <label className="col-form-label font-weight-bolder">PCC Advance Status</label>
+                                        <TextInput
+                                            id="AdvanceStatus-input"
+                                            type="text"
+                                            name="AdvanceStatus"
+                                            className="form-control w-100"
+                                            placeholder="Enter PCC Advance Status"
+                                            onChange={handleOnChange}
+                                            value={pccDetails.AdvanceStatus}
+                                        // required
+                                        // disabled
+                                        />
+                                    </Col>
+                                </Row>
+                                : null
+                        }
+                        
                         <Row className='mt-5'>
                             <Col className='d-flex justify-content-between'>
                                 <Button variant="primary" onClick={() => onPrevButton()}>Previous</Button>
-                                <Button type="submit" variant="primary">Next</Button>
+                                <Button type="submit" variant="primary">Update</Button>
                             </Col>
                         </Row>
                     </ValidationForm>

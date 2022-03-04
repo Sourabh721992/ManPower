@@ -2,9 +2,13 @@ import React, {Fragment, useState}  from 'react'
 import { Button, Card, Col, Row } from 'react-bootstrap'
 import { TextInput, ValidationForm } from 'react-bootstrap4-form-validation'
 import Select from 'react-select'
+import { Role } from '../../master-data'
 import { filterDropdown, getTrades } from '../../utils/CommonList'
+import UserProfile from '../../utils/UserProfile'
 
 const ExpertiseInfo = (props) => {
+
+    const session = UserProfile.getSession()
 
     let Trades = getTrades();
     let TradeOptions = []
@@ -113,6 +117,7 @@ const ExpertiseInfo = (props) => {
                                     onChange={(e) => handleSelect(e, "Trade1")}
                                     value={filterDropdown(TradeOptions, expertiseDetails.Trade1)}
                                     required
+                                    isDisabled={session.Role === Role.Buyer}
                                 />
                                 {isTradeError &&
                                     <small className='text-danger'>
@@ -132,6 +137,7 @@ const ExpertiseInfo = (props) => {
                                     onChange={(e) => handleSelect(e, "Trade2")}
                                     value={filterDropdown(TradeOptions, expertiseDetails.Trade2)}
                                     required
+                                    isDisabled={session.Role === Role.Buyer}
                                 />
                             </Col>
                         </Row>
@@ -152,6 +158,7 @@ const ExpertiseInfo = (props) => {
                                         required: "Gulf experience is required",
                                         pattern: "Required valid gulf experience in years"
                                     }}
+                                    disabled={session.Role === Role.Buyer}
                                 />
                             </Col>
                             <Col>
@@ -170,6 +177,7 @@ const ExpertiseInfo = (props) => {
                                         required: "India experience is required",
                                         pattern: "Required valid india experience in years"
                                     }}
+                                    disabled={session.Role === Role.Buyer}
                                 />
                             </Col>
                             
@@ -191,6 +199,7 @@ const ExpertiseInfo = (props) => {
                                         required: "Total experience is required",
                                         pattern: "Required valid total experience in years"
                                     }}
+                                    disabled={session.Role === Role.Buyer}
                                 />
                             </Col>
                             <Col>
@@ -212,73 +221,96 @@ const ExpertiseInfo = (props) => {
                         <Row className="form-group">
                             <Col>
                                 <label className="col-form-label font-weight-bolder" >Video Link</label>
-                                <TextInput
-                                    type="text"
-                                    name="VidLink1"
-                                    className="form-control w-100"
-                                    placeholder="Enter Video Link"
-                                    onChange={handleOnChange}
-                                    defaultValue={expertiseDetails.VidLink1}
-                                    pattern="^((http|https)?(://)?)[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
-                                    errorMessage={{
-                                        required: 'Video URL is required',
-                                        pattern: 'Video URL is invalid.',
-                                    }}
-                                />
+                                {
+                                    session.Role === Role.Supplier ?
+                                        <TextInput
+                                            type="text"
+                                            name="VidLink1"
+                                            className="form-control w-100"
+                                            placeholder="Enter Video Link"
+                                            onChange={handleOnChange}
+                                            defaultValue={expertiseDetails.VidLink1}
+                                            pattern="^((http|https)?(://)?)[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
+                                            errorMessage={{
+                                                required: 'Video URL is required',
+                                                pattern: 'Video URL is invalid.',
+                                            }}
+                                            disabled={session.Role === Role.Buyer}
+                                        />
+                                        : expertiseDetails.VidLink1 ?
+                                            <a href={expertiseDetails.VidLink1}>{expertiseDetails.VidLink1}</a> : "Not Available"
+                                }
                             </Col>
                         </Row>
                         <Row className="form-group">
                             <Col>
                                 <label className="col-form-label font-weight-bolder" >Video Link</label>
-                                <TextInput
-                                    type="text"
-                                    name="VidLink2"
-                                    className="form-control w-100"
-                                    placeholder="Enter Video Link"
-                                    onChange={handleOnChange}
-                                    defaultValue={expertiseDetails.VidLink2}
-                                    pattern="^((http|https)?(://)?)[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
-                                    errorMessage={{
-                                        required: 'Video URL is required',
-                                        pattern: 'Video URL is invalid.',
-                                    }}
-                                />
+                                {
+                                    session.Role === Role.Supplier ?
+                                        <TextInput
+                                            type="text"
+                                            name="VidLink2"
+                                            className="form-control w-100"
+                                            placeholder="Enter Video Link"
+                                            onChange={handleOnChange}
+                                            defaultValue={expertiseDetails.VidLink2}
+                                            pattern="^((http|https)?(://)?)[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
+                                            errorMessage={{
+                                                required: 'Video URL is required',
+                                                pattern: 'Video URL is invalid.',
+                                            }}
+                                        />
+                                        : expertiseDetails.VidLink2 ?
+                                        <a href = {expertiseDetails.VidLink2}>{expertiseDetails.VidLink2}</a> : "Not Available"
+                                }
                             </Col>
                         </Row>
                         <Row className="form-group">
                             <Col>
                                 <label className="col-form-label font-weight-bolder" >Video Link</label>
-                                <TextInput
-                                    type="text"
-                                    name="VidLink3"
-                                    className="form-control w-100"
-                                    placeholder="Enter Video Link"
-                                    onChange={handleOnChange}
-                                    defaultValue={expertiseDetails.VidLink3}
-                                    pattern="^((http|https)?(://)?)[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
-                                    errorMessage={{
-                                        required: 'Video URL is required',
-                                        pattern: 'Video URL is invalid.',
-                                    }}
-                                />
+                                {
+                                    session.Role === Role.Supplier ?
+                                        <TextInput
+                                            type="text"
+                                            name="VidLink3"
+                                            className="form-control w-100"
+                                            placeholder="Enter Video Link"
+                                            onChange={handleOnChange}
+                                            defaultValue={expertiseDetails.VidLink3}
+                                            pattern="^((http|https)?(://)?)[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
+                                            errorMessage={{
+                                                required: 'Video URL is required',
+                                                pattern: 'Video URL is invalid.',
+                                            }}
+                                        />
+                                        : expertiseDetails.VidLink3 ?
+                                        <a href ={expertiseDetails.VidLink3}>{expertiseDetails.VidLink3}</a> : "Not Available"
+                                }
+                                
+                                
                             </Col>
                         </Row>
                         <Row className="form-group">
                             <Col>
                                 <label className="col-form-label font-weight-bolder" >CV Link</label>
-                                <TextInput
-                                    type="text"
-                                    name="CVLink"
-                                    className="form-control w-100"
-                                    placeholder="Enter CV Link"
-                                    onChange={handleOnChange}
-                                    defaultValue={expertiseDetails.CVLink}
-                                    pattern="^((http|https)?(://)?)[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
-                                    errorMessage={{
-                                        required: 'CV URL is required',
-                                        pattern: 'CV URL is invalid.',
-                                    }}
-                                />
+                                {
+                                    session.Role === Role.Supplier ?
+                                        <TextInput
+                                            type="text"
+                                            name="CVLink"
+                                            className="form-control w-100"
+                                            placeholder="Enter CV Link"
+                                            onChange={handleOnChange}
+                                            defaultValue={expertiseDetails.CVLink}
+                                            pattern="^((http|https)?(://)?)[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
+                                            errorMessage={{
+                                                required: 'CV URL is required',
+                                                pattern: 'CV URL is invalid.',
+                                            }}
+                                        />
+                                        : expertiseDetails.CVLink ?
+                                            <a href={expertiseDetails.CVLink}>{expertiseDetails.CVLink}</a> : "Not Available"
+                                }
                             </Col>
                         </Row>
                         

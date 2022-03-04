@@ -14,7 +14,7 @@
     "js-base64": "^3.7.2",
     "moment": "^2.29.1",
     "react": "^17.0.2",
-    "react-bootstrap": "^1.6.4",
+    "react-bootstrap": "^2.1.2",
     "react-bootstrap-confirmation": "^1.0.4",
     "react-bootstrap-time-picker": "^2.0.1",
     "react-bootstrap4-form-validation": "^1.0.10",

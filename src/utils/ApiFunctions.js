@@ -504,13 +504,11 @@ const UpdateWorkerProgressApi = (body) => {
             .then((resData) => {
                 logger.log("Worker/UpdateWorkerProgress", resData);
                 DismissThisToast(loadingToast)
-                SuccessNotify("Worker Progress Updated!")
                 resolve(resData);
             })
             .catch((error) => {
                 logger.log(error)
                 DismissThisToast(loadingToast)
-                ErrorNotify(error.Message)
                 reject(error);
             });
     })

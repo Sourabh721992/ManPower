@@ -67,14 +67,14 @@ const DocDetails = (props) => {
         <Fragment>
             <Card className='shadow-sm'>
                 <Card.Header>
-                    <h5 className='text-muted'>Selection Details</h5>
+                    <h5 className='text-muted'>Document Details</h5>
                 </Card.Header>
 
                 <Card.Body>
                     <ValidationForm onSubmit={onNextButton}>
                         <Row className='form-group'>
                             <Col>
-                                <label className="col-form-label font-weight-bolder">Insurance<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder">Insurance</label>
                                 <TextInput
                                     id="Insurance-input"
                                     type="text"
@@ -82,13 +82,13 @@ const DocDetails = (props) => {
                                     className="form-control w-100"
                                     placeholder="Insurance"
                                     onChange={handleOnChange}
-                                    defaultValue={docDetails.Insurance}
-                                    required
+                                    value={docDetails.Insurance}
+                                    // required
                                     // disabled
                                 />
                             </Col>
                             <Col>
-                                <label className="col-form-label font-weight-bolder">Application Number<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder">Application Number</label>
                                 <TextInput
                                     id="ApplicationNumber-input"
                                     type="text"
@@ -96,15 +96,15 @@ const DocDetails = (props) => {
                                     className="form-control w-100"
                                     placeholder="Enter Application Number"
                                     onChange={handleOnChange}
-                                    defaultValue={docDetails.ApplicationNumber}
-                                    required
+                                    value={docDetails.ApplicationNumber}
+                                    // required
                                     // disabled
                                 />
                             </Col>
                         </Row>
                         <Row className="form-group">
                             <Col>
-                                <label className="col-form-label font-weight-bolder">File Number<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder">File Number</label>
                                 <TextInput
                                     id="FileNumber-input"
                                     type="text"
@@ -112,13 +112,13 @@ const DocDetails = (props) => {
                                     className="form-control w-100"
                                     placeholder="Enter File Number"
                                     onChange={handleOnChange}
-                                    defaultValue={docDetails.FileNumber}
-                                    required
+                                    value={docDetails.FileNumber}
+                                    // required
                                     // disabled
                                 />
                             </Col>
                             <Col>
-                                <label className="col-form-label font-weight-bolder">Password<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder">Password</label>
                                 <TextInput
                                     id="password-input"
                                     type="text"
@@ -126,15 +126,15 @@ const DocDetails = (props) => {
                                     className="form-control w-100"
                                     placeholder="Password"
                                     onChange={handleOnChange}
-                                    defaultValue={docDetails.Password}
-                                    required
+                                    value={docDetails.Password}
+                                    // required
                                     // disabled
                                 />
                             </Col>
                         </Row>
                         <Row className="form-group">
                             <Col>
-                                <label className="col-form-label font-weight-bolder">Passport Sent To Candidate<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder">Passport Sent To Candidate</label>
                                 <TextInput
                                     id="PassportSentToCandidate-input"
                                     type="text"
@@ -142,13 +142,13 @@ const DocDetails = (props) => {
                                     className="form-control w-100"
                                     placeholder="Passport Sent To Candidate"
                                     onChange={handleOnChange}
-                                    defaultValue={docDetails.PassportSentToCandidate}
-                                    required
+                                    value={docDetails.PassportSentToCandidate}
+                                    // required
                                     // disabled
                                 />
                             </Col>
                             <Col>
-                                <label className="col-form-label font-weight-bolder">Passport Status<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder">Passport Status</label>
                                 <TextInput
                                     id="PassportStatus-input"
                                     type="text"
@@ -156,8 +156,8 @@ const DocDetails = (props) => {
                                     className="form-control w-100"
                                     placeholder="Passport Status"
                                     onChange={handleOnChange}
-                                    defaultValue={docDetails.PassportStatus}
-                                    required
+                                    value={docDetails.PassportStatus}
+                                    // required
                                     // disabled
                                 />
                             </Col>

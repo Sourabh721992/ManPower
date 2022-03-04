@@ -3,8 +3,12 @@ import { Card, Row, Col, Button } from 'react-bootstrap'
 import { ValidationForm, TextInput, Radio } from 'react-bootstrap4-form-validation';
 import moment from "moment";
 import PhoneInput, { isValidPhoneNumber, getCountryCallingCode } from 'react-phone-number-input';
+import UserProfile from '../../utils/UserProfile';
+import { Role } from '../../master-data';
 
 const BasicInfo = (props) => {
+
+    const session = UserProfile.getSession()
 
     const [basicDetails, setBasicInfo] = useState({
         Name: '',
@@ -119,8 +123,8 @@ const BasicInfo = (props) => {
                                     onChange={handleOnChange}
                                     defaultValue={basicDetails.Name}
                                     required
+                                    disabled={session.Role === Role.Buyer}
                                     pattern="^([^0-9]*)$"
-                                    // disabled
                                     errorMessage={{
                                         pattern: "Please enter valid worker name"
                                     }}
@@ -149,6 +153,8 @@ const BasicInfo = (props) => {
                                     defaultValue={moment(basicDetails.DOB).format('YYYY-MM-DD')}
                                     max={moment(new Date().setFullYear(new Date().getFullYear() - 18)).format("YYYY-MM-DD")}
                                     required
+                                    disabled={session.Role === Role.Buyer}
+                                    
                                 />
                             </Col>
                             <Col>
@@ -171,47 +177,38 @@ const BasicInfo = (props) => {
                             </Col>
                         </Row>
                         <Row className="form-group">
-                            <Col>
-                                <label className="col-form-label font-weight-bolder" >Contact No<span style={{ color: 'red' }}>*</span></label>
-                                <PhoneInput
-                                    name="ContactNo"
-                                    aria-label="mobile number"
-                                    className="form-control w-100"
-                                    placeholder="Enter phone number"
-                                    // value={basicDetails.ContactNo}
-                                    onChange={handleContactNo}
-                                    onCountryChange={handleCountryChange}
-                                    defaultCountry={"IN"}
-                                    international
-                                    required
-                                    countryCallingCodeEditable={false}
-                                    // error={basicDetails.ContactNo ? (isValidPhoneNumber(basicDetails.ContactNo) ? undefined : 'Invalid phone number') : 'Phone number required'}
-                                    // rules={{ required: true }}
-                                    // style={{ borderColor: validated.mobileValidate == null ? "#ced4da" : validated.mobileValidate === true ? "red" : "green" }}
-                                />
-                                {contactValidated === false ?
-                                    <small className='text-danger'>
-                                        Please enter valid contact no.
-                                    </small>
-                                    : 
-                                     null
+                            {
+                                session.Role === Role.Supplier ?
+
+                                    <Col>
+                                        <label className="col-form-label font-weight-bolder" >Contact No<span style={{ color: 'red' }}>*</span></label>
+                                        <PhoneInput
+                                            name="ContactNo"
+                                            aria-label="mobile number"
+                                            className="form-control w-100"
+                                            placeholder="Enter phone number"
+                                            // value={basicDetails.ContactNo}
+                                            onChange={handleContactNo}
+                                            onCountryChange={handleCountryChange}
+                                            defaultCountry={"IN"}
+                                            international
+                                            required
+                                            countryCallingCodeEditable={false}
+                                        // error={basicDetails.ContactNo ? (isValidPhoneNumber(basicDetails.ContactNo) ? undefined : 'Invalid phone number') : 'Phone number required'}
+                                        // rules={{ required: true }}
+                                        // style={{ borderColor: validated.mobileValidate == null ? "#ced4da" : validated.mobileValidate === true ? "red" : "green" }}
+                                        />
+                                        {contactValidated === false ?
+                                            <small className='text-danger'>
+                                                Please enter valid contact no.
+                                            </small>
+                                            :
+                                            null
+                                        }
+                                    </Col>
+                                    : null
                                 }
-                                {/* <TextInput
-                                    type="text"
-                                    name="ContactNo"
-                                    className="form-control w-100"
-                                    placeholder="Mobile Number"
-                                    onChange={handleOnChange}
-                                    defaultValue={basicDetails.ContactNo}
-                                    pattern="^((?!(0))[0-9]{10})$"
-                                    required
-                                    errorMessage={{
-                                        required: "Mobile number is required",
-                                        pattern: "Required 10 digit valid mobile number"
-                                    }}
-                                /> */}
-                            </Col>
-                            <Col>
+                            <Col sm={6}>
                                 <label className="col-form-label font-weight-bolder" >Aadhaar No<span style={{ color: 'red' }}>*</span></label>
                                 <TextInput
                                     type="text"
@@ -246,6 +243,7 @@ const BasicInfo = (props) => {
                                         required: "Passport number is required",
                                         pattern: "Required valid passport number"
                                     }}
+                                    disabled={session.Role === Role.Buyer}
                                 />
                             </Col>
                             <Col>
@@ -260,22 +258,29 @@ const BasicInfo = (props) => {
                                     defaultValue={moment(basicDetails.PassportExpy).format('YYYY-MM-DD')}
                                     min={moment(Date.now()).format("YYYY-MM-DD")}
                                     required
+                                    disabled={session.Role === Role.Buyer}
                                 />
                             </Col>
                         </Row>
-                        <Row className="form-group">
-                            <Col sm={6}>
-                                <label className="col-form-label font-weight-bolder" >Reference</label>
-                                <TextInput
-                                    type="text"
-                                    name="Reference"
-                                    className="form-control w-100"
-                                    placeholder="Add Reference"
-                                    onChange={handleOnChange}
-                                    defaultValue={basicDetails.Reference}
-                                />
-                            </Col>
-                        </Row>
+                        {
+                            // show to supplier not to buyer/client
+                            session.Role === Role.Supplier ?
+                                <Row className="form-group">
+                                    <Col sm={6}>
+                                        <label className="col-form-label font-weight-bolder" >Reference</label>
+                                        <TextInput
+                                            type="text"
+                                            name="Reference"
+                                            className="form-control w-100"
+                                            placeholder="Add Reference"
+                                            onChange={handleOnChange}
+                                            defaultValue={basicDetails.Reference}
+                                        />
+                                    </Col>
+                                </Row>
+                                : null
+                        }
+                        
                         <Row className='mt-5'>
                             <Col className='d-flex justify-content-end'>
                                 <Button type="submit" variant="primary">Next</Button>

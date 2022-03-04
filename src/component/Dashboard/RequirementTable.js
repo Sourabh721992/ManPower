@@ -5,6 +5,8 @@ import Table from 'react-bootstrap/Table'
 import { encodeBase64, formatShortDate, getMoneyFormat, setItemToLocalStorage, /*logger*/ } from "../../utils/CommonList";
 // import {SearchIconBtn, UsersIconBtn} from "../Controls/Buttons/IconButtons";
 import { withRouter } from "react-router-dom";
+import {DangerBadge, SuccessBadge, WarningBadge} from "../Controls/Badge/Badge"
+import { RequirementStatus } from "../../master-data";
 
 function RequirementTable(props) {
     // // console.log(props.detail);
@@ -26,6 +28,28 @@ function RequirementTable(props) {
             props.history.push("/requirement/" + Data)
         }
     }
+
+    const displayRequirementStatus = (status) => {
+        if(status){
+            if(status === RequirementStatus.PENDING){
+                return(
+                    <DangerBadge badgeText={status}/>
+                )
+            }
+            else if(status === RequirementStatus.PROCESSING){
+                return(
+                    <WarningBadge badgeText={status}/>
+                )
+            }
+            else if(status === RequirementStatus.COMPLETED){
+                return(
+                    <SuccessBadge badgeText={status}/>
+                )
+            }
+        }
+        return "-"
+    }
+
     return (
         <div className='my-3 mx-5 '>
             <Table responsive striped borderless hover>
@@ -69,7 +93,7 @@ function RequirementTable(props) {
                                         </span><br /></div>
                                     )
                                 })}</td>
-                                <td>{item.Status}</td>
+                                <td>{displayRequirementStatus(item.Status)}</td>
                                 <td>{item.BuyerName}</td>
                                 <td>{formatShortDate(item.CreatedDate)}</td>
                                 {/* <td>

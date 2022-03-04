@@ -128,7 +128,7 @@ console.log(details)
                                         <td>{formatShortDate(item.AddedOn)}</td>
                                         <td style={{ "whiteSpace": "normal", "wordBreak": "break-word", "maxWidth": "160px" }}>
                                             {
-                                                Remarks != null ?
+                                                Remarks ?
                                                     Remarks.length > 40 && !item.showMoreRemark
                                                         ?
                                                         <>
@@ -153,7 +153,7 @@ console.log(details)
                                                             :
                                                             Remarks
                                                     :
-                                                    ''
+                                                    '-'
                                             }
                                         </td>
                                         {
@@ -176,7 +176,7 @@ console.log(details)
                                                                     </Dropdown.Item>
                                                                     :
                                                                     // {/* Update Worker Progress only for supplier */}
-                                                                    session.Role === Role.Supplier &&
+                                                                    details.Status === RequirementStatus.PROCESSING &&
                                                                     <Dropdown.Item eventKey="update_worker_progress" onClick={() => handleUpdateProgress(item.Code)}>
                                                                         <BsFileText className='text-primary' /> Edit Progress
                                                                     </Dropdown.Item>

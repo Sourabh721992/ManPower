@@ -3,8 +3,12 @@ import { Card, Row, Col, Button } from 'react-bootstrap'
 import { ValidationForm, TextInput, Radio } from 'react-bootstrap4-form-validation';
 import moment from "moment";
 import { usePrevious } from '../../utils/CustomHook';
+import UserProfile from '../../utils/UserProfile';
+import { Role } from '../../master-data';
 
 const Selection = (props) => {
+
+    const session = UserProfile.getSession()
 
     const [selectionDetails, setSelectionInfo] = useState({
         ReceivedByClient: false,
@@ -59,7 +63,7 @@ const Selection = (props) => {
         e.preventDefault();
         
         // update into parent
-        props.handleOnChange(selectionDetails, "update-parent", "pcc")
+        props.handleOnChange(selectionDetails, "update-progress-api")
     }
 
     return (
@@ -73,15 +77,15 @@ const Selection = (props) => {
                     <ValidationForm onSubmit={onNextButton}>
                         <Row className='form-group'>
                             <Col>
-                                <label className="col-form-label font-weight-bolder">Received By Client<span style={{ color: 'red' }}>*</span></label>
-                                <Radio.RadioGroup name="ReceivedByClient" required valueSelected={selectionDetails.ReceivedByClient.toString()}
+                                <label className="col-form-label font-weight-bolder">Received By Client</label>
+                                <Radio.RadioGroup name="ReceivedByClient" valueSelected={selectionDetails.ReceivedByClient.toString()}
                                     onChange={handleOnChange}>
                                     <Radio.RadioItem id="yes" label="Yes" value="true" />
                                     <Radio.RadioItem id="no" label="No" value="false" />
                                 </Radio.RadioGroup>
                             </Col>
                             <Col>
-                                <label className="col-form-label font-weight-bolder">Select Confirm Date<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder">Select Confirm Date</label>
                                 <TextInput
                                     id="SelectConfirmDate-input"
                                     name="SelectConfirmDate"
@@ -89,15 +93,15 @@ const Selection = (props) => {
                                     placeholder="Select Confirm Date"
                                     className="form-control w-100"
                                     onChange={handleOnChange}
-                                    defaultValue={moment(selectionDetails.SelectConfirmDate).format('YYYY-MM-DD')}
+                                    value={moment(selectionDetails.SelectConfirmDate).format('YYYY-MM-DD')}
                                     // max={moment(Date.now()).format("YYYY-MM-DD")}
-                                    required
+                                    // required
                                 />
                             </Col>
                         </Row>
                         <Row className="form-group">
                             <Col>
-                                <label className="col-form-label font-weight-bolder">Selected By<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder">Selected Confirm By</label>
                                 <TextInput
                                     id="selected-by"
                                     type="text"
@@ -105,23 +109,23 @@ const Selection = (props) => {
                                     className="form-control w-100"
                                     placeholder="Selected By"
                                     onChange={handleOnChange}
-                                    defaultValue={selectionDetails.SelectedBy}
-                                    required
-                                    // disabled
+                                    value={selectionDetails.SelectedBy}
+                                    
+                                    // required
                                 />
                             </Col>
                             <Col>
-                                <label className="col-form-label font-weight-bolder">Selection Confirmed By Head <span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder">Selection Confirmed By Head </label>
                                 <Radio.RadioGroup name="SelectionConfirmedByHead" required valueSelected={selectionDetails.SelectionConfirmedByHead.toString()}
                                     onChange={handleOnChange}>
-                                    <Radio.RadioItem id="yes" label="Yes" value="true" />
-                                    <Radio.RadioItem id="no" label="No" value="false" />
+                                    <Radio.RadioItem id="yes" label="Yes" value="true" disabled={session.Role === Role.Buyer}/>
+                                    <Radio.RadioItem id="no" label="No" value="false" disabled={session.Role === Role.Buyer}/>
                                 </Radio.RadioGroup>
                             </Col>
                         </Row>
                         <Row className="form-group">
                             <Col sm={6}>
-                                <label className="col-form-label font-weight-bolder" >Document Send Date<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder" >Document Send Date</label>
                                 <TextInput
                                     id="document-send-date-input"
                                     name="DocsSendDate"
@@ -129,15 +133,16 @@ const Selection = (props) => {
                                     placeholder="Select document send date"
                                     className="form-control w-100"
                                     onChange={handleOnChange}
-                                    defaultValue={moment(selectionDetails.DocsSendDate).format('YYYY-MM-DD')}
+                                    value={moment(selectionDetails.DocsSendDate).format('YYYY-MM-DD')}
+                                    disabled={session.Role === Role.Buyer}
                                     // max={moment(Date.now()).format("YYYY-MM-DD")}
-                                    required
+                                    // required
                                 />
                             </Col>
                         </Row>
                         <Row className='mt-5'>
                             <Col className='d-flex justify-content-end'>
-                                <Button type="submit" variant="primary">Next</Button>
+                                <Button type="submit" variant="primary">Update</Button>
                             </Col>
                         </Row>
                     </ValidationForm>

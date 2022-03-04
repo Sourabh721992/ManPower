@@ -8,6 +8,7 @@ import StatusCounter from '../StatusCounter';
 import {FilterButton} from '../../Controls/Buttons/Buttons';
 // import { TradesApi } from '../../../utils/ApiFunctions';
 import { logger } from '../../../utils/CommonList';
+import { LoginAPI } from '../../../utils/ApiFunctions';
 
 export class SupplierDashboard extends Component {
 
@@ -16,7 +17,9 @@ export class SupplierDashboard extends Component {
     
         var session = UserProfile.getSession(); 
         this.state = {
-            session
+            session,
+            StatusCounter: session.StatusCounter,
+            Requirements: session.Requirements
         }
     }
 
@@ -25,6 +28,27 @@ export class SupplierDashboard extends Component {
         if(!this.state.session){
             // get data from api
         }
+
+        // call API
+        let item = JSON.parse(localStorage.getItem("LoginCredential"));
+
+        LoginAPI(item, true).then
+            ((resData) => {
+                if(resData.Message){
+                    let stateCopy = Object.assign({}, this.state);
+                    resData.Message = JSON.parse(resData.Message)
+                    if(resData.Message.StatusCounter ){
+                        stateCopy.StatusCounter = resData.Message.StatusCounter
+                    }
+                    if(resData.Message.Requirements){
+                        stateCopy.Requirements = resData.Message.Requirements
+                    }
+                    this.setState(stateCopy)
+                }
+
+            }).catch((error) => {
+                // alert("catch error found 1", error);
+            })
         
     }
 
@@ -33,7 +57,7 @@ export class SupplierDashboard extends Component {
             <>
                 {/* <Header session={this.state.session} /> */}
 
-                <StatusCounter detail={this.state.session.StatusCounter} />
+                <StatusCounter detail={this.state.StatusCounter} />
 
                 <div className='mx-5'>
                     
@@ -44,7 +68,7 @@ export class SupplierDashboard extends Component {
                     </div>
 
                     <hr />
-                    <RequirementTable detail={this.state.session.Requirements}/>
+                    <RequirementTable detail={this.state.Requirements}/>
                 </div>
 
                 {/* <Footer /> */}

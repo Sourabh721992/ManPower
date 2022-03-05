@@ -89,7 +89,7 @@ function RequirementTable(props) {
                                 <td>{item.Trades.map((s, i) => {
                                     return(
                                         <div key={"req_sal_cell_ " + i}><span>
-                                            {getMoneyFormat(s.MaxSalary, s.Currency)}-{getMoneyFormat(s.MinSalary, s.Currency)}
+                                            {getMoneyFormat(s.MinSalary, s.Currency)}-{getMoneyFormat(s.MaxSalary, s.Currency)}
                                         </span><br /></div>
                                     )
                                 })}</td>

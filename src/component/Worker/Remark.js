@@ -145,7 +145,7 @@ const Remark = (props) => {
                         name=""
                         className="form-control flex-fill"
                         placeholder={(session.Role === Role.Supplier && supplierRemark) || (session.Role === Role.Buyer && buyerRemark)
-                            ? "Update Remark" : "Enter your Remark"}
+                            ? "Send Message" : "Send Message"}
                         value={tempRemark}
                         onChange={(e) => handleRemarksInput(e)}
                         onKeyPress={(e) => handleEnterKey(e)}

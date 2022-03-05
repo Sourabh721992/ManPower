@@ -60,7 +60,7 @@ export default function AddNewBuyer() {
               <Col sm={5}>
                     <div className="d-flex justify-content-end mt-3">
                       <div>
-                      <Button variant='secondary' onClick={() => { history.push("/buyer")}}>Cancel</Button>
+                      <Button className = "btn btn-secondary" onClick={() => { history.push("/buyer")}}>Cancel</Button>
                       </div>
                       <div style={{marginLeft:"15px"}}>
                         <Button type="submit" className="btn btn-primary">Add</Button>

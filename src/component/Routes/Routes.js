@@ -29,7 +29,7 @@ function App() {
     showHeader = false
   }
   return (
-    <div style={{overflow:"auto"}}>
+    <div style={{overflowX: "hidden", overflowY:"auto"}}>
       <Router>
       
       <Toaster />

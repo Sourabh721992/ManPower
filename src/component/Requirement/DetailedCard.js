@@ -221,13 +221,13 @@ const DetailedCard = (props) => {
                                                                 }</td>
                                                                 <td>{item.TradeName}</td>
                                                                 <td>{
-                                                                    getMoneyFormat(item.MaxSalary, item.Currency)}-{getMoneyFormat(item.MinSalary, item.Currency)
+                                                                    getMoneyFormat(item.MinSalary, item.Currency)}-{getMoneyFormat(item.MaxSalary, item.Currency)
                                                                     }</td>
                                                                 <td>{
                                                                     item.WorkerCount
                                                                 }</td>
                                                                 <td>{
-                                                                    item.FromWH + "-" + item.ToWh
+                                                                    item.FromWH + " - " + item.ToWh
                                                                 }</td>
                                                                 <td>{item.WorkingDays}</td>
                                                                 <td>{item.IfFoodProvided ? "Yes" : "No"}</td>

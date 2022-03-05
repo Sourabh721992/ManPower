@@ -62,7 +62,7 @@ export default function AddSupplier() {
                 <Col sm={5}>
                     <div className="d-flex justify-content-end">
                       <div>
-                        <Button variant="secondary" onClick={() => { history.push("/Supplier")}}>Cancel</Button>
+                        <Button className="btn btn-secondary" onClick={() => { history.push("/Supplier")}}>Cancel</Button>
                       </div>
                       <div style={{marginLeft:"15px"}}>
                         <Button type="submit" className="btn btn-primary">Add</Button>

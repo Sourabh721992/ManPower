@@ -29,7 +29,7 @@ function PrimaryButton(props) {
 
 function SuccessButton(props) {
   return (
-    <Button disabled={props.disabled} variant="success" onClick={props.onClickEvent}>
+    <Button disabled={props.disabled} variant="primary" onClick={props.onClickEvent}>
       {props.text} 
     </Button>
   );
@@ -37,7 +37,7 @@ function SuccessButton(props) {
 
 function LightButton(props) {
   return (
-    <Button disabled={props.disabled} variant="light" onClick={props.onClickEvent}>
+    <Button disabled={props.disabled} className="btn btn-secondary" onClick={props.onClickEvent}>
       {props.text} 
     </Button>
   );

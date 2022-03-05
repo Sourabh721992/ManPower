@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "../../Css/app.css";
 // import Header from "../Layout/Header";
-import { RequirementInsert, LoginAPI } from "../../utils/ApiFunctions";
+import { RequirementInsert, DashboardApi } from "../../utils/ApiFunctions";
 import { Row, Col, Form/* , InputGroup, FormControl, Alert */ } from "react-bootstrap";
 import "react-phone-number-input/style.css";
 import UserProfile from "../../utils/UserProfile";
@@ -75,9 +75,11 @@ export default function Dashboard(props) {
 
         if (isUpdated) {
 
-            let item = JSON.parse(localStorage.getItem("LoginCredential"));
+            const body = {
+                userId : session.UserId
+            }
 
-            LoginAPI(item, true).then
+            DashboardApi(body).then
                 ((resData) => {
                     console.warn("res1 : ", JSON.stringify(resData.Message));
                     UserProfile.setSession(resData.Message, true);

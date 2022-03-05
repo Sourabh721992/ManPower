@@ -19,7 +19,7 @@ const AssignedWorkerTable = (props) => {
     const session = UserProfile.getSession()
 
     const [details, setDetails] = useState(props.details)
-    const [isLoading, setIsLoading] = useState(false)
+    // const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         if(JSON.stringify(details) !== JSON.stringify(props.details)){
@@ -47,9 +47,9 @@ const AssignedWorkerTable = (props) => {
                         props.updateParent("update-requirement-details", requirementDataCopy)
                     }
                 }
-                setIsLoading(false)
+                // setIsLoading(false)
             }).catch(() => {
-                setIsLoading(false)
+                // setIsLoading(false)
             })
         }
     }

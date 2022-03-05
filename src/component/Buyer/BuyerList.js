@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Card, Col, Row } from 'react-bootstrap'
+import { Col, Row } from 'react-bootstrap'
 // import { MdDelete } from 'react-icons/md'
 // import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { RemoveBuyer } from '../../utils/ApiFunctions'

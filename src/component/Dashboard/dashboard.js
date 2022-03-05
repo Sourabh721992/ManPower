@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "../../Css/app.css";
-import { RequirementInsert, LoginAPI } from "../../utils/ApiFunctions";
+import { RequirementInsert, DashboardApi } from "../../utils/ApiFunctions";
 import { Row, Col, Form} from "react-bootstrap";
 import "react-phone-number-input/style.css";
 import UserProfile from "../../utils/UserProfile";
@@ -78,10 +78,12 @@ export default function Dashboard(props) {
     const ResetForm = (isUpdated) => {
 
         if (isUpdated) {
+            // call API
+            const body = {
+                userId : session.UserId
+            }
 
-            let item = JSON.parse(localStorage.getItem("LoginCredential"));
-
-            LoginAPI(item, true).then
+            DashboardApi(body).then
                 ((resData) => {
                     console.warn("res1 : ", JSON.stringify(resData.Message));
                     UserProfile.setSession(resData.Message, true);
@@ -160,9 +162,12 @@ export default function Dashboard(props) {
     };
 
     const updateSession = () => {
-        let item = JSON.parse(localStorage.getItem("LoginCredential"));
+        // call API
+        const body = {
+            userId : session.UserId
+        }
 
-            LoginAPI(item, true).then
+        DashboardApi(body).then
                 ((resData) => {
                     UserProfile.setSession(resData.Message, true);
                     session = UserProfile.getSession()

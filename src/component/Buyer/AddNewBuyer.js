@@ -7,6 +7,7 @@ import { logger } from '../../utils/CommonList';
 import UserProfile from '../../utils/UserProfile';
 // import Header from '../Layout/Header'
 // import Label from '../Controls/Label/Label';
+import validator from 'validator';
 
 export default function AddNewBuyer() {
 
@@ -49,6 +50,7 @@ export default function AddNewBuyer() {
                   placeholder="Email address"
                   required
                   value={email}
+                  validator={validator.isEmail}
                   onChange={(e) => setEmail(e.target.value)}
                   errorMessage={{ required: "Email is required", validator: "Please enter a valid email address" }}
                 />

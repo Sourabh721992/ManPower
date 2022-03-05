@@ -514,9 +514,25 @@ const UpdateWorkerProgressApi = (body) => {
     })
 }
 
+const DashboardApi = (body) => {
+    return new Promise((resolve, reject) => {
+        Client.post("User/Dashboard", body) 
+            .then((resData) => {
+                logger.log("Worker/Dashboard", resData);
+                // DismissThisToast(loadingToast)
+                resolve(resData);
+            })
+            .catch((error) => {
+                logger.log(error)
+                // DismissThisToast(loadingToast)
+                reject(error);
+            });
+    })
+}
+
 export {
     SignupAPI, LoginAPI, TradesApi, RequirementInsert, AddSupplierApi, GetSupplierApi, GetUserProfileApi, UpdateUserProfileApi, GetPendingUsersApi,
     DeletePendingUsersApi, DeleteSupplierApi, AddWorkerApi, GetWorkerApi, GetWorkerListApi, GetRequirementApi, AddMapWorkersApi,
     GetBuyerListApi, RemoveWorkerApi, AddBuyerUser, RemoveBuyer, RequirementUpdateStatusApi, WorkerUpdateStatusApi, UpdateBuyerSupplierRemarks,
-    FetchWorkerProgressApi, UpdateWorkerProgressApi
+    FetchWorkerProgressApi, UpdateWorkerProgressApi, DashboardApi
 }

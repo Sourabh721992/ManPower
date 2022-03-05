@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from "react";
 import Table from 'react-bootstrap/Table'
-import { GetWorkerApi, GetWorkerListApi } from "../../utils/ApiFunctions";
-import { formatShortDate, logger, /*logger*/ } from "../../utils/CommonList";
+import { /*GetWorkerApi,*/ GetWorkerListApi } from "../../utils/ApiFunctions";
+import { formatShortDate, /*logger*/ } from "../../utils/CommonList";
 import UserProfile from "../../utils/UserProfile";
 import { SuccessNotify } from "../Controls/Toast/Toast";
 // import { ToastSuccess } from "../Controls/Toast/Toast";

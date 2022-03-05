@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "../../Css/app.css";
+// import "../../Css/app.css";
 // import Header from "../Layout/Header";
-import { GetUserProfileApi, LoginAPI, UpdateUserProfileApi } from "../../utils/ApiFunctions";
+import { GetUserProfileApi, UpdateUserProfileApi, DashboardApi } from "../../utils/ApiFunctions";
 // import "react-phone-number-input/style.css";
 import PhoneInput, { isValidPhoneNumber, getCountryCallingCode }  from "react-phone-number-input";
 import { Row, Col, Form, InputGroup } from "react-bootstrap";
@@ -9,6 +9,7 @@ import UserProfile from "../../utils/UserProfile";
 import Label from "../Controls/Label/Label";
 import Text from "../Controls/Text/Text";
 import SuccessAlert from "../Controls/alert/successAlert";
+import ReactSpinner from "../Controls/Loader/ReactSpinner";
 
 export default function Profile(props) {
     const [UserProfileAPIData, SetUserProfile] = useState({ UserInfo: {} });
@@ -17,6 +18,7 @@ export default function Profile(props) {
     const [showAlert, SetAlert] = useState({ show: false, isDataSaved: false, message: "" });
     const [validated, setValidated] = useState({ allValidate: false, mobileValidate: null });
     const [contactValidated, setContactValidated] = useState(null);
+    const [isLoading, setIsLoading] = useState(true)
     var session = UserProfile.getSession();
 
     const onChange = (e) => {
@@ -49,12 +51,20 @@ export default function Profile(props) {
             ((resData) => {
                 resData.Message = JSON.parse(resData.Message);
                 SetUserProfile(resData.Message);
-                setContryCode(resData.Message.UserInfo.CountryCode)
-                setMobileNumber("+"+resData.Message.UserInfo.CountryCode + resData.Message.UserInfo.MobileNo);
+                setIsLoading(false)
+
+                if(resData.Message.UserInfo && resData.Message.UserInfo.CountryCode){
+                    setContryCode(resData.Message.UserInfo.CountryCode)
+                    if(resData.Message.UserInfo.MobileNo){
+                        setMobileNumber("+"+resData.Message.UserInfo.CountryCode + resData.Message.UserInfo.MobileNo);
+                    }
+                }
+                
                 SetAlert({ show: false, isDataSaved: false, message: "" });
             }).catch((error) => {
                 // alert("catch Error found in getUserProfile", JSON.stringify(error));
                 SetUserProfile({});
+                setIsLoading(false)
             })
     }
 
@@ -62,7 +72,7 @@ export default function Profile(props) {
         let mobileValidationDisplay = null;
         e.preventDefault();
 
-        if (Mobile_number.trim() === "") {
+        if (Mobile_number.trim() === "" || !contactValidated) {
             let setContactValidatedCopy = contactValidated
             setContactValidatedCopy = false
             setContactValidated(setContactValidatedCopy)
@@ -92,18 +102,22 @@ export default function Profile(props) {
                     // // console.log("Supplier Inserted Successfully", resData);
                     // SetAlert({ show: true, isDataSaved: true, message: resData.Message });
 
-                    let item = JSON.parse(localStorage.getItem("LoginCredential"));
-                    LoginAPI(item, true).then
+                    // let item = JSON.parse(localStorage.getItem("LoginCredential"));
+                    const body = {
+                        userId : session.UserId
+                    }
+
+                    DashboardApi(body).then
                         ((loginRes) => {
                             UserProfile.setSession(loginRes.Message, true);
                             // Refresh the page
-                            window.location.href="/Profile"
+                            // window.location.href="/Profile"
                         })
 
                         
-                    setTimeout(function () {
-                        getUserProfilefromAPI();
-                    }, 1000);
+                    // setTimeout(function () {
+                    //     getUserProfilefromAPI();
+                    // }, 1000);
                 }).catch((error) => {
                     //alert("catch error found Supplier in Dashboard", JSON.stringify(error));
 
@@ -135,6 +149,7 @@ export default function Profile(props) {
 
     return (
         <>
+            <ReactSpinner loading={isLoading} />
             {/* <Header session={session} /> */}
             <div className="DashboardBody">
                 {/* <h2 className="RequireDetlHead"> Account Information </h2> */}

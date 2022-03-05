@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../Css/app.css";
 // import Header from "../Layout/Header";
-import { RequirementInsert, LoginAPI, GetSupplierApi } from "../../utils/ApiFunctions";
+import { RequirementInsert, GetSupplierApi, DashboardApi } from "../../utils/ApiFunctions";
 import { Row, Col, Form } from "react-bootstrap";
 import "react-phone-number-input/style.css";
 import UserProfile from "../../utils/UserProfile";
@@ -115,9 +115,11 @@ export default function AddRequirement() {
 
         if (isUpdated) {
 
-            let item = JSON.parse(localStorage.getItem("LoginCredential"));
+            const body = {
+                userId : session.UserId
+            }
 
-            LoginAPI(item, true).then
+            DashboardApi(body).then
                 ((resData) => {
                     console.warn("res1 : ", JSON.stringify(resData.Message));
                     UserProfile.setSession(resData.Message, true);

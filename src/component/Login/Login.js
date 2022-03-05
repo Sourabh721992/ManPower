@@ -15,14 +15,14 @@ import { BsFillPersonFill, BsFillKeyFill } from "react-icons/bs";
 import { LoginAPI } from "../../utils/ApiFunctions";
 import { TradesApi } from "../../utils/ApiFunctions";
 import {setTrade} from "../../utils/CommonList";
-import SuccessAlert from "../Controls/alert/successAlert";
+// import SuccessAlert from "../Controls/alert/successAlert";
 
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // const history = useHistory();
   const [validated, setValidated] = useState(false);
-  const [showAlert, SetAlert] = useState({ show: false, isDataSaved: false, message: "" });
+  // const [showAlert, SetAlert] = useState({ show: false, isDataSaved: false, message: "" });
 
   const Validate = async (e) => {
 
@@ -58,7 +58,7 @@ export default function Login(props) {
 
       LoginAPI(item).then
         ((resData) => {
-          localStorage.setItem("LoginCredential", JSON.stringify(item));
+          // localStorage.setItem("LoginCredential", JSON.stringify(item));
           UserProfile.setSession(resData.Message, true);
           // // console.log("Login API success");
           // console.log(resData)
@@ -74,11 +74,11 @@ export default function Login(props) {
         }).catch((error) => {
           //alert("catch error found 1", error);
 
-          SetAlert({ show: true, isDataSaved: false, message: error.Message });
+          // SetAlert({ show: true, isDataSaved: false, message: error.Message });
 
-          setTimeout(function () {
-            SetAlert({ show: false, isDataSaved: false, message: "" });
-          }, 2000);
+          // setTimeout(function () {
+          //   SetAlert({ show: false, isDataSaved: false, message: "" });
+          // }, 2000);
         })
     }
   };

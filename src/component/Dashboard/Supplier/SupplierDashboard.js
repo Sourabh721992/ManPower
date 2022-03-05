@@ -8,7 +8,7 @@ import StatusCounter from '../StatusCounter';
 import {FilterButton} from '../../Controls/Buttons/Buttons';
 // import { TradesApi } from '../../../utils/ApiFunctions';
 import { logger } from '../../../utils/CommonList';
-import { LoginAPI } from '../../../utils/ApiFunctions';
+import { DashboardApi } from '../../../utils/ApiFunctions';
 import ReactSpinner from '../../Controls/Loader/ReactSpinner';
 
 export class SupplierDashboard extends Component {
@@ -32,12 +32,14 @@ export class SupplierDashboard extends Component {
         }
 
         // call API
-        let item = JSON.parse(localStorage.getItem("LoginCredential"));
+        const body = {
+            userId : this.state.session.UserId
+        }
+
         let stateCopy = Object.assign({}, this.state);
-        LoginAPI(item, true).then
+        DashboardApi(body).then
             ((resData) => {
                 if(resData.Message){
-                    
                     UserProfile.setSession(resData.Message, true);
                     stateCopy.session = UserProfile.getSession()
                     resData.Message = JSON.parse(resData.Message)

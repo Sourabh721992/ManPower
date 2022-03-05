@@ -140,14 +140,11 @@ export default function Supplier(props) {
 
         DeleteSupplierApi(item).then
             ((resData) => {
-                //resData.Message = JSON.parse(resData.Message);
+                let SupplierDataCopy = Object.assign({}, SupplierData)
 
-                // SetAlert({ show: true, isDataSaved: true, message: resData.Message });
+                SupplierDataCopy.SupplierList.Suppliers = SupplierDataCopy.SupplierList.Suppliers.filter(u => u.Id !== supplierId)
 
-                // setTimeout(function () {
-                //     SetAlert({ show: false, isDataSaved: false, message: "" });
-                //     getSupplier();
-                // }, 3000);
+                SetSupplierList(SupplierDataCopy)
 
 
             }).catch((error) => {
@@ -203,10 +200,22 @@ export default function Supplier(props) {
         }
     };
 
+    const handleFromChild = (action, data) => {
+        if(data){
+            if(action === "deletePendingUser"){
+                let PendingUserDataCopy = [...PendingUserData]
+
+                PendingUserDataCopy = PendingUserDataCopy.filter(u => u.email !== data.Email)
+
+                SetPendingUserList(PendingUserDataCopy)
+            }
+        }
+    }
+
     return (
         <>
             {/* <Header session={session} /> */}
-            <div className="DashboardBody">
+            <div className="mx-5">
                 <Row>
                     <Col sm={3}>
                         <h5 className="RequireDetlHead text-muted ml-4"> Supplier Information </h5>
@@ -245,7 +254,7 @@ export default function Supplier(props) {
                     </Tab>
 
                     <Tab eventKey="pendingSupplier" title="Pending Suppliers">
-                        <PendingList from={"supplier"} pendingList={PendingUserData} response={(email) => onClickDelete(email)} />
+                        <PendingList from={"supplier"} pendingList={PendingUserData} updateParent={handleFromChild} />
                     </Tab>
                 </Tabs>
 

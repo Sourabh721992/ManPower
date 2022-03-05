@@ -12,13 +12,13 @@ const Flight = (props) => {
     const [flightDetails, setFlightInfo] = useState({
         SAReceived: false,
         SASend: false,
-        WPDate: new Date(),
-        FileSubOnlineDate: new Date(),
+        WPDate: null,
+        FileSubOnlineDate: null,
         FileSendTOSelva: false,
-        FileSendPhyDt: new Date(),
-        VISAStampDt: new Date(),
-        ExpectedFlightDt: new Date(),
-        ConfirmedFlightDt: new Date(),
+        FileSendPhyDt: null,
+        VISAStampDt: null,
+        ExpectedFlightDt: null,
+        ConfirmedFlightDt: null,
         RomanionNumber: false,
         WorkerArrivedSafely: true,
         CompanyContactPerson: '',
@@ -123,6 +123,7 @@ const Flight = (props) => {
                                     className="form-control w-100"
                                     onChange={handleOnChange}
                                     value={moment(flightDetails.WPDate).format('YYYY-MM-DD')}
+                                    defaultValue={null}
                                     disabled={session.Role === Role.Buyer}
                                     // max={moment(Date.now()).format("YYYY-MM-DD")}
                                     // required

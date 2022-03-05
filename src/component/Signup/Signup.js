@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import "../../Css/app.css";
+// import "../../Css/app.css";
 // import Header from "../Layout/Header";
 import { SignupAPI } from "../../utils/ApiFunctions";
-import { Row, Col, Form, InputGroup, FormControl, Image } from "react-bootstrap";
+import { Row, Col, Form, Image, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 // import { BsArrowRepeat } from "react-icons/bs";
-import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
-import SuccessAlert from "../Controls/alert/successAlert";
+import PhoneInput, { isValidPhoneNumber, getCountryCallingCode } from "react-phone-number-input";
+// import SuccessAlert from "../Controls/alert/successAlert";
+import validator from "validator";
+import { Radio, TextInput, ValidationForm } from "react-bootstrap4-form-validation";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -18,85 +19,89 @@ export default function Signup() {
   const [Confirm_password, setConfirmPassword] = useState("");
   const [Org_name, setOrgName] = useState("");
   const [Mobile_number, setMobileNumber] = useState("");
+  const [CountryCode, setContryCode] = useState('91');
   const [Role_name, setRole] = useState("B");
-  const [validated, setValidated] = useState({ allValidate: false, mobileValidate: null });
+  // const [validated, setValidated] = useState({ allValidate: false, mobileValidate: null });
   const history = useHistory();
-  const [showAlert, SetAlert] = useState({ show: false, isDataSaved: false, message: "" });
+  // const [showAlert, SetAlert] = useState({ show: false, isDataSaved: false, message: "" });
+  const [contactValidated, setContactValidated] = useState(null);
 
   // const onChangeMobileNumber = (e) => {
   //   setMobileNumber(e.target.value)
   //   setValidated({ allValidate: validated.allValidate, mobileValidate: true })
   // }
 
-  const Validate = async (e) => {
+
+  const onSubmit = (e) => {
     e.preventDefault();
-    let mobile = await Mobile_number;
-    let Phone_number = "";
-    if (mobile)
-      Phone_number = await mobile.substr(-10, 10);
-    let Email_ID = new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(
-      email
-    );
 
-    let mobileValidationDisplay = null;
+    if (Mobile_number.trim() === "") {
+      let setContactValidatedCopy = contactValidated
+      setContactValidatedCopy = false
+      setContactValidated(setContactValidatedCopy)
+      return
+    }
 
-    //Validations
-    if (Email_ID === false || First_name === "" || Last_name === "" || password === "" || Confirm_password === "" || Org_name === "" || (Mobile_number === "") || Role_name === "") {
+    let ContactNo = Mobile_number.replace("+"+CountryCode, "")
 
-      if (!Mobile_number) {
-        mobileValidationDisplay = true;
+    let item = {
+      Email: email.toLocaleLowerCase(),
+      FirstName: First_name,
+      LastName: Last_name,
+      Password: password,
+      Role: Role_name,
+      OrgName: Org_name,
+      MobileNo: ContactNo,
+      CountryCode: CountryCode,
+    };
+
+    SignupAPI(item).then
+      ((resData) => {
+        console.warn("res", resData);
+
+        // SetAlert({ show: true, isDataSaved: true, message: resData.Message });
+
+        setTimeout(function (item) {
+          // SetAlert({ show: false, isDataSaved: false, message: "" });
+          history.push("/");
+        }, 1500)
+
+
+      }).catch((error) => {
+        // alert("catch error found", error);
+
+        // SetAlert({ show: true, isDataSaved: true, message: error.Message });
+
+        // setTimeout(function (item) {
+        //   SetAlert({ show: false, isDataSaved: false, message: "" });
+        // }, 1500)
+
+      })
+  }
+
+  const matchPassword = (value) => {
+    return value && value === password;
+  }
+
+  const handleContactNo = (value) => {
+    if (value) {
+      setMobileNumber(value)
+      if (isValidPhoneNumber(value)) {
+        setContactValidated(true)
       }
       else {
-        mobileValidationDisplay = false
+        setContactValidated(false)
       }
-
-      setValidated({ allValidate: true, mobileValidate: mobileValidationDisplay })
-    } else {
-      let countryCode = await Mobile_number;
-      let country_Code = await countryCode.slice(0, -10);
-      let item = {
-        Email: email,
-        FirstName: First_name,
-        LastName: Last_name,
-        Password: password,
-        Role: Role_name,
-        OrgName: Org_name,
-        MobileNo: Phone_number,
-        CountryCode: country_Code,
-      };
-      /*  Client.post("SignUp", item)  //Signup API Call
-         .then((resData) => {
-           console.warn("res", resData);
-           history.push("/Login");
-         })
-         .catch((error) => {
-           alert("catch error found", error);
-         }); */
-
-      SignupAPI(item).then
-        ((resData) => {
-          console.warn("res", resData);
-
-          SetAlert({ show: true, isDataSaved: true, message: resData.Message });
-
-          setTimeout(function (item) {
-            SetAlert({ show: false, isDataSaved: false, message: "" });
-            history.push("/");
-          }, 1500)
-
-
-        }).catch((error) => {
-          // alert("catch error found", error);
-
-          SetAlert({ show: true, isDataSaved: true, message: error.Message });
-
-          setTimeout(function (item) {
-            SetAlert({ show: false, isDataSaved: false, message: "" });
-          }, 1500)
-
-        })
     }
-  };
+  }
+
+  const handleCountryChange = (value) => {
+    if (value) {
+
+      setContryCode(getCountryCallingCode(value))
+
+    }
+  }
 
   return (
     <>
@@ -145,198 +150,160 @@ export default function Signup() {
               </Link>
             </span>
           </h4>
-          <Form noValidate validated={validated.allValidate} onSubmit={Validate}>
-            <Form.Group className="mb-1">
-              <Row>
-                <Col sm={12}>
-                  <InputGroup className="mb-3">
-                    <Form.Label className="black-600-text">Email</Form.Label>
-                    <FormControl
-                      aria-label="Email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Please Enter Email
-                    </Form.Control.Feedback>
-                  </InputGroup>
-                  <Form.Text className="text-muted">
+
+          <ValidationForm onSubmit={onSubmit}>
+            <Row className='form-group'>
+              <Col sm={6}>
+                <label className="col-form-label font-weight-bolder" >Email<span style={{ color: 'red' }}>*</span></label>
+                <TextInput
+                  id="emailId"
+                  type="email"
+                  name="email"
+                  className="form-control w-100"
+                  placeholder="Enter Email Address"
+                  onChange={(e) => setEmail(e.target.value)}
+                  defaultValue={email}
+                  required
+                  validator={validator.isEmail}
+                  errorMessage={{
+                    validator: "Please enter valid email address",
+                    required: "Please enter email address"
+                  }}
+                />
+                <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
                   </Form.Text>
-                </Col>
-              </Row>
-              <Row className="mt-3">
-                <Col sm={6}>
-                  <InputGroup className="mb-3">
-                    <Form.Label className="black-600-text">First Name</Form.Label>
-                    <FormControl
-                      aria-label="First Name"
-                      value={First_name}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Please Enter First Name
-                    </Form.Control.Feedback>
-                  </InputGroup>
-                </Col>
-                <Col sm={6}>
-                  <InputGroup className="mb-3">
-                    <Form.Label className="black-600-text">Last Name</Form.Label>
-                    <FormControl
-                      aria-label="Last Name"
-                      value={Last_name}
-                      onChange={(e) => setLastName(e.target.value)}
-                      required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Please Enter Last Name
-                    </Form.Control.Feedback>
-                  </InputGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={6}>
-                  <InputGroup className="mb-3">
-                    <Form.Label className="black-600-text">Password</Form.Label>
-                    <FormControl
-                      type="password"
-                      aria-label="Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Please Enter Password
-                    </Form.Control.Feedback>
-                  </InputGroup>
-                </Col>
-                <Col sm={6}>
-                  <InputGroup className="mb-3">
-                    <Form.Label className="black-600-text">
-                      Confirm Password
-                    </Form.Label>
-                    <FormControl
-                      type="password"
-                      aria-label="Confirm Password"
-                      value={Confirm_password}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Please Enter Confirm Password
-                    </Form.Control.Feedback>
-                  </InputGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={12}>
-                  <InputGroup className="mb-3">
-                    <Form.Label className="black-600-text">
-                      Organization Name
-                    </Form.Label>
-                    <FormControl
-                      aria-label="Organization Name"
-                      value={Org_name}
-                      onChange={(e) => setOrgName(e.target.value)}
-                      required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Please Enter Organization Name
-                    </Form.Control.Feedback>
-                  </InputGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={5}>
-                  <InputGroup className="mb-2">
-                    <Form.Label className="black-600-text">Mobile No.</Form.Label>
-                    <Row>
-                      <Col xs={12} style={{ paddingLeft: 0 }}>
-                        <InputGroup>
-                          <PhoneInput
-                            aria-label="mobile number"
-                            className="form-control"
-                            placeholder="Enter phone number"
-                            value={Mobile_number}
-                            onChange={setMobileNumber}
-                            rules={{ required: true }}
-                            style={{ borderColor: validated.mobileValidate == null ? "#ced4da" : validated.mobileValidate === true ? "red" : "green" }}
-                          />
-                          <Form.Control.Feedback id="MobileFeedback" type="invalid" style={{ display: validated.mobileValidate == null ? "none" : validated.mobileValidate === true ? "block" : "none" }}>
-                            Please Enter Mobile Number
-                          </Form.Control.Feedback>
-                        </InputGroup>
-                      </Col>
-                    </Row>
-                  </InputGroup>
-                </Col>
-                <Col sm={7}>
-                  <InputGroup>
-                    <Form.Label className="black-600-text">Role</Form.Label>
-                    <Row style={{ width: "100%" }}>
-                      <Col sm={5}>
-                        <InputGroup className="mt-2 mb-3 black-600-text">
-                          <InputGroup.Radio
-                            name="Role"
-                            aria-label="Radio button for following text input"
-                            value={"B"}
-                            onChange={() => setRole("B")}
-                            required
-                            feedback="Please choose one"
-                            feedbackType="invalid"
-                            checked={Role_name === "B" ? true : false}
-                          />
-                          Hire Workers
-
-                          <Form.Control.Feedback type="invalid">
-                            Please choose one
-                          </Form.Control.Feedback>
-                        </InputGroup>
-                      </Col>
-                      <Col sm={7}>
-                        <InputGroup className="mt-2 mb-3 black-600-text">
-                          <InputGroup.Radio
-                            name="Role"
-                            aria-label="Radio button for following text input"
-                            value={"S"}
-                            onChange={() => setRole("S")}
-                            feedback="Please choose one"
-                            feedbackType="invalid"
-                            required
-                            checked={Role_name === "S" ? true : false}
-                          />
-                          Supply Workers
-
-                          <Form.Control.Feedback type="invalid">
-                            Please choose one
-                          </Form.Control.Feedback>
-                        </InputGroup>
-                      </Col>
-                    </Row>
-                  </InputGroup>
-                </Col>
-              </Row>
-            </Form.Group>
-            <Row>
-              <Col sm={12} style={{ textAlign: "right" }}>
-                <button type="submit" className="btn button">
-                  Register
-                </button>
-                {/* <Link className="black-text semibold ms-4 refresh">
-                  <BsArrowRepeat className="refresh-icon" /> 
-                </Link> */}
               </Col>
             </Row>
-            <Row>
-              <Col sm={4}>
+            <Row className="form-group">
+              <Col>
+                <label className="col-form-label font-weight-bolder" >First Name<span style={{ color: 'red' }}>*</span></label>
+                <TextInput
+                  id="fname-input"
+                  name="First_name"
+                  type="text"
+                  placeholder="Enter Your First Name"
+                  className="form-control w-100"
+                  onChange={(e) => setFirstName(e.target.value)}
+                  defaultValue={First_name}
+                  required
+                  errorMessage={{
+                    required: "Please enter first name"
+                  }}
+
+                />
               </Col>
-              <Col sm={4} style={{ textAlign: "center" }}>
-                <SuccessAlert show={showAlert.show} message={showAlert.message} variant={showAlert.isDataSaved === true ? "success" : "danger"} />
+              <Col>
+                <label className="col-form-label font-weight-bolder" >Last Name<span style={{ color: 'red' }}>*</span></label>
+                <TextInput
+                  id="lname-input"
+                  name="Last_name"
+                  type="text"
+                  placeholder="Enter Your last Name"
+                  className="form-control w-100"
+                  onChange={(e) => setLastName(e.target.value)}
+                  defaultValue={Last_name}
+                  required
+                  errorMessage={{
+                    required: "Please enter last name",
+                  }}
+                />
               </Col>
             </Row>
-          </Form>
+            <Row className="form-group">
+              <Col>
+                <label className="col-form-label font-weight-bolder" >Password<span style={{ color: 'red' }}>*</span></label>
+                <TextInput
+                  id="password-input"
+                  name="password"
+                  type="password"
+                  placeholder="Enter Password"
+                  className="form-control w-100"
+                  onChange={(e) => setPassword(e.target.value)}
+                  defaultValue={password}
+                  required
+                  pattern="(?=.*[A-Z]).{6,}"
+                  errorMessage={{ required: "Password is required", pattern: "Password should be at least 6 characters and contains at least one upper case letter" }}
+                  autoComplete="off"
+                />
+              </Col>
+              <Col>
+                <label className="col-form-label font-weight-bolder" >Confirm Password<span style={{ color: 'red' }}>*</span></label>
+                <TextInput
+                  id="cpassword-input"
+                  name="Confirm_password"
+                  type="password"
+                  placeholder="Confirm Password"
+                  className="form-control w-100"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  defaultValue={Confirm_password}
+                  required
+                  validator={matchPassword}
+                  errorMessage={{ required: "Confirm password is required", validator: "Password does not match" }}
+                  autoComplete="off"
+                />
+              </Col>
+            </Row>
+            <Row className="form-group">
+              <Col>
+                <label className="col-form-label font-weight-bolder" >Organization Name<span style={{ color: 'red' }}>*</span></label>
+                <TextInput
+                  id="orgname-input"
+                  name="Org_name"
+                  type="text"
+                  placeholder="Enter Organization Name"
+                  className="form-control w-100"
+                  onChange={(e) => setOrgName(e.target.value)}
+                  defaultValue={Org_name}
+                  required
+                  errorMessage={{ required: "Organization name is required" }}
+                />
+              </Col>
+            </Row>
+            <Row className="form-group">
+              <Col>
+                <label className="col-form-label font-weight-bolder" >Mobile No.<span style={{ color: 'red' }}>*</span></label>
+                <PhoneInput
+                  name="ContactNo"
+                  aria-label="mobile number"
+                  className="form-control w-100"
+                  placeholder="Enter phone number"
+                  // value={basicDetails.ContactNo}
+                  onChange={handleContactNo}
+                  onCountryChange={handleCountryChange}
+                  defaultCountry={"IN"}
+                  international
+                  required
+                  countryCallingCodeEditable={false}
+                // error={basicDetails.ContactNo ? (isValidPhoneNumber(basicDetails.ContactNo) ? undefined : 'Invalid phone number') : 'Phone number required'}
+                // rules={{ required: true }}
+                // style={{ borderColor: validated.mobileValidate == null ? "#ced4da" : validated.mobileValidate === true ? "red" : "green" }}
+                />
+                {contactValidated === false ?
+                  <small className='text-danger'>
+                    Please enter valid contact no.
+                  </small>
+                  :
+                  null
+                }
+              </Col>
+              <Col className="d-flex align-items-center">
+                <Radio.RadioGroup name="Role_name" required valueSelected={Role_name}
+                  onChange={(e) => setRole(e.target.value)}>
+                  <Radio.RadioItem id="B" label="Hire Workers" value="B" />
+                  <Radio.RadioItem id="S" label="Supply Workers" value="S" />
+                </Radio.RadioGroup>
+              </Col>
+            </Row>
+
+            <Row className='mt-5'>
+              <Col className='d-flex justify-content-end'>
+                {/* <SuccessAlert show={showAlert.show} message={showAlert.message} variant={showAlert.isDataSaved === true ? "success" : "danger"} /> */}
+                <Button type="submit" variant="primary">Register</Button>
+              </Col>
+            </Row>
+          </ValidationForm>
+          
         </div>
       </div>
     </>

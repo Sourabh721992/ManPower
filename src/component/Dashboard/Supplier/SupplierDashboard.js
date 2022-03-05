@@ -9,6 +9,7 @@ import {FilterButton} from '../../Controls/Buttons/Buttons';
 // import { TradesApi } from '../../../utils/ApiFunctions';
 import { logger } from '../../../utils/CommonList';
 import { LoginAPI } from '../../../utils/ApiFunctions';
+import ReactSpinner from '../../Controls/Loader/ReactSpinner';
 
 export class SupplierDashboard extends Component {
 
@@ -19,7 +20,8 @@ export class SupplierDashboard extends Component {
         this.state = {
             session,
             StatusCounter: session.StatusCounter,
-            Requirements: session.Requirements
+            Requirements: session.Requirements,
+            isLoading: true
         }
     }
 
@@ -31,11 +33,13 @@ export class SupplierDashboard extends Component {
 
         // call API
         let item = JSON.parse(localStorage.getItem("LoginCredential"));
-
+        let stateCopy = Object.assign({}, this.state);
         LoginAPI(item, true).then
             ((resData) => {
                 if(resData.Message){
-                    let stateCopy = Object.assign({}, this.state);
+                    
+                    UserProfile.setSession(resData.Message, true);
+                    stateCopy.session = UserProfile.getSession()
                     resData.Message = JSON.parse(resData.Message)
                     if(resData.Message.StatusCounter ){
                         stateCopy.StatusCounter = resData.Message.StatusCounter
@@ -43,16 +47,26 @@ export class SupplierDashboard extends Component {
                     if(resData.Message.Requirements){
                         stateCopy.Requirements = resData.Message.Requirements
                     }
+                    stateCopy.isLoading = false
                     this.setState(stateCopy)
                 }
 
             }).catch((error) => {
+                stateCopy.isLoading = false
+                this.setState(stateCopy)
                 // alert("catch error found 1", error);
             })
         
     }
 
     render() {
+        if (this.state.isLoading) {
+            return (
+                <div className='my-3 mx-5'>
+                    <ReactSpinner loading={this.state.isLoading} />
+                </div>
+            )
+        }                                                                      
         return (
             <>
                 {/* <Header session={this.state.session} /> */}

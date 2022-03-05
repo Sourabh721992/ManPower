@@ -10,9 +10,9 @@ const Pcc = (props) => {
 
     const session = UserProfile.getSession()
     const [pccDetails, setPCCInfo] = useState({
-        PCCDate: new Date(),
-        PCCAppliedDate: new Date(),
-        PCCAppointmentDate: new Date(),
+        PCCDate: null,
+        PCCAppliedDate: null,
+        PCCAppointmentDate: null,
         PCCLoginUsername: '',
         PCCLoginPassword: '',
         PCCStatus: '',

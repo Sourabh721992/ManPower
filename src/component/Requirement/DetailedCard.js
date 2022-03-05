@@ -5,7 +5,7 @@ import { BsFillPlusCircleFill } from 'react-icons/bs'
 import { withRouter } from 'react-router-dom'
 import { RequirementStatus, Role } from '../../master-data'
 import { RequirementUpdateStatusApi } from '../../utils/ApiFunctions'
-import { encodeBase64, getMoneyFormat, trimCutString } from '../../utils/CommonList'
+import { encodeBase64, getMoneyFormat, trimCutString , getStringTime} from '../../utils/CommonList'
 import UserProfile from '../../utils/UserProfile'
 import { PrimaryButton, SuccessButton } from '../Controls/Buttons/Buttons'
 // import { AddIconBtn } from '../Controls/Buttons/IconButtons'
@@ -159,7 +159,7 @@ const DetailedCard = (props) => {
                                     RequirementData.Status === RequirementStatus.PENDING ?
                                         <PrimaryButton text={"Proceed Ahead"} onClickEvent={handleProceedAheadConfirm} />
                                     :
-                                    RequirementData.Status === RequirementStatus.PROCESSING ?
+                                    RequirementData.Status === RequirementStatus.PROCESSING && session.Role === Role.Buyer ?
                                         <SuccessButton text={"Complete Requirement"} onClickEvent={handleCompleteConfirm} />
                                         : null
                                 }
@@ -221,13 +221,17 @@ const DetailedCard = (props) => {
                                                                 }</td>
                                                                 <td>{item.TradeName}</td>
                                                                 <td>{
-                                                                    getMoneyFormat(item.MaxSalary, item.Currency)}-{getMoneyFormat(item.MinSalary, item.Currency)
+                                                                        item.Currency && item.MinSalary && item.MinSalary > 0 && item.MaxSalary && item.MaxSalary > 0 ?
+                                                                            <span>
+                                                                                {getMoneyFormat(item.MaxSalary, item.Currency)}-{getMoneyFormat(item.MinSalary, item.Currency)}
+                                                                            </span>
+                                                                            : <span>Not Disclosed</span>
                                                                     }</td>
                                                                 <td>{
                                                                     item.WorkerCount
                                                                 }</td>
                                                                 <td>{
-                                                                    item.FromWH + "-" + item.ToWh
+                                                                    getStringTime(item.FromWH) + "-" + getStringTime(item.ToWh)
                                                                 }</td>
                                                                 <td>{item.WorkingDays}</td>
                                                                 <td>{item.IfFoodProvided ? "Yes" : "No"}</td>

@@ -9,6 +9,9 @@ import { BsFileText, BsThreeDotsVertical } from 'react-icons/bs'
 import { withRouter } from 'react-router-dom'
 import UserProfile from '../../utils/UserProfile'
 import UpdateWorkerStatus from './UpdateWorkerStatus'
+import { LinkButton } from '../Controls/Buttons/Buttons'
+import { BsChatSquareText } from 'react-icons/bs'
+
 
 
 const AssignedWorkerTable = (props) => {
@@ -75,19 +78,29 @@ const AssignedWorkerTable = (props) => {
         </span>
     ));
 
-    const showDescription = (wCode) => {
+    const showRemark = (wCode) => {
         let requirementDataCopy = Object.assign({}, details);
 
         requirementDataCopy.Workers.forEach(w => {
             if (w.Code === wCode) {
-                w.showMoreRemark = !w.showMoreRemark
+                w.showRemark = true
             }
         })
 
         setDetails(requirementDataCopy)
     }
 
-console.log(details)
+    const closeRemark = () => {
+        let requirementDataCopy = Object.assign({}, details);
+
+        requirementDataCopy.Workers.forEach(w => {
+                w.showRemark = false
+        })
+
+        setDetails(requirementDataCopy)
+    }
+
+// console.log(details)
     if (details.Workers && details.Workers.length > 0) {
         return (
             <Card className='shadow-sm mt-4'>
@@ -129,29 +142,21 @@ console.log(details)
                                         <td style={{ "whiteSpace": "normal", "wordBreak": "break-word", "maxWidth": "160px" }}>
                                             {
                                                 Remarks ?
-                                                    Remarks.length > 40 && !item.showMoreRemark
-                                                        ?
-                                                        <>
-                                                            {Remarks.slice(0, 40)}...
-                                                            <span
-                                                                className="text-primary"
-                                                                style={{ "cursor": "pointer" }}
-                                                                onClick={() => showDescription(item.Code)}
-                                                            >more</span>
-                                                        </>
-                                                        :
-                                                        Remarks.length > 40
-                                                            ?
-                                                            <>
-                                                                {Remarks}
-                                                                <span
-                                                                    className="text-primary"
-                                                                    style={{ "cursor": "pointer" }}
-                                                                    onClick={() => showDescription(item.Code)}
-                                                                > hide</span>
-                                                            </>
-                                                            :
-                                                            Remarks
+                                                    <LinkButton onClickEvent={() => showRemark(item.Code)} 
+                                                    text={Remarks.length > 40 ?
+                                                        Remarks.slice(0, 40) + "..."
+                                                        : Remarks} className="p-0"/>
+                                                    // <span
+                                                    //     className="text-primary"
+                                                    //     style={{ "cursor": "pointer" }}
+                                                    //     onClick={() => showRemark(item.Code)}
+                                                    // >
+                                                    //     {
+                                                    //         Remarks.length > 40 ?
+                                                    //             Remarks.slice(0, 40) + "..."
+                                                    //             : Remarks
+                                                    //     }
+                                                    // </span>
                                                     :
                                                     '-'
                                             }
@@ -159,15 +164,15 @@ console.log(details)
                                         {
                                             details.Status !== RequirementStatus.COMPLETED ?
                                                 <td>
+                                                    {/* DROPDOWN ITEM - REMARKS */}
+                                                    <Remark show={item.showRemark} closeRemark={closeRemark} requirementCode={details.Code} workerCode={item.Code} SellerRemarks={item.SellerRemarks} BuyerRemarks={item.BuyerRemarks} />
                                                     <Dropdown drop="left">
                                                         <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
                                                             <BsThreeDotsVertical />
                                                         </Dropdown.Toggle>
 
                                                         <Dropdown.Menu>
-                                                            {/* DROPDOWN ITEM - REMARKS */}
-                                                            <Remark requirementCode={details.Code} workerCode={item.Code} SellerRemarks={item.SellerRemarks} BuyerRemarks={item.BuyerRemarks} />
-
+                                                        <Dropdown.Item eventKey="chat" onClick={() => showRemark(item.Code)}><BsChatSquareText className='text-primary' /> Remarks</Dropdown.Item>
                                                             {/* delete assigned worker */}
                                                             {
                                                                 details.Status === RequirementStatus.PENDING ?

@@ -12,10 +12,10 @@ const Selection = (props) => {
 
     const [selectionDetails, setSelectionInfo] = useState({
         ReceivedByClient: false,
-        SelectConfirmDate: new Date(),
+        SelectConfirmDate: null,
         SelectedBy: '',
         SelectionConfirmedByHead: false,
-        DocsSendDate : new Date(),
+        DocsSendDate : null,
     })
 
     const prevProps = usePrevious(props.workerData);

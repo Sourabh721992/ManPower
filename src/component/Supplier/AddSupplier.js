@@ -6,6 +6,7 @@ import { AddSupplierApi } from '../../utils/ApiFunctions'
 import { logger } from '../../utils/CommonList'
 import UserProfile from '../../utils/UserProfile'
 // import Header from '../Layout/Header'
+import validator from 'validator';
 
 export default function AddSupplier() {
     const [email, setEmail] = useState("")
@@ -52,6 +53,7 @@ export default function AddSupplier() {
                     placeholder="Email address"
                     required
                     value={email}
+                    validator={validator.isEmail}
                     onChange={(e) => setEmail(e.target.value)}
                     errorMessage={{ required: "Email is required", validator: "Please enter a valid email address" }}
                   />

@@ -24,7 +24,12 @@ export default function Text(props) {
                     onChange={props.onChange}
                     name={props.name}
                     style={{ height: "30px", width: "100%" }}
+                    max={props.max}
+                    min={props.min}
                 />
+                <Form.Control.Feedback type={props.feedBackType}>
+                    {props.feedBack}
+                </Form.Control.Feedback>
                 {/*  {feedback} */}
             </InputGroup>
         </>

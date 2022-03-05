@@ -5,7 +5,7 @@ import { RequirementInsert, LoginAPI, GetSupplierApi } from "../../utils/ApiFunc
 import { Row, Col, Form } from "react-bootstrap";
 import "react-phone-number-input/style.css";
 import UserProfile from "../../utils/UserProfile";
-import {getTrades} from "../../utils/CommonList";
+import {getTrades, setIntTime} from "../../utils/CommonList";
 import Label from "../Controls/Label/Label";
 import Dropdown from "../Controls/Dropdown/Dropdown";
 import Text from "../Controls/Text/Text";
@@ -17,7 +17,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 const currencies = require('currencies.json');
 
 export default function AddRequirement() {
-    let InitialTradeValue = { "TradeName": "", "workingDays": 5, "currency": "", "trade": "-1", "workers": 1, "salaryFrom": 1, "salaryTo": 1, "workHoursFrom": "09:00", "workHoursTo": "18:00", "FoodExpense": "Provided", "AccTrans": "Provided" };
+    let InitialTradeValue = { "TradeName": "", "workingDays": 5, "currency": "", "trade": "-1", "workers": 1, "salaryFrom": 0, "salaryTo": 0, "workHoursFrom": "09:00", "workHoursTo": "18:00", "FoodExpense": "Provided", "AccTrans": "Provided" };
     let InitialStateValues = { "supplier": "", rating: "", client: "" };
     const [supplierSelectedValue, formStateValue] = useState(InitialStateValues);
     const [TradeStateValue, SetTradeStateValue] = useState([InitialTradeValue]);
@@ -167,8 +167,8 @@ export default function AddRequirement() {
 
             let arr = [];
             TradeStateValue.forEach((item) => {
-                let FromWH = parseInt(item.workHoursFrom.split(":")[0]);
-                let ToWh = parseInt(item.workHoursTo.split(":")[0]);
+                let FromWH = setIntTime(item.workHoursFrom) //parseInt(item.workHoursFrom.split(":")[0]);
+                let ToWh = setIntTime(item.workHoursTo) //parseInt(item.workHoursTo.split(":")[0]);
                 let IfFoodProvided = item.FoodExpense === "Provided" ? true : false
                 let IfAccProvided = item.AccTrans === "Provided" ? true : false
                 arr.push({ "TradeName": item.TradeName, "TradeId": item.trade, "WorkerCount": parseInt(item.workers), "Currency": item.currency, "MinSalary": parseInt(item.salaryFrom), "MaxSalary": parseInt(item.salaryTo), "FromWH": FromWH, "ToWh": ToWh, "IfFoodProvided": IfFoodProvided, "IfAccProvided": IfAccProvided, "WorkingDays": parseInt(item.workingDays) })
@@ -275,7 +275,17 @@ export default function AddRequirement() {
                                                 <Col sm={4}>
                                                     <Row>
                                                         <Col sm={5}>
-                                                            <Text required={true} key={"txtWorkingDays" + index} value={TradeStateValue[index]["workingDays"]} id={"txtWorkingDays" + index} name={"trade-" + index + "_workingDays"} type="number" onChange={(e) => updateTradeItemValue(e, index)} />
+                                                            <Text 
+                                                                required={true} 
+                                                                key={"txtWorkingDays" + index} 
+                                                                value={TradeStateValue[index]["workingDays"]} 
+                                                                id={"txtWorkingDays" + index} 
+                                                                name={"trade-" + index + "_workingDays"} 
+                                                                type="number" 
+                                                                onChange={(e) => updateTradeItemValue(e, index)} 
+                                                                max={7} min={0} 
+                                                                feedBackType="invalid"
+                                                                feedBack="Maximum 7 working days"/>
                                                         </Col>
                                                         <Col sm={3}>
                                                             <Label value="Workers" id={"AddRequirementWorkers" + index} />
@@ -294,21 +304,41 @@ export default function AddRequirement() {
                                             <Row style={{ marginTop: "5px" }}>
                                                 <Col sm={1} style={{ marginLeft: "1%" }}>
                                                     <Label value="Salary" id={"AddRequirementSalary" + index} />
-                                                    <span style={{ color: "red" }}>&nbsp;*</span>
+                                                    {/* <span style={{ color: "red" }}>&nbsp;*</span> */}
                                                 </Col>
                                                 <Col sm={4} style={{ width: "31.5%" }}>
                                                     <Row>
                                                         <Col sm={5}>
-                                                            <Dropdown required={true} key={"ddlCurrency" + index} id={"ddlCurrency" + index} name={"trade" + index + "_currency"} value={TradeStateValue[index]["currency"]} data={Currency} valueColumn="code" textColumn="name" addDefaultText={true} defaultText="Select Currency" onChange={(e) => updateTradeItemValue(e, index)} />
+                                                            <Dropdown required={false} key={"ddlCurrency" + index} id={"ddlCurrency" + index} name={"trade" + index + "_currency"} value={TradeStateValue[index]["currency"]} data={Currency} valueColumn="code" textColumn="name" addDefaultText={true} defaultText="Select Currency" onChange={(e) => updateTradeItemValue(e, index)} />
                                                         </Col>
                                                         <Col sm={3}>
-                                                            <Text required={true} key={"txtFromSalary" + index} value={TradeStateValue[index]["salaryFrom"]} id={"txtFromSalary" + index} name={"trade-" + index + "_salaryFrom"} type="number" onChange={(e) => updateTradeItemValue(e, index)} />
+                                                            <Text 
+                                                                required={TradeStateValue[index]["currency"] ? true : false} 
+                                                                key={"txtFromSalary" + index} 
+                                                                value={TradeStateValue[index]["salaryFrom"]} 
+                                                                id={"txtFromSalary" + index} 
+                                                                name={"trade-" + index + "_salaryFrom"} 
+                                                                type="number" 
+                                                                onChange={(e) => updateTradeItemValue(e, index)} 
+                                                                min={0} 
+                                                                feedBackType="invalid"
+                                                                feedBack="Enter valid salary"/>
                                                         </Col>
                                                         <Col sm={1}>
                                                             <Label value="To" id={"AddRequirementToSalary" + index} />
                                                         </Col>
                                                         <Col sm={3}>
-                                                            <Text required={true} key={"txtToSalary" + index} value={TradeStateValue[index]["salaryTo"]} id={"txtToSalary" + index} name={"trade-" + index + "_salaryTo"} type="number" onChange={(e) => updateTradeItemValue(e, index)} />
+                                                            <Text 
+                                                                required={TradeStateValue[index]["currency"] ? true : false} 
+                                                                key={"txtToSalary" + index} 
+                                                                value={TradeStateValue[index]["salaryTo"]} 
+                                                                id={"txtToSalary" + index} 
+                                                                name={"trade-" + index + "_salaryTo"} 
+                                                                type="number" 
+                                                                onChange={(e) => updateTradeItemValue(e, index)} 
+                                                                min={0}
+                                                                feedBackType="invalid"
+                                                                feedBack="Enter valid salary"/>
                                                         </Col>
                                                     </Row>
                                                 </Col>

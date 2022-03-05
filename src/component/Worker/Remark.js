@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { Button, Card, Dropdown, Form, Modal } from 'react-bootstrap'
-import { BsChatSquareText } from 'react-icons/bs'
+import { Button, Card, Form, Modal } from 'react-bootstrap'
 import { MdSend } from 'react-icons/md'
 import { Role } from '../../master-data'
 import { UpdateBuyerSupplierRemarks } from '../../utils/ApiFunctions'
@@ -12,19 +11,19 @@ const Remark = (props) => {
     const session = UserProfile.getSession()
 
     const workerCode = props.workerCode
+    const showModal = props.show
     const requirementCode = props.requirementCode
-    const [showModal, setShowModal] = useState(false)
+    // const [showModal, setShowModal] = useState(false)
     const [buyerRemark, setBuyerRemark] = useState(props.BuyerRemarks)
     const [supplierRemark, setSupplierRemark] = useState(props.SellerRemarks)
     const [tempRemark, setTempRemark] = useState("")
 
-    const handleRemarkModal = () => {
-        setShowModal(true)
-    }
-
     const closeRemarkModal = () => {
-        setShowModal(false)
+        // setShowModal(false)
         setTempRemark("")
+        if(props.closeRemark){
+            props.closeRemark()
+        }
     }
 
     const handleUpdateRemark = () => {
@@ -43,7 +42,7 @@ const Remark = (props) => {
             else {
                 setSupplierRemark(tempRemark)
             }
-            setTempRemark("")
+            closeRemarkModal()
         }).catch(() => {
             
         })
@@ -89,8 +88,7 @@ const Remark = (props) => {
 
     return (
         <Fragment>
-            <Dropdown.Item eventKey="chat" onClick={handleRemarkModal}><BsChatSquareText className='text-primary' /> Remarks</Dropdown.Item>
-            <Modal scrollable show={showModal} onHide={closeRemarkModal}>
+            <Modal key={workerCode} scrollable show={showModal} onHide={closeRemarkModal}>
                 <Modal.Header>
                     <Modal.Title as="h5">Recent Remarks</Modal.Title>
                 </Modal.Header>

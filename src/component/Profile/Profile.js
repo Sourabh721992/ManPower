@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import "../../Css/app.css";
 // import Header from "../Layout/Header";
 import { GetUserProfileApi, LoginAPI, UpdateUserProfileApi } from "../../utils/ApiFunctions";
-import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
+// import "react-phone-number-input/style.css";
+import PhoneInput, { isValidPhoneNumber, getCountryCallingCode }  from "react-phone-number-input";
 import { Row, Col, Form, InputGroup } from "react-bootstrap";
 import UserProfile from "../../utils/UserProfile";
 import Label from "../Controls/Label/Label";
@@ -13,9 +13,10 @@ import SuccessAlert from "../Controls/alert/successAlert";
 export default function Profile(props) {
     const [UserProfileAPIData, SetUserProfile] = useState({ UserInfo: {} });
     const [Mobile_number, setMobileNumber] = useState("");
+    const [CountryCode, setContryCode] = useState('');
     const [showAlert, SetAlert] = useState({ show: false, isDataSaved: false, message: "" });
     const [validated, setValidated] = useState({ allValidate: false, mobileValidate: null });
-
+    const [contactValidated, setContactValidated] = useState(null);
     var session = UserProfile.getSession();
 
     const onChange = (e) => {
@@ -48,7 +49,8 @@ export default function Profile(props) {
             ((resData) => {
                 resData.Message = JSON.parse(resData.Message);
                 SetUserProfile(resData.Message);
-                setMobileNumber(resData.Message.UserInfo.CountryCode + " " + resData.Message.UserInfo.MobileNo);
+                setContryCode(resData.Message.UserInfo.CountryCode)
+                setMobileNumber("+"+resData.Message.UserInfo.CountryCode + resData.Message.UserInfo.MobileNo);
                 SetAlert({ show: false, isDataSaved: false, message: "" });
             }).catch((error) => {
                 // alert("catch Error found in getUserProfile", JSON.stringify(error));
@@ -59,6 +61,13 @@ export default function Profile(props) {
     const Validate = async (e) => {
         let mobileValidationDisplay = null;
         e.preventDefault();
+
+        if (Mobile_number.trim() === "") {
+            let setContactValidatedCopy = contactValidated
+            setContactValidatedCopy = false
+            setContactValidated(setContactValidatedCopy)
+            return
+        }
 
         //Validations
         if (UserProfileAPIData.UserInfo.Email === "" || UserProfileAPIData.UserInfo.FirstName === "" || UserProfileAPIData.UserInfo.LastName === "" || UserProfileAPIData.UserInfo.OrgName === "" || (Mobile_number === "") || (Mobile_number === undefined)) {
@@ -75,8 +84,8 @@ export default function Profile(props) {
         } else {
 
             delete UserProfileAPIData.UserInfo.Id;
-            UserProfileAPIData.UserInfo.MobileNo = await Mobile_number.substr(-10, 10);;
-            UserProfileAPIData.UserInfo.CountryCode = await Mobile_number.slice(0, -10);
+            UserProfileAPIData.UserInfo.MobileNo = Mobile_number.replace("+"+CountryCode, "")
+            UserProfileAPIData.UserInfo.CountryCode = CountryCode
 
             UpdateUserProfileApi(UserProfileAPIData.UserInfo).then
                 ((resData) => {
@@ -104,6 +113,25 @@ export default function Profile(props) {
                 })
         }
     };
+
+    const handleContactNo = (value) => {
+        if(value){
+
+            setMobileNumber(value)
+            if(isValidPhoneNumber(value)){
+                setContactValidated(true)
+            }
+            else{
+                setContactValidated(false)
+            }
+        }
+    }
+
+    const handleCountryChange = (value) => {
+        if(value){
+            setContryCode(getCountryCallingCode(value))
+        }
+    }
 
     return (
         <>
@@ -163,14 +191,28 @@ export default function Profile(props) {
                             <Col sm={10} style={{ width: "35%" }}>
                                 <InputGroup className="txtbgColor">
                                     <PhoneInput
+                                        name="ContactNo"
                                         aria-label="mobile number"
-                                        className="form-control"
+                                        className="form-control w-100"
                                         placeholder="Enter phone number"
                                         value={Mobile_number}
-                                        onChange={setMobileNumber}
+                                        onChange={handleContactNo}
+                                        onCountryChange={handleCountryChange}
+                                        defaultCountry={"IN"}
+                                        international
                                         rules={{ required: true }}
-                                        style={{ borderColor: validated.mobileValidate == null ? "#ced4da" : validated.mobileValidate === true ? "red" : "green" }}
+                                        countryCallingCodeEditable={false}
+                                    // error={basicDetails.ContactNo ? (isValidPhoneNumber(basicDetails.ContactNo) ? undefined : 'Invalid phone number') : 'Phone number required'}
+                                    // rules={{ required: true }}
+                                    // style={{ borderColor: validated.mobileValidate == null ? "#ced4da" : validated.mobileValidate === true ? "red" : "green" }}
                                     />
+                                    {contactValidated === false ?
+                                        <small className='text-danger'>
+                                            Please enter valid contact no.
+                                        </small>
+                                        :
+                                        null
+                                    }
                                 </InputGroup>
                             </Col>
                         </Row>

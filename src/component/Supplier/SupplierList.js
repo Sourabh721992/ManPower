@@ -29,7 +29,7 @@ export default function SupplierList(props) {
                             </Col>
                             <Col sm={1}></Col>
                             <Col sm={5} style={{ marginLeft: "3%" }}>
-                                <div className="fs15px fl fwb" style={{ fontSize: "12px" }}>{"Added on - " + item.AddedOn.split("T")[0]}</div>
+                                <div className="fs15px fl fwb" style={{ fontSize: "12px" }}>{"Added on - " + formatShortDate(item.AddedOn)}</div>
                             </Col>
                         </Row>
                         <div className="clr"></div>

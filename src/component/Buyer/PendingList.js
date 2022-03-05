@@ -26,6 +26,9 @@ export default function PendingList(props) {
                 //resData.Message = JSON.parse(resData.Message);
                 // SetAlert({ show: true, isDataSaved: true, message: resData.Message });
                 pendingList = pendingList.splice(index, 1)
+                if(props.updateParent){
+                    props.updateParent("deletePendingUser", data)
+                }
                 /* setAlertMessage(resData.Message)
                 setShowAlert(true); */
                 // getPendingUser();

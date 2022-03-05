@@ -138,9 +138,31 @@ function removeItemFromLocalStorage(key){
     localStorage.removeItem(key)
 }
 
+// if 09:30 -> return 0930
+function setIntTime(time){
+    var result = 0
+    if(time){
+        result = time.replace(":", "")
+    }
+    return Number(result, )
+}
+
+// if 0930 -> return "09:30"
+function getStringTime(time){
+    var result = ""
+    result = time.toString()
+    if(time && result.length > 0){
+        let position = result.length === 4 ? 2 : 1
+        
+        result = [result.slice(0, position), ":", result.slice(position)].join('')
+        // result = result.substring(0, 2) + ":" + result.substring(2);
+    }
+    return result
+}
+
 export {
     setTrade, getTrades, getMoneyFormat, logger, formatShortDate, filterDropdown, decodeBase64, encodeBase64, trimCutString,
-    setItemToLocalStorage, getItemFromLocalStorage, removeItemFromLocalStorage
+    setItemToLocalStorage, getItemFromLocalStorage, removeItemFromLocalStorage, setIntTime, getStringTime
 }
 
 

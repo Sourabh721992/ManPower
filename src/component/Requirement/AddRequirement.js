@@ -18,7 +18,7 @@ const currencies = require('currencies.json');
 
 export default function AddRequirement() {
     let InitialTradeValue = { "TradeName": "", "workingDays": 5, "currency": "", "trade": "-1", "workers": 1, "salaryFrom": 0, "salaryTo": 0, "workHoursFrom": "09:00", "workHoursTo": "18:00", "FoodExpense": "Provided", "AccTrans": "Provided" };
-    let InitialStateValues = { "supplier": "", rating: "", client: "" };
+    let InitialStateValues = { "supplier": "", rating: "", client: "", BuyerRemark: "", SupplierRemark: "" };
     const [supplierSelectedValue, formStateValue] = useState(InitialStateValues);
     const [TradeStateValue, SetTradeStateValue] = useState([InitialTradeValue]);
     const [validated, setValidated] = useState(false);
@@ -164,6 +164,8 @@ export default function AddRequirement() {
             map["UserId"] = session.UserId;
             map["SupplierId"] = supplierSelectedValue.supplier
             map["ClientName"] = supplierSelectedValue.client
+            map["BuyerRemark"] = supplierSelectedValue.BuyerRemark
+            map["SupplierRemark"] = supplierSelectedValue.SupplierRemark
             map["status"] = ""
             map["rating"] = supplierSelectedValue.rating
 
@@ -242,6 +244,14 @@ export default function AddRequirement() {
                         </Col>
                         <Col sm={4}>
                             <Dropdown required={true} key="ddlRating" id="ddlRating" name="rating" value={supplierSelectedValue.rating} data={Rating} valueColumn="id" textColumn="Name" addDefaultText={true} defaultText="--Select Rating--" onChange={onChange} />
+                        </Col>
+                    </Row>
+                    <Row className="mb20px">
+                        <Col sm={2}>
+                            <Label value="Remark" id="AddRequirementRemark" />
+                        </Col>
+                        <Col sm={3}>
+                            <Text as={'textarea'} key="txtClientRemark" value={supplierSelectedValue.BuyerRemark} id="txtClient" name="BuyerRemark" type="text" onChange={onChange}  />
                         </Col>
                     </Row>
                     {

@@ -129,7 +129,9 @@ function setItemToLocalStorage(key, value){
 function getItemFromLocalStorage(key){
     var data
     var value = localStorage.getItem(key)
-    data = JSON.parse(decodeBase64(value)) 
+    if(value){
+        data = JSON.parse(decodeBase64(value)) 
+    }
 
     return data
 }

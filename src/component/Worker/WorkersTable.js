@@ -1,39 +1,27 @@
-import React, { useState, useEffect} from "react";
+import React from "react";
+import { Card } from "react-bootstrap";
 import Table from 'react-bootstrap/Table'
-import { /*GetWorkerApi,*/ GetWorkerListApi } from "../../utils/ApiFunctions";
 import { formatShortDate, /*logger*/ } from "../../utils/CommonList";
-import UserProfile from "../../utils/UserProfile";
-import { SuccessNotify } from "../Controls/Toast/Toast";
+// import { SuccessNotify } from "../Controls/Toast/Toast";
 // import { ToastSuccess } from "../Controls/Toast/Toast";
 
 const WorkersTable = (props) => {
 
-    const session = UserProfile.getSession()
+    const workerList = props.workerList
+    const isLoading = props.isLoading
 
-    const [workerList, setWorkerList] = useState([])
-
-    useEffect(() => {
-        // call get api
-        GetWorkerListApi({supplierId: session.UserId /*"S8"*/})
-        .then((response) => {
-            let workerListCopy = [...workerList]
-
-            if(response.Code === 0){
-                SuccessNotify(response.Message)
-            }
-            if(response.Code === 1 && response.Message){
-                workerListCopy = JSON.parse(response.Message)
-                setWorkerList(workerListCopy)
-                // logger.log(workerListCopy)
-            }
-        })
-
-        /* GetWorkerApi({supplierId: session.UserId})
-        .then((response) => {
-            logger.log("workerliisst- ", response)
-        }) */
-
-      }, [])
+    
+    if(workerList.length === 0 && !isLoading){
+        return (
+            <div className='my-3 mx-5'>
+                <Card className='shadow-sm mt-4'>
+                    <Card.Body className='d-flex justify-content-center align-items-center text-muted'>
+                        No Un-Assigned Workers Found
+                    </Card.Body>
+                </Card>
+            </div>
+        )
+    }
 
     return (
 

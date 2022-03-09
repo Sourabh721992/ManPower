@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, Fragment} from 'react'
 import { Card, Dropdown, Table } from 'react-bootstrap'
 import { FiTrash2 } from 'react-icons/fi'
 import { RequirementStatus, Role } from '../../master-data'
@@ -9,7 +9,7 @@ import { BsFileText, BsThreeDotsVertical } from 'react-icons/bs'
 import { withRouter } from 'react-router-dom'
 import UserProfile from '../../utils/UserProfile'
 import UpdateWorkerStatus from './UpdateWorkerStatus'
-import { LinkButton } from '../Controls/Buttons/Buttons'
+// import { LinkButton } from '../Controls/Buttons/Buttons'
 import { BsChatSquareText } from 'react-icons/bs'
 
 
@@ -142,21 +142,27 @@ const AssignedWorkerTable = (props) => {
                                         <td style={{ "whiteSpace": "normal", "wordBreak": "break-word", "maxWidth": "160px" }}>
                                             {
                                                 Remarks ?
-                                                    <LinkButton onClickEvent={() => showRemark(item.Code)} 
-                                                    text={Remarks.length > 40 ?
-                                                        Remarks.slice(0, 40) + "..."
-                                                        : Remarks} className="p-0"/>
-                                                    // <span
-                                                    //     className="text-primary"
-                                                    //     style={{ "cursor": "pointer" }}
-                                                    //     onClick={() => showRemark(item.Code)}
-                                                    // >
-                                                    //     {
-                                                    //         Remarks.length > 40 ?
-                                                    //             Remarks.slice(0, 40) + "..."
-                                                    //             : Remarks
-                                                    //     }
-                                                    // </span>
+                                                    // <LinkButton onClickEvent={() => showRemark(item.Code)} 
+                                                    // text={Remarks.length > 40 ?
+                                                    //     Remarks.slice(0, 40) + "..."
+                                                    //     : Remarks} className="p-0"/>
+                                                    <Fragment>
+
+                                                    
+                                                    <span
+                                                        className="text-primary"
+                                                        style={{ "cursor": "pointer" }}
+                                                        onClick={() => showRemark(item.Code)}
+                                                    >
+                                                        {
+                                                            Remarks.length > 40 ?
+                                                                Remarks.slice(0, 40) + "..."
+                                                                : Remarks
+                                                        }
+                                                    </span>
+                                                    {/* - REMARKS */}
+                                                    <Remark show={item.showRemark} closeRemark={closeRemark} requirementCode={details.Code} workerCode={item.Code} SellerRemarks={item.SellerRemarks} BuyerRemarks={item.BuyerRemarks} />
+                                                    </Fragment>
                                                     :
                                                     '-'
                                             }
@@ -164,8 +170,7 @@ const AssignedWorkerTable = (props) => {
                                         {
                                             details.Status !== RequirementStatus.COMPLETED ?
                                                 <td>
-                                                    {/* DROPDOWN ITEM - REMARKS */}
-                                                    <Remark show={item.showRemark} closeRemark={closeRemark} requirementCode={details.Code} workerCode={item.Code} SellerRemarks={item.SellerRemarks} BuyerRemarks={item.BuyerRemarks} />
+                                                    
                                                     <Dropdown drop="left">
                                                         <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
                                                             <BsThreeDotsVertical />

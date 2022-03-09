@@ -49,6 +49,12 @@ const RequirementStatus = {
     }
 }
 
+const RequirementStatusDropdownList = [
+    { value: "Pending", label: "Pending" },
+    { value: "Processing", label: "Processing" },
+    { value: "Completed", label: "Completed" },
+]
+
 const WorkerStatusDropdownList = [
     { value: "Resources", label: "Resources" },
     { value: "Work Permit", label: "Work Permit" },
@@ -58,5 +64,5 @@ const WorkerStatusDropdownList = [
 ]
 
 export {
-    LanguagesData, Role, RequirementStatus, WorkerStatusDropdownList
+    LanguagesData, Role, RequirementStatus, WorkerStatusDropdownList, RequirementStatusDropdownList
 }

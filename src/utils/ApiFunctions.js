@@ -457,7 +457,27 @@ const WorkerUpdateStatusApi = (payload) => {
     })
 }
 
-const UpdateBuyerSupplierRemarks = (payload) => {
+const UpdateWorkerBuyerSupplierRemarks = (payload) => {
+    const loadingToast = LoadingNotify("Saving and sharing remarks...")
+
+    return new Promise((resolve, reject) => {
+        Client.post("Requirement/UpdateRemark", payload) 
+            .then((resData) => {
+                logger.log("Requirement/UpdateRemark", resData);
+                DismissThisToast(loadingToast)
+                SuccessNotify("Remark Added!")
+                resolve(resData);
+            })
+            .catch((error) => {
+                logger.log(error)
+                DismissThisToast(loadingToast)
+                ErrorNotify(error.Message)
+                reject(error);
+            });
+    })
+}
+
+const UpdateRequirementBuyerSupplierRemarks = (payload) => {
     const loadingToast = LoadingNotify("Saving and sharing remarks...")
 
     return new Promise((resolve, reject) => {
@@ -533,6 +553,6 @@ const DashboardApi = (body) => {
 export {
     SignupAPI, LoginAPI, TradesApi, RequirementInsert, AddSupplierApi, GetSupplierApi, GetUserProfileApi, UpdateUserProfileApi, GetPendingUsersApi,
     DeletePendingUsersApi, DeleteSupplierApi, AddWorkerApi, GetWorkerApi, GetWorkerListApi, GetRequirementApi, AddMapWorkersApi,
-    GetBuyerListApi, RemoveWorkerApi, AddBuyerUser, RemoveBuyer, RequirementUpdateStatusApi, WorkerUpdateStatusApi, UpdateBuyerSupplierRemarks,
-    FetchWorkerProgressApi, UpdateWorkerProgressApi, DashboardApi
+    GetBuyerListApi, RemoveWorkerApi, AddBuyerUser, RemoveBuyer, RequirementUpdateStatusApi, WorkerUpdateStatusApi, UpdateWorkerBuyerSupplierRemarks,
+    FetchWorkerProgressApi, UpdateWorkerProgressApi, DashboardApi, UpdateRequirementBuyerSupplierRemarks
 }

@@ -16,6 +16,7 @@ import SuccessAlert from "../Controls/alert/successAlert";
 import { FcDeleteRow, FcAddRow } from "react-icons/fc";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
+import FilterRequirements from "./Filter";
 
 export default function Dashboard(props) {
     let InitialTradeValue = { "trade": "-1", "workers": 1, "salaryFrom": 1, "salaryTo": 1, "workHoursFrom": "09:00", "workHoursTo": "18:00", "FoodExpense": "Provided", "AccTrans": "Provided" };
@@ -35,6 +36,10 @@ export default function Dashboard(props) {
     var session = UserProfile.getSession();
     let Trades = getTrades();
     // console.log("Dashboard ", session);
+
+    const [StatusCounterData, setStatusCounter] = useState(session.StatusCounter)
+    const [Requirements, setRequirements] = useState(session.Requirements)
+    const [FilteredRequirements, setFilteredRequirements] = useState(session.Requirements)
 
     useEffect(() => {
         updateSession()
@@ -169,24 +174,58 @@ export default function Dashboard(props) {
 
         DashboardApi(body).then
                 ((resData) => {
+                    let StatusCounterCopy = Object.assign({}, StatusCounterData)
+                    let RequirementDataCopy = [...Requirements]
+                    let FilteredRequirementsCopy = [...FilteredRequirements]
                     UserProfile.setSession(resData.Message, true);
                     session = UserProfile.getSession()
-                    SetInitialState();
+                    resData.Message = JSON.parse(resData.Message)
+                    if(resData.Message.StatusCounter ){
+                        StatusCounterCopy = resData.Message.StatusCounter
+                    }
+                    if(resData.Message.Requirements){
+                        RequirementDataCopy = resData.Message.Requirements
+                        FilteredRequirementsCopy = resData.Message.Requirements
+                    }
+                    setFilteredRequirements(FilteredRequirementsCopy)
+                    setRequirements(RequirementDataCopy)
+                    setStatusCounter(StatusCounterCopy)
+                    
+                    // SetInitialState();
 
                 }).catch((error) => {
                     // alert("catch error found 1", error);
                 })
     }
 
+    const handleFromChild = (action, data) => {
+        let FilteredRequirementsCopy = [...FilteredRequirements]
+        let RequirementDataCopy = [...Requirements]
+        if (data && action === "filterApplied") {
+            FilteredRequirementsCopy = data
+        }
+        else if (action === "clearFilter") {
+            FilteredRequirementsCopy = Requirements
+        }
+        else if(action === "update-requirements"){
+            FilteredRequirementsCopy = data
+            setRequirements(RequirementDataCopy)
+        }
+        setFilteredRequirements(FilteredRequirementsCopy)
+    }
+
     return (
         <>
             {/* <Header session={session} /> */}
-            <div className="DashboardBody">
-                <StatusCounter detail={session.StatusCounter} />
-                <div className="clr"></div>
-                <div style={{ marginTop: "45px" }}>
-                    <h4 className="RequireDetlHead text-muted"> Requirement Details </h4>
-                    <div className="fl" style={{ marginLeft: "67%", cursor: "pointer", marginTop: "15px" }} onClick={handleShow}>
+            <StatusCounter detail={StatusCounterData} />
+            <div className='mx-5'>
+
+                <div className='d-flex '>
+                    <h5 className='mb-0 text-muted flex-grow-1'>Recent Requirements</h5>
+                    {/* <h6 className='mb-0'><FiFilter className='f-24 mr-2' /> Filter</h6> */}
+                    {/* <FilterButton /> */}
+                    <FilterRequirements originalData={Requirements} UpdateParent={handleFromChild}/>
+                    <div className="fl" style={{marginLeft: "2%", cursor: "pointer" }} onClick={handleShow}>
                         <div className="fl" style={{ width: "25px", marginTop: "8px" }}>
                             <IconContext.Provider value={{ color: "#3860C7", size: "1.4em" }} >
                                 <div>
@@ -199,9 +238,21 @@ export default function Dashboard(props) {
                         </button>
                     </div>
                 </div>
-                <div className="clr"></div>
-                <RequirementTable detail={session.Requirements} />
+
+                <hr />
+                <RequirementTable detail={FilteredRequirements} UpdateParent={handleFromChild}/>
             </div>
+            {/* <div className="DashboardBody">
+                <StatusCounter detail={StatusCounterData} />
+                <div className="clr"></div>
+                <div style={{ marginTop: "45px" }}>
+                    <h4 className="RequireDetlHead text-muted"> Requirement Details </h4>
+                    <FilterRequirements originalData={Requirements} UpdateParent={handleFromChild}/>
+                    
+                </div>
+                <div className="clr"></div>
+                <RequirementTable detail={FilteredRequirements} />
+            </div> */}
             <Modal centered dialogClassName="requirement-modal" show={showRequirementPopup} onHide={handleClose}>
                 <Modal.Header>
                     <Modal.Title>Create New Requirement</Modal.Title>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import "../../Css/app.css";
 import "react-phone-number-input/style.css";
 import {Table, Card} from 'react-bootstrap'
@@ -8,6 +8,7 @@ import { withRouter } from "react-router-dom";
 import {DangerBadge, SuccessBadge, WarningBadge} from "../Controls/Badge/Badge"
 import { RequirementStatus, Role } from "../../master-data";
 import UserProfile from "../../utils/UserProfile";
+import Remark from "../Worker/Remark";
 
 function RequirementTable(props) {
     // // console.log(props.detail);
@@ -53,6 +54,35 @@ function RequirementTable(props) {
         return "-"
     }
 
+    const showRemark = (wCode) => {
+        let requirementDataCopy = [...props.detail]
+
+        requirementDataCopy.forEach(w => {
+            if (w.Code === wCode) {
+                w.showRemark = true
+            }
+        })
+
+        // UPDATE PARENT
+        if(props.UpdateParent){
+            props.UpdateParent("update-requirements", requirementDataCopy)
+        }
+
+    }
+
+    const closeRemark = () => {
+        let requirementDataCopy = [...props.detail]
+
+        requirementDataCopy.forEach(w => {
+            w.showRemark = false
+        })
+
+        // UPDATE PARENT
+        if(props.UpdateParent){
+            props.UpdateParent("update-requirements", requirementDataCopy)
+        }
+    }
+
     return (
         <div className='my-3 mx-5 '>
             {
@@ -69,15 +99,28 @@ function RequirementTable(props) {
                                     "Buyer": "Supplier"
                                     }
                                 </th>
+                                <th>Remark</th>
                                 <th>Created Date</th>
                                 {/* <th>Action</th> */}
                             </tr>
                         </thead>
                         <tbody className="text-center">
                             {props.detail.map((item, index) => {
+                                let Remarks = session.Role === Role.Supplier ? item.BuyerRemark : item.SupplierRemark
                                 return (
-                                    <tr className="align-middle" style={{ cursor: "pointer" }} key={item.Code} onClick={() => handleOnClick(item.Code, item.BuyerName, item.SupplierName)}>
-                                        <td>{item.Code}</td>
+                                    <tr className="align-middle" key={item.Code}> 
+                                        <td>{
+                                            <span
+                                                className="text-primary"
+                                                style={{ "cursor": "pointer" }}
+                                                onClick={() => handleOnClick(item.Code, item.BuyerName, item.SupplierName)}
+                                            >
+                                                {
+                                                    item.Code
+                                                }
+                                            </span>
+                                        }
+                                        </td>
                                         <td>
                                             {item.Trades.map((s, i) => {
                                                 return (
@@ -112,6 +155,41 @@ function RequirementTable(props) {
                                         <td>{session.Role === Role.Supplier ?
                                                 item.BuyerName
                                                 : item.SupplierName
+                                            }
+                                        </td>
+                                        <td style={{ "whiteSpace": "normal", "wordBreak": "break-word", "maxWidth": "160px" }}>
+                                            {
+                                                Remarks ?
+                                                    // <LinkButton onClickEvent={() => showRemark(item.Code)} 
+                                                    // text={Remarks.length > 40 ?
+                                                    //     Remarks.slice(0, 40) + "..."
+                                                    //     : Remarks} className="p-0"/>
+                                                    <Fragment>
+
+
+                                                        <span
+                                                            className="text-primary"
+                                                            style={{ "cursor": "pointer" }}
+                                                            onClick={() => showRemark(item.Code)}
+                                                        >
+                                                            {
+                                                                Remarks.length > 40 ?
+                                                                    Remarks.slice(0, 40) + "..."
+                                                                    : Remarks
+                                                            }
+                                                        </span>
+                                                        {/* - REMARKS */}
+                                                        <Remark 
+                                                            show={item.showRemark}
+                                                            source="RequirementRemarks"
+                                                            closeRemark={closeRemark} 
+                                                            requirementCode={item.Code} 
+                                                            // workerCode={item.Code} 
+                                                            SellerRemarks={item.SupplierRemark} 
+                                                            BuyerRemarks={item.BuyerRemark} />
+                                                    </Fragment>
+                                                    :
+                                                    '-'
                                             }
                                         </td>
                                         <td>{formatShortDate(item.CreatedDate)}</td>

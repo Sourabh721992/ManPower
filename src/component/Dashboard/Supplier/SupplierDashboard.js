@@ -5,11 +5,12 @@ import UserProfile from '../../../utils/UserProfile';
 import RequirementTable from '../RequirementTable';
 // import { FiFilter } from "react-icons/fi";
 import StatusCounter from '../StatusCounter';
-import {FilterButton} from '../../Controls/Buttons/Buttons';
+// import {FilterButton} from '../../Controls/Buttons/Buttons';
 // import { TradesApi } from '../../../utils/ApiFunctions';
 import { logger } from '../../../utils/CommonList';
 import { DashboardApi } from '../../../utils/ApiFunctions';
 import ReactSpinner from '../../Controls/Loader/ReactSpinner';
+import FilterRequirements from '../Filter';
 
 export class SupplierDashboard extends Component {
 
@@ -21,6 +22,7 @@ export class SupplierDashboard extends Component {
             session,
             StatusCounter: session.StatusCounter,
             Requirements: session.Requirements,
+            FilteredRequirements: session.Requirements,
             isLoading: true
         }
     }
@@ -48,6 +50,7 @@ export class SupplierDashboard extends Component {
                     }
                     if(resData.Message.Requirements){
                         stateCopy.Requirements = resData.Message.Requirements
+                        stateCopy.FilteredRequirements = resData.Message.Requirements
                     }
                     stateCopy.isLoading = false
                     this.setState(stateCopy)
@@ -59,6 +62,21 @@ export class SupplierDashboard extends Component {
                 // alert("catch error found 1", error);
             })
         
+    }
+
+    handleFromChild = (action, data) => {
+        let stateCopy = Object.assign({}, this.state);
+        if (data && action === "filterApplied") {
+            stateCopy.FilteredRequirements = data
+        }
+        else if (action === "clearFilter") {
+            stateCopy.FilteredRequirements = stateCopy.Requirements
+        }
+        else if(action === "update-requirements"){
+            stateCopy.FilteredRequirements = data
+            stateCopy.Requirements = data
+        }
+        this.setState(stateCopy)
     }
 
     render() {
@@ -80,11 +98,12 @@ export class SupplierDashboard extends Component {
                     <div className='d-flex justify-content-between align-items-end'>
                         <h5 className='mb-0 text-muted'>Recent Requirements</h5>
                         {/* <h6 className='mb-0'><FiFilter className='f-24 mr-2' /> Filter</h6> */}
-                        <FilterButton />
+                        {/* <FilterButton /> */}
+                        <FilterRequirements originalData={this.state.Requirements} UpdateParent={this.handleFromChild}/>
                     </div>
 
                     <hr />
-                    <RequirementTable detail={this.state.Requirements}/>
+                    <RequirementTable detail={this.state.FilteredRequirements} UpdateParent={this.handleFromChild}/>
                 </div>
 
                 {/* <Footer /> */}

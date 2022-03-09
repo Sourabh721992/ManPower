@@ -1,11 +1,11 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { FiFilter } from "react-icons/fi";
-import "../../../Css/app.css";
+// import "../../../Css/app.css";
 
 function FilterButton(props) {
   return (
-    <Button variant="light" onClick={props.onClickEvent}>
+    <Button variant="light" className={props.className} onClick={props.onClickEvent}>
       <FiFilter /> Filter 
     </Button>
   );
@@ -21,7 +21,7 @@ function MpButton(props) {
 
 function PrimaryButton(props) {
   return (
-    <Button disabled={props.disabled} variant="primary" onClick={props.onClickEvent}>
+    <Button disabled={props.disabled} size={props.size} variant="primary" className={props.className} onClick={props.onClickEvent}>
       {props.text} 
     </Button>
   );
@@ -37,7 +37,7 @@ function SuccessButton(props) {
 
 function LightButton(props) {
   return (
-    <Button disabled={props.disabled} className="btn btn-secondary" onClick={props.onClickEvent}>
+    <Button disabled={props.disabled} size={props.size} variant="secondary" className={props.className} onClick={props.onClickEvent}>
       {props.text} 
     </Button>
   );

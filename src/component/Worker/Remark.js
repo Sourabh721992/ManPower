@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import { Button, Card, Form, Modal } from 'react-bootstrap'
 import { MdSend } from 'react-icons/md'
 import { Role } from '../../master-data'
-import { UpdateBuyerSupplierRemarks } from '../../utils/ApiFunctions'
+import { UpdateRequirementBuyerSupplierRemarks, UpdateWorkerBuyerSupplierRemarks } from '../../utils/ApiFunctions'
 import { getItemFromLocalStorage } from '../../utils/CommonList'
 import UserProfile from '../../utils/UserProfile'
 
@@ -13,6 +13,7 @@ const Remark = (props) => {
     const workerCode = props.workerCode
     const showModal = props.show
     const requirementCode = props.requirementCode
+    const source = props.source
     // const [showModal, setShowModal] = useState(false)
     const [buyerRemark, setBuyerRemark] = useState(props.BuyerRemarks)
     const [supplierRemark, setSupplierRemark] = useState(props.SellerRemarks)
@@ -28,24 +29,47 @@ const Remark = (props) => {
 
     const handleUpdateRemark = () => {
         // CALL API
-        const Body = {
-            workerCode: workerCode,
-            role: session.Role,
-            remarks: tempRemark
+        if(source === "RequirementRemarks"){
+            const Body = {
+                requirementCode : requirementCode,
+                role: session.Role,
+                remarks: tempRemark
+            }
+    
+            UpdateRequirementBuyerSupplierRemarks(Body)
+            .then(() => {
+                if (session.Role === Role.Buyer) {
+                    setBuyerRemark(tempRemark)
+                }
+                else {
+                    setSupplierRemark(tempRemark)
+                }
+                closeRemarkModal()
+            }).catch(() => {
+                
+            })
         }
-
-        UpdateBuyerSupplierRemarks(Body)
-        .then(() => {
-            if (session.Role === Role.Buyer) {
-                setBuyerRemark(tempRemark)
+        else {
+            const Body = {
+                workerCode: workerCode,
+                role: session.Role,
+                remarks: tempRemark
             }
-            else {
-                setSupplierRemark(tempRemark)
-            }
-            closeRemarkModal()
-        }).catch(() => {
-            
-        })
+    
+            UpdateWorkerBuyerSupplierRemarks(Body)
+            .then(() => {
+                if (session.Role === Role.Buyer) {
+                    setBuyerRemark(tempRemark)
+                }
+                else {
+                    setSupplierRemark(tempRemark)
+                }
+                closeRemarkModal()
+            }).catch(() => {
+                
+            })
+        }
+        
     }
 
     const handleRemarksInput = (e) => {
@@ -88,7 +112,7 @@ const Remark = (props) => {
 
     return (
         <Fragment>
-            <Modal key={workerCode} scrollable show={showModal} onHide={closeRemarkModal}>
+            <Modal key={workerCode ? workerCode : requirementCode} scrollable show={showModal} onHide={closeRemarkModal}>
                 <Modal.Header>
                     <Modal.Title as="h5">Recent Remarks</Modal.Title>
                 </Modal.Header>

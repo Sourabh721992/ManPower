@@ -26,6 +26,7 @@ export default function Text(props) {
                     style={{ height: "30px", width: "100%" }}
                     max={props.max}
                     min={props.min}
+                    as={props.as}
                 />
                 <Form.Control.Feedback type={props.feedBackType}>
                     {props.feedBack}

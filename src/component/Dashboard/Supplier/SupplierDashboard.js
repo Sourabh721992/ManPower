@@ -23,7 +23,8 @@ export class SupplierDashboard extends Component {
             StatusCounter: session.StatusCounter,
             Requirements: session.Requirements,
             FilteredRequirements: session.Requirements,
-            isLoading: true
+            isLoading: true,
+            fromRequirementTab: props.fromRequirementTab ? props.fromRequirementTab : false
         }
     }
 
@@ -90,13 +91,21 @@ export class SupplierDashboard extends Component {
         return (
             <>
                 {/* <Header session={this.state.session} /> */}
+                {
+                    this.state.fromRequirementTab ?
+                    null :
+                        <StatusCounter detail={this.state.StatusCounter} />
+                }
+                
 
-                <StatusCounter detail={this.state.StatusCounter} />
-
-                <div className='mx-5'>
+                <div className='mx-5 my-1'>
                     
                     <div className='d-flex justify-content-between align-items-end'>
-                        <h5 className='mb-0 text-muted'>Recent Requirements</h5>
+                        <h5 className='mb-0 text-muted'>
+                            {
+                                this.state.fromRequirementTab ? "All Requirements" : "Recent Requirements"
+                            }
+                        </h5>
                         {/* <h6 className='mb-0'><FiFilter className='f-24 mr-2' /> Filter</h6> */}
                         {/* <FilterButton /> */}
                         <FilterRequirements originalData={this.state.Requirements} UpdateParent={this.handleFromChild}/>

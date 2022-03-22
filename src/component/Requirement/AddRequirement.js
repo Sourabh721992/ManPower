@@ -187,7 +187,7 @@ export default function AddRequirement() {
 
                     SetSpinner(false);
 
-                    history.push("/dashboard")
+                    history.push("/requirements")
                     ResetForm(true);
                     /* setTimeout(function () {
                         // // console.log("Set Timeout Called");

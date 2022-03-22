@@ -2,10 +2,11 @@ import React from "react";
 import { Navbar, Nav, NavDropdown/* , Container */ } from "react-bootstrap";
 import UserProfile from "../../utils/UserProfile";
 // import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { /* AiOutlineUser, */ AiFillHome, AiOutlineUsergroupAdd } from "react-icons/ai";
+import { /* AiOutlineUser, */ AiFillHome, AiOutlineFileSearch, AiOutlineUsergroupAdd } from "react-icons/ai";
 import { GiMonoWheelRobot } from 'react-icons/gi';
 import {FaUserCircle} from "react-icons/fa"
 import { IconContext } from "react-icons";
+import { Role } from "../../master-data";
 
 export default function Header(props) {
 
@@ -96,7 +97,12 @@ export default function Header(props) {
               </div>
             </IconContext.Provider>
             <Nav.Link className="text-secondary" href="/worker">Worker</Nav.Link>
-          {/* <Nav.Link className="text-secondary" href="#requirements">Requirements</Nav.Link> */}
+            <IconContext.Provider value={{ color: "#6c757d", size: "1.4em" }} >
+              <div style={{ width: "7px", float: "left", marginTop: "5px" }}>
+                <AiOutlineFileSearch />
+              </div>
+            </IconContext.Provider>
+            <Nav.Link className="text-secondary" href="/requirements">Requirements</Nav.Link>
           </Nav>
         </div>
       </nav>
@@ -119,6 +125,12 @@ export default function Header(props) {
               </div>
             </IconContext.Provider>
             <Nav.Link className="text-secondary" href="/supplier">Supplier</Nav.Link>
+            <IconContext.Provider value={{ color: "#6c757d", size: "1.4em" }} >
+              <div style={{ width: "7px", float: "left", marginTop: "5px" }}>
+                <AiOutlineFileSearch />
+              </div>
+            </IconContext.Provider>
+            <Nav.Link className="text-secondary" href="/requirements">Requirements</Nav.Link>
           </Nav>
         </div>
       </nav>
@@ -148,7 +160,7 @@ export default function Header(props) {
       {
         showNavbar() ? 
         (
-          session && session.Role === "S"
+          session && session.Role === Role.Supplier
           ?
           supplierNavBar
           :

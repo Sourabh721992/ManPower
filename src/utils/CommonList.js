@@ -162,9 +162,24 @@ function getStringTime(time){
     return result
 }
 
+function getSexLabel(sex){
+    if(sex){
+        if(sex === "M"){
+            return "Male"
+        }
+        else if(sex === "F"){
+            return "Female"
+        }
+        else if(sex === "O"){
+            return "Other"
+        }
+    }
+    return ""
+}
+
 export {
     setTrade, getTrades, getMoneyFormat, logger, formatShortDate, filterDropdown, decodeBase64, encodeBase64, trimCutString,
-    setItemToLocalStorage, getItemFromLocalStorage, removeItemFromLocalStorage, setIntTime, getStringTime
+    setItemToLocalStorage, getItemFromLocalStorage, removeItemFromLocalStorage, setIntTime, getStringTime, getSexLabel
 }
 
 

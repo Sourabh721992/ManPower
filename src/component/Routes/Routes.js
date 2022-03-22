@@ -22,6 +22,7 @@ import UserProfile from "../../utils/UserProfile";
 import AddSupplier from "../Supplier/AddSupplier";
 import { Toaster } from 'react-hot-toast'
 import WorkerProgress from "../Worker/WorkerProgress";
+import RequirementTab from "../Requirement/RequirementTab";
 
 function App() {
   var showHeader = true
@@ -61,6 +62,7 @@ function App() {
           <PrivateRoute exact path="/workerProgress/:data" component={WorkerProgress} />
           <PrivateRoute exact path="/requirement/:data" component={Requirement} />
           <PrivateRoute exact path="/mapWorker/:data" component={MapWorker} />
+          <PrivateRoute exact path="/requirements" component={RequirementTab} />
         </Switch>
         {/* <Footer /> */}
       </Router>

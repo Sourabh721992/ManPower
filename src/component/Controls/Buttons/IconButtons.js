@@ -1,8 +1,9 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import { BsThreeDotsVertical } from 'react-icons/bs'
-import { FiUsers, FiSearch, FiTrash2, FiEdit } from 'react-icons/fi'
+import { FiUsers, FiSearch, FiTrash2, FiEdit, FiDownload } from 'react-icons/fi'
 import { MdOutlineAddCircle, MdOutlineNavigateNext } from 'react-icons/md'
+import ReactTooltip from 'react-tooltip'
 
 function SearchIconBtn(props) {
   return (
@@ -62,6 +63,17 @@ function ThreeDotButton(props){
   )
 }
 
+function DownloadButton(props){
+  return(
+    <Button data-tip data-for='download' variant="link" ref={props.ref} disabled={props.disabled} onClick={props.onClickEvent}>
+      <FiDownload style={{ fontSize: "18px" }} />
+      <ReactTooltip id="download">
+        Download
+      </ReactTooltip>
+    </Button>
+  )
+}
+
 export {
-  SearchIconBtn, UsersIconBtn, AddIconBtn, DeleteIconBtn, EditIconBtn, ProceedIconBtn, ThreeDotButton
+  SearchIconBtn, UsersIconBtn, AddIconBtn, DeleteIconBtn, EditIconBtn, ProceedIconBtn, ThreeDotButton, DownloadButton
 }

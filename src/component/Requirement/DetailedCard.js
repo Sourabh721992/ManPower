@@ -7,7 +7,8 @@ import { RequirementStatus, Role } from '../../master-data'
 import { RequirementUpdateStatusApi } from '../../utils/ApiFunctions'
 import { encodeBase64, getMoneyFormat, trimCutString , getStringTime} from '../../utils/CommonList'
 import UserProfile from '../../utils/UserProfile'
-import { PrimaryButton, SuccessButton } from '../Controls/Buttons/Buttons'
+import { PrimaryButton } from '../Controls/Buttons/Buttons'
+import DownloadRequirement from './DownloadRequirement'
 // import { AddIconBtn } from '../Controls/Buttons/IconButtons'
 
 
@@ -160,9 +161,19 @@ const DetailedCard = (props) => {
                                         <PrimaryButton text={"Proceed Ahead"} onClickEvent={handleProceedAheadConfirm} />
                                     :
                                     RequirementData.Status === RequirementStatus.PROCESSING && session.Role === Role.Buyer ?
-                                        <SuccessButton text={"Complete Requirement"} onClickEvent={handleCompleteConfirm} />
+                                        <PrimaryButton text={"Complete Requirement"} onClickEvent={handleCompleteConfirm} />
                                         : null
                                 }
+                            </Col>
+                        </Row>
+                        : null
+                }
+                {/* download requirement in excel */}
+                {
+                    RequirementData.Status === RequirementStatus.COMPLETED ?
+                        <Row>
+                            <Col className='d-flex justify-content-end'>
+                                <DownloadRequirement requirementId={RequirementData.Code} />
                             </Col>
                         </Row>
                         : null

@@ -550,9 +550,25 @@ const DashboardApi = (body) => {
     })
 }
 
+const GetRequirementDownloadApi = (body) => {
+    return new Promise((resolve, reject) => {
+        Client.post("Requirement/FetchWhole", body) 
+            .then((resData) => {
+                logger.log("Requirement/FetchWhole", resData);
+                // DismissThisToast(loadingToast)
+                resolve(resData);
+            })
+            .catch((error) => {
+                logger.log(error)
+                // DismissThisToast(loadingToast)
+                reject(error);
+            });
+    })
+}
+
 export {
     SignupAPI, LoginAPI, TradesApi, RequirementInsert, AddSupplierApi, GetSupplierApi, GetUserProfileApi, UpdateUserProfileApi, GetPendingUsersApi,
     DeletePendingUsersApi, DeleteSupplierApi, AddWorkerApi, GetWorkerApi, GetWorkerListApi, GetRequirementApi, AddMapWorkersApi,
     GetBuyerListApi, RemoveWorkerApi, AddBuyerUser, RemoveBuyer, RequirementUpdateStatusApi, WorkerUpdateStatusApi, UpdateWorkerBuyerSupplierRemarks,
-    FetchWorkerProgressApi, UpdateWorkerProgressApi, DashboardApi, UpdateRequirementBuyerSupplierRemarks
+    FetchWorkerProgressApi, UpdateWorkerProgressApi, DashboardApi, UpdateRequirementBuyerSupplierRemarks, GetRequirementDownloadApi
 }

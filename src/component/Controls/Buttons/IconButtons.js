@@ -65,8 +65,8 @@ function ThreeDotButton(props){
 
 function DownloadButton(props){
   return(
-    <Button data-tip data-for='download' variant="link" ref={props.ref} disabled={props.disabled} onClick={props.onClickEvent}>
-      <FiDownload style={{ fontSize: "18px" }} />
+    <Button className={props.className} data-tip data-for='download' variant="primary" ref={props.ref} disabled={props.disabled} onClick={props.onClickEvent}>
+      <FiDownload className={props.iconClassName} style={{ fontSize: "18px" }} /> {props.btnText}
       <ReactTooltip id="download">
         Download
       </ReactTooltip>

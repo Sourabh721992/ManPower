@@ -135,7 +135,7 @@ const DownloadRequirement = (props) => {
 
     return (
         <Fragment>
-            <DownloadButton disabled={isLoading} onClickEvent={() => handleDownload()}/>
+            <DownloadButton iconClassName='mb-1' btnText="Export" disabled={isLoading} onClickEvent={() => handleDownload()}/>
         </Fragment>
     )
 }

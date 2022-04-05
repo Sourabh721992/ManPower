@@ -194,6 +194,10 @@ body {
   height: 100%;
   padding: 40px;
 }
+.main-container > .first-main-container .inner-layout .inner-info-layout {
+  padding-left: 53px;
+  padding-right: 53px;
+}
 .sign-up > .second-main-container {
   background-color: #fff;
   padding: 40px 120px;

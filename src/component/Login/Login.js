@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../Css/app.css";
+// import "../../Css/app.css";
 // import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import UserProfile from "../../utils/UserProfile";
 import {
@@ -89,14 +89,43 @@ export default function Login(props) {
           <div className="inner-layout">
             <Row>
               <Col sm={12}>
-                <Image src="./logo.jpg" />
+                
+                <h1 className="blue-900-text"> <Image src="./logo.jpg" /> HRV7</h1>
               </Col>
               <Col sm={12}>
-                <div className="inner-layout-content">
-                  <h2 className="blue-text">
+                <div className="inner-info-layout"> 
+                {/* inner-layout-content */}
+                  {/* <h2 className="blue-text">
                     Find premium quality solutions in software - with the best
                     minds in the industry
-                  </h2>
+                  </h2> */}
+                  <ul className="blue-900-text light">
+                    <li className="h5 mb-3">
+                      One stop solution for all the job posters &
+                      suppliers providing real time status of the
+                      candidate's application. our tool helps in
+                      eliminating the need of manual efforts and
+                      thereby helps in reducing overall Turn Around
+                      Time from job requirement received date to case
+                      closure.
+                    </li>
+                    <li className="h5 mb-3">
+                      Our team has tremendous expertise on the
+                      resource availability as per demand and we are
+                      highly committed towards providing excellent
+                      candidates as per your job requirement.
+                    </li>
+                    <li className="h5 mb-3">
+                      Start your journey with us @INR 499/month
+                      (customization charges extra).
+                    </li>
+                    <li className="h5 mb-3">
+                      We can give various options for Subscription like
+                      monthly, quarterly, half-yearly and annual. We
+                      can provide additional discounts to long-term
+                      subscribers.
+                    </li>
+                  </ul>
                   {/* <p className="grey-text">Landing page *.png, *.html</p> */}
                 </div>
               </Col>

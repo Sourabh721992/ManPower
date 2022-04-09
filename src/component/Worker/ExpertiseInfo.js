@@ -34,6 +34,7 @@ const ExpertiseInfo = (props) => {
         CVLink: ''
     })
     const [isTradeError, setIsTradeError] = useState(false) 
+    const [showAddition, setShowAddition] = useState(true)
 
     const handleOnChange = (e, data) => {
 
@@ -46,7 +47,19 @@ const ExpertiseInfo = (props) => {
 
         if(name === "GulfExpr" || name === "IndiaExpr" || name === "TotalExpr" ){
 
-            expertiseDetailsCopy[name] = parseFloat(target.value)
+            if(target.value){
+                expertiseDetailsCopy[name] = isNaN(target.value) ? 0 : parseFloat(target.value)
+            }
+
+            if(name === "GulfExpr" || name === "IndiaExpr"){
+                if(showAddition){
+                    expertiseDetailsCopy.TotalExpr = expertiseDetailsCopy.GulfExpr + expertiseDetailsCopy.IndiaExpr
+                }
+            }
+
+            if(name === "TotalExpr"){
+                setShowAddition(false)
+            }
         }
         else{
             expertiseDetailsCopy[name] = target.value
@@ -143,7 +156,7 @@ const ExpertiseInfo = (props) => {
                         </Row>
                         <Row className="form-group">
                             <Col>
-                                <label className="col-form-label font-weight-bolder">Gulf Experience<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder">Gulf Experience(in Years)<span style={{ color: 'red' }}>*</span></label>
                                 <TextInput
                                     type='text'
                                     // step="0.1"
@@ -162,7 +175,7 @@ const ExpertiseInfo = (props) => {
                                 />
                             </Col>
                             <Col>
-                                <label className="col-form-label font-weight-bolder" >India Experience<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder" >India Experience(in Years)<span style={{ color: 'red' }}>*</span></label>
                                 <TextInput
                                     type='text'
                                     // step="0.1"
@@ -184,7 +197,7 @@ const ExpertiseInfo = (props) => {
                         </Row>
                         <Row className="form-group">
                             <Col>
-                                <label className="col-form-label font-weight-bolder" >Total Experience<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder" >Total Experience(in Years)<span style={{ color: 'red' }}>*</span></label>
                                 <TextInput
                                     type='text'
                                     // step="0.1"
@@ -193,7 +206,8 @@ const ExpertiseInfo = (props) => {
                                     className="form-control w-100"
                                     placeholder="Enter Total Experience (In Years)"
                                     onChange={handleOnChange}
-                                    defaultValue={expertiseDetails.TotalExpr}
+                                    // defaultValue={}
+                                    value={expertiseDetails.TotalExpr}
                                     required
                                     errorMessage={{
                                         required: "Total experience is required",
@@ -220,7 +234,7 @@ const ExpertiseInfo = (props) => {
                         </Row>
                         <Row className="form-group">
                             <Col>
-                                <label className="col-form-label font-weight-bolder" >Video Link</label>
+                                <label className="col-form-label font-weight-bolder" >Video Link<span style={{ color: 'red' }}>*</span></label>
                                 {
                                     session.Role === Role.Supplier ?
                                         <TextInput
@@ -231,6 +245,7 @@ const ExpertiseInfo = (props) => {
                                             onChange={handleOnChange}
                                             defaultValue={expertiseDetails.VidLink1}
                                             pattern="^((http|https)?(://)?)[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$"
+                                            required
                                             errorMessage={{
                                                 required: 'Video URL is required',
                                                 pattern: 'Video URL is invalid.',

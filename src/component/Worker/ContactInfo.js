@@ -89,7 +89,7 @@ const ContactInfo = (props) => {
                     <ValidationForm onSubmit={onNextButton}>
                         <Row className='form-group'>
                             <Col>
-                                <label className="col-form-label font-weight-bolder" >Worker Address<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder" >Worker Address</label>
                                 <TextInput
                                     id="workerAddress"
                                     type="text"
@@ -98,7 +98,7 @@ const ContactInfo = (props) => {
                                     placeholder="Enter Address"
                                     onChange={handleOnChange}
                                     defaultValue={contactDetails.Address}
-                                    required
+                                    // required
                                     // disabled
                                 />
                             </Col>

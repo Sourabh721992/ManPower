@@ -209,7 +209,7 @@ const BasicInfo = (props) => {
                                     : null
                                 }
                             <Col sm={6}>
-                                <label className="col-form-label font-weight-bolder" >Aadhaar No<span style={{ color: 'red' }}>*</span></label>
+                                <label className="col-form-label font-weight-bolder" >Aadhaar No</label>
                                 <TextInput
                                     type="text"
                                     name="AdharNo"
@@ -218,7 +218,7 @@ const BasicInfo = (props) => {
                                     onChange={handleOnChange}
                                     value={basicDetails.AdharNo}
                                     pattern="^\d{4}\s\d{4}\s\d{4}$"
-                                    required
+                                    // required
                                     max={"16"}
                                     errorMessage={{
                                         required: "Aadhaar number is required",

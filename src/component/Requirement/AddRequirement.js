@@ -262,10 +262,13 @@ export default function AddRequirement() {
                                         <Label value={"Trade Info " + (index + 1)} id={"TradeInfoLabel" + index} />
                                     </Col>
                                     <Col sm={9}></Col>
-                                    <Col sm={1} onClick={() => deleteTradeItem(index)}>
-                                        <Label value="Delete" id={"DeleteInfo" + index} />
-                                        <FcDeleteRow size="1.5em" />
-                                    </Col>
+                                    {
+                                        index != 0 &&
+                                        <Col sm={1} onClick={() => deleteTradeItem(index)}>
+                                            <Label value="Delete" id={"DeleteInfo" + index} />
+                                            <FcDeleteRow size="1.5em" />
+                                        </Col>
+                                    }
                                 </Row>
                                 <div key={"TradeItem2" + index} style={{ marginTop: "-5px", border: "1px dotted gray", borderRadius: "5px" }}>
                                     <Row className="mb10px">

@@ -305,11 +305,14 @@ export default function Signup() {
               </Col>
             </Row>
 
-            <Row className='mt-5'>
+            <Row className='mt-3'>
               <Col className='d-flex justify-content-end'>
                 {/* <SuccessAlert show={showAlert.show} message={showAlert.message} variant={showAlert.isDataSaved === true ? "success" : "danger"} /> */}
                 <Button type="submit" variant="primary">Register</Button>
               </Col>
+            </Row>
+            <Row className="mt-5">
+              
             </Row>
           </ValidationForm>
           

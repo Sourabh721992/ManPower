@@ -225,7 +225,7 @@ export default function Supplier(props) {
                         {/* <SuccessAlert show={showAlert.show} message={showAlert.message} variant={showAlert.isDataSaved === true ? "success" : "danger"} /> */}
                     </Col>
                     <Col sm={6} className="mt-2">
-                    <div className="fl" style={{ marginLeft: "74%", cursor: "pointer" }} onClick={handleShow}>
+                    <div className="fl" style={{ marginLeft: "70%", cursor: "pointer" }} onClick={handleShow}>
                     <div className="fl" style={{ width: "25px", marginTop: "8px" }}>
                         <IconContext.Provider value={{ color: "#3860C7", size: "1.4em" }} >
                             <div>

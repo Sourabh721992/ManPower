@@ -112,29 +112,38 @@ export default function Signup() {
             <Row>
               <Col sm={12}>
                 <div className="inner-layout-content">
-                <div class="d-flex flex-row bd-highlight mb-3">
-                  <div class="bd-highlight">
+                <div class="d-flex flex-row bd-highlight">
+                  {/* <div class="bd-highlight">
                     <Image src="./logo.jpg"/>
-                  </div>
-                  <div class="p-2 bd-highlight">
-                    <h2 className="blue-900-text mb-4 mt-3">HRV7</h2>
+                  </div> */}
+                  <div class="p-1 bd-highlight">
+                    <h4 className="blue-900-text mb-4 mt-3">Features</h4>
                   </div>
                 </div>
                  
-                  
-                  {/* <h5 className="black-600-text mb-4">Content to show</h5>
-                  <p className="black-600-text">
-                    Content 1 : Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit.
-                  </p>
-                  <p className="black-600-text">
-                    Content 2 : Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit.
-                  </p>
-                  <p className="black-600-text">
-                    Content 3 : Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit.
-                  </p> */}
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm ={12}>
+              <div className="inner-info-layout"> 
+                  <ul className="blue-900-text light">
+                    <li className="h6 mb-3">
+                    Connecting job posters and worker suppliers around the globe.
+                    </li>
+                    <li className="h6 mb-3">
+                      Real-time tracking of worker's application status.
+                    </li>
+                    <li className="h6 mb-3">
+                      Our tools aimed to reduce manual efforts and thereby increase productivity in procuring workers.
+                    </li>
+                    <li className="h6 mb-3">
+                      Skilled in providing excellent resources based on the requirement.
+                    </li>
+                    <li className="h6 mb-3">
+                      Different subscription models are available. Request you to connect with the support team.
+                    </li>
+                  </ul>
                 </div>
               </Col>
             </Row>

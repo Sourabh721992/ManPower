@@ -9,6 +9,7 @@ import { BsFileText, BsThreeDotsVertical } from 'react-icons/bs'
 import { withRouter } from 'react-router-dom'
 import UserProfile from '../../utils/UserProfile'
 import UpdateWorkerStatus from './UpdateWorkerStatus'
+import WorkerInfo from '../Worker/Modals/WorkerInfo'
 // import { LinkButton } from '../Controls/Buttons/Buttons'
 import { BsChatSquareText } from 'react-icons/bs'
 
@@ -133,7 +134,7 @@ const AssignedWorkerTable = (props) => {
                                     <tr style={{borderRadius: "5px"}} key={item.Code} 
                                     // onClick={session.Role === Role.Supplier ? () => handleUpdateProgress(item.Code): null}
                                     >
-                                        <td>{item.Code}</td>
+                                        <td><WorkerInfo workerCode={item.Code}></WorkerInfo></td>
                                         <td>{item.Name}</td>
                                         <td>{ item.Reference ? item.Reference : "-" }</td>
                                         <td ><UpdateWorkerStatus details={details} workerDetails={item}/> </td>

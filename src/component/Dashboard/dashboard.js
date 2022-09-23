@@ -9,6 +9,7 @@ import RequirementTable from "./RequirementTable";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import FilterRequirements from "./Filter";
+import { Card } from 'react-bootstrap';
 
 export default function Dashboard(props) {
     
@@ -16,10 +17,10 @@ export default function Dashboard(props) {
     
     const handleShow = () => { history.push("/AddRequirement"); }
     var session = UserProfile.getSession();
-
     const [StatusCounterData, setStatusCounter] = useState(session.StatusCounter)
     const [Requirements, setRequirements] = useState(session.Requirements)
     const [FilteredRequirements, setFilteredRequirements] = useState(session.Requirements)
+    const [ParentRequirement, setParentRequirements] = useState([...new Set(session.Requirements.map(requirement=>requirement.ParentId))])
     const fromRequirementTab = props.fromRequirementTab ? props.fromRequirementTab : false
 
     useEffect(() => {
@@ -50,7 +51,7 @@ export default function Dashboard(props) {
                     setFilteredRequirements(FilteredRequirementsCopy)
                     setRequirements(RequirementDataCopy)
                     setStatusCounter(StatusCounterCopy)
-                    
+                    setParentRequirements([...new Set(FilteredRequirementsCopy.map(requirement=>requirement.ParentId))])
                     // SetInitialState();
 
                 }).catch((error) => {
@@ -72,6 +73,7 @@ export default function Dashboard(props) {
             setRequirements(RequirementDataCopy)
         }
         setFilteredRequirements(FilteredRequirementsCopy)
+        setParentRequirements([...new Set(FilteredRequirementsCopy.map(requirement=>requirement.ParentId))])
     }
 
     return (
@@ -104,9 +106,27 @@ export default function Dashboard(props) {
                         </button>
                     </div>
                 </div>
-
                 <hr />
-                <RequirementTable detail={FilteredRequirements} UpdateParent={handleFromChild}/>
+                {
+                    ParentRequirement.map((pr, index) => {
+                        return(
+                            <div className="mb-3">
+                                <Card key={index}>
+                                    <Card.Body>
+                                        <Card.Title>
+                                            {pr}
+                                        </Card.Title>
+                                        <RequirementTable 
+                                            detail={ FilteredRequirements.length > 0 ? FilteredRequirements.filter(r => r.ParentId == pr) : []} 
+                                            UpdateParent={handleFromChild}/>
+                                    </Card.Body>
+                                </Card>
+                            </div>
+                        )
+                           
+                    })
+                }
+                
             </div>
         </>
     )

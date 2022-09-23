@@ -87,7 +87,7 @@ const DownloadRequirement = (props) => {
                     'Buyer Remark': requirementData.BuyerRemark ? requirementData.BuyerRemark : "" ,
                     'Trades': row.TradeName,
                     'Workers Required': row.WorkerCount,
-                    'Salary': row.MinSalary + "-" + row.MaxSalary,
+                    'Salary': row.MinSalary + " - " + row.MaxSalary,
                     'Currency': row.Currency,
                     'Timing': getStringTime(row.FromWH) + "-" + getStringTime(row.ToWh),
                     'Work Days': row.WorkingDays,

@@ -81,9 +81,9 @@ const RequirementInsert = (payload) => {
     const loadingToast = LoadingNotify("Saving requirement...")
 
     return new Promise((resolve, reject) => {
-        Client.post("Requirement/Insert", payload) //Login API Call
+        Client.post("Requirement/InsertV2", payload) //Login API Call
             .then((resData) => {
-                logger.log("Requirement/Insert", resData);
+                logger.log("Requirement/InsertV2", resData);
                 DismissThisToast(loadingToast)
                 SuccessNotify(resData.Message)
                 resolve(resData);
@@ -261,7 +261,7 @@ const GetWorkerApi = (payload) => {
     const loadingToast = LoadingNotify("Fetching worker...")
 
     return new Promise((resolve, reject) => {
-        Client.post("GetWorkerApi - Worker/FetchWorker", payload) 
+        Client.post("Worker/FetchWorker", payload) 
             .then((resData) => {
                 logger.log("Worker/FetchWorker", resData);
                 DismissThisToast(loadingToast)

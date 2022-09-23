@@ -13,6 +13,7 @@
     "currency-list": "^1.0.6",
     "js-base64": "^3.7.2",
     "moment": "^2.29.1",
+    "multiselect-react-dropdown": "^2.0.25",
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.2",
     "react-bootstrap-confirmation": "^1.0.4",

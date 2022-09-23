@@ -22,7 +22,6 @@ function RequirementTable(props) {
     // function onClickBtn(e) {
     //     logger.log(e)
     // }
-
     function handleOnClick(rCode, bName, sName){
         if(rCode){
             //set to local storage
@@ -143,7 +142,7 @@ function RequirementTable(props) {
                                                     {
                                                         s.Currency && s.MinSalary && s.MinSalary > 0 && s.MaxSalary && s.MaxSalary > 0 ?
                                                             <span>
-                                                                {getMoneyFormat(s.MaxSalary, s.Currency)}-{getMoneyFormat(s.MinSalary, s.Currency)}
+                                                                {getMoneyFormat(s.MinSalary, s.Currency)} -{getMoneyFormat(s.MaxSalary, s.Currency)}
                                                             </span>
                                                             : <span>Not Disclosed</span>
                                                     }

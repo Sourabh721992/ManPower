@@ -18,10 +18,14 @@ const Localization = {
 
 const logger = {
     log: (message, ...args) => {
-        console.log(message, args);
+        if(window.location.href.indexOf("localhost") > -1) {
+            console.log(message, args);
+        }
     },
     error: (message, ...args) => {
-        console.error(message, args);
+        if(window.location.href.indexOf("localhost") > -1) {
+            console.error(message, args);
+        }
     }
 }
 

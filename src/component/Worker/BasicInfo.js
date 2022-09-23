@@ -152,6 +152,7 @@ const BasicInfo = (props) => {
                                     onChange={handleOnChange}
                                     defaultValue={moment(basicDetails.DOB).format('YYYY-MM-DD')}
                                     max={moment(new Date().setFullYear(new Date().getFullYear() - 18)).format("YYYY-MM-DD")}
+                                    min={moment(new Date().setFullYear(new Date().getFullYear() - 65)).format("YYYY-MM-DD")}
                                     required
                                     disabled={session.Role === Role.Buyer}
                                     
@@ -168,9 +169,11 @@ const BasicInfo = (props) => {
                                     onChange={handleOnChange}
                                     defaultValue={basicDetails.Age}
                                     min={18}
+                                    max={65}
                                     errorMessage={{
                                         required: "Worker age is required",
-                                        min: "Age can not be less than 18"
+                                        min: "Age can not be less than 18",
+                                        max: "Age can not be more than 65"
                                     }}
                                     required
                                 />
@@ -256,9 +259,13 @@ const BasicInfo = (props) => {
                                     className="form-control w-100"
                                     onChange={handleOnChange}
                                     defaultValue={moment(basicDetails.PassportExpy).format('YYYY-MM-DD')}
+                                    max={moment(new Date().setFullYear(new Date().getFullYear() + 100)).format("YYYY-MM-DD")}
                                     min={moment(Date.now()).format("YYYY-MM-DD")}
                                     required
                                     disabled={session.Role === Role.Buyer}
+                                    errorMessage={{
+                                        max: "Passport Expiry Date is not valid"
+                                    }}
                                 />
                             </Col>
                         </Row>

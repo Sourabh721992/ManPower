@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Multiselect from 'multiselect-react-dropdown';
 import "../../Css/app.css";
 // import Header from "../Layout/Header";
 import { RequirementInsert, GetSupplierApi, DashboardApi } from "../../utils/ApiFunctions";
@@ -18,7 +19,7 @@ const currencies = require('currencies.json');
 
 export default function AddRequirement() {
     let InitialTradeValue = { "TradeName": "", "workingDays": 5, "currency": "", "trade": "-1", "workers": 1, "salaryFrom": 0, "salaryTo": 0, "workHoursFrom": "09:00", "workHoursTo": "18:00", "FoodExpense": "Provided", "AccTrans": "Provided" };
-    let InitialStateValues = { "supplier": "", rating: "", client: "", BuyerRemark: "", SupplierRemark: "" };
+    let InitialStateValues = { "supplier": [], rating: "", client: "", BuyerRemark: "", SupplierRemark: "" };
     const [supplierSelectedValue, formStateValue] = useState(InitialStateValues);
     const [TradeStateValue, SetTradeStateValue] = useState([InitialTradeValue]);
     const [validated, setValidated] = useState(false);
@@ -26,7 +27,10 @@ export default function AddRequirement() {
     const [Currency, SetCurrencies] = useState(currencies.currencies);
     const [SupplierData, SetSupplierList] = useState([]);
     const [Spinner, SetSpinner] = useState(false);
+    const [NewSupplierList, SetNewSupplierList] = useState([]);
+    const [SelectedSuppliers, SetSelectedSuppliers] = useState([]);
     const history = useHistory()
+    const multiSelect = useRef(null);
 
 
     // // console.log(currencies.currencies);
@@ -87,18 +91,26 @@ export default function AddRequirement() {
 
         GetSupplierApi(item).then
             ((resData) => {
+                let newSupplierList = [];
                 resData.Message = JSON.parse(resData.Message);
                 //resData.Message = "{\"Count\":2,\"Suppliers\":[{\"Id\":\"S1001\",\"Name\":\"ABC Suppliers\",\"AddedOn\":\"20-Dec,2021\",\"RequirementCleared\":5,\"TotalWorkersProvided\":239,\"LastEngagement\":\"12-Jan-2022\"},{\"Id\":\"S1002\",\"Name\":\"XYZ Suppliers\",\"AddedOn\":\"20-Dec,2021\",\"RequirementCleared\":21,\"TotalWorkersProvided\":7561,\"LastEngagement\":\"21-Jan-2022\"},{\"Id\":\"S1001\",\"Name\":\"ABC Suppliers\",\"AddedOn\":\"20-Dec,2021\",\"RequirementCleared\":5,\"TotalWorkersProvided\":239,\"LastEngagement\":\"12-Jan-2022\"},{\"Id\":\"S1002\",\"Name\":\"XYZ Suppliers\",\"AddedOn\":\"20-Dec,2021\",\"RequirementCleared\":21,\"TotalWorkersProvided\":7561,\"LastEngagement\":\"21-Jan-2022\"}]}"
 
                 //resData.Message.Suppliers = JSON.parse(resData.Message.Suppliers);
 
+                resData.Message.Suppliers.map((item) => {
+                    let objSupplier = {};
+                    objSupplier.name = `${item.Id} - ${item.Name}`;
+                    objSupplier.id = item.Id;
+                    newSupplierList.push(objSupplier);
+                })
+
                 resData.Message.Suppliers = resData.Message.Suppliers.map((item) => {
-                    item.Name = item.Name + "-" + item.Id;
+                    item.Name = `${item.Id} - ${item.Name}`;
                     return item;
                 })
 
                 SetSupplierList(resData.Message.Suppliers);
-
+                SetNewSupplierList(newSupplierList);
             }).catch((error) => {
                 // alert("catch Error found in GetSupplierApi", JSON.stringify(error));
                 SetSupplierList([]);
@@ -121,7 +133,7 @@ export default function AddRequirement() {
 
             DashboardApi(body).then
                 ((resData) => {
-                    console.warn("res1 : ", JSON.stringify(resData.Message));
+                    //console.warn("res1 : ", JSON.stringify(resData.Message));
                     UserProfile.setSession(resData.Message, true);
                     session = UserProfile.getSession()
                     SetInitialState();
@@ -135,10 +147,19 @@ export default function AddRequirement() {
         }
     }
 
+    const onSelect = (selectedList, selectedItem) => {
+        SetSelectedSuppliers(selectedList);
+    }
+
+    const onRemove = (selectedList, removeItem) => {
+        SetSelectedSuppliers(selectedList);
+    }
+
     function SetInitialState() {
         setValidated(false);
         formStateValue(InitialStateValues);
         SetTradeStateValue([InitialTradeValue])
+        multiSelect.current.resetSelectedValues();
         // SetAlert({ show: false, isDataSaved: false });
     }
 
@@ -153,16 +174,13 @@ export default function AddRequirement() {
         })
 
         //Validations
-        if (supplierSelectedValue.supplier === "" || supplierSelectedValue.rating === "" || valTrade.length > 0) {
-            // // console.log("login called 1");
+        if (NewSupplierList.length === 0|| supplierSelectedValue.rating === "" || valTrade.length > 0) {
+            
             setValidated(true);
         } else {
-
             SetSpinner(true);
-
             let map = {};
             map["UserId"] = session.UserId;
-            map["SupplierId"] = supplierSelectedValue.supplier
             map["ClientName"] = supplierSelectedValue.client
             map["BuyerRemark"] = supplierSelectedValue.BuyerRemark
             map["SupplierRemark"] = supplierSelectedValue.SupplierRemark
@@ -170,15 +188,24 @@ export default function AddRequirement() {
             map["rating"] = supplierSelectedValue.rating
 
             let arr = [];
+            let totatWorkers = 0; 
             TradeStateValue.forEach((item) => {
                 let FromWH = setIntTime(item.workHoursFrom) //parseInt(item.workHoursFrom.split(":")[0]);
                 let ToWh = setIntTime(item.workHoursTo) //parseInt(item.workHoursTo.split(":")[0]);
                 let IfFoodProvided = item.FoodExpense === "Provided" ? true : false
                 let IfAccProvided = item.AccTrans === "Provided" ? true : false
                 arr.push({ "TradeName": item.TradeName, "TradeId": item.trade, "WorkerCount": parseInt(item.workers), "Currency": item.currency, "MinSalary": parseInt(item.salaryFrom), "MaxSalary": parseInt(item.salaryTo), "FromWH": FromWH, "ToWh": ToWh, "IfFoodProvided": IfFoodProvided, "IfAccProvided": IfAccProvided, "WorkingDays": parseInt(item.workingDays) })
+                totatWorkers += parseInt(item.workers)
             })
             map["Trades"] = arr;
+            map["WorkerCount"] = totatWorkers;
+            map["CurrentWorkers"] = {};
 
+            let arrSuppliers = [];
+            SelectedSuppliers.map(suppliers => {
+                arrSuppliers.push(suppliers.id);
+            });
+            map["Suppliers"] = arrSuppliers;
             // // console.log("save Map", map);
             RequirementInsert(map).then
                 ((resData) => {
@@ -222,11 +249,15 @@ export default function AddRequirement() {
                 <div style={{ float: "left", width: "90%", marginLeft: "5%" }}>
                     <Row className="mb20px">
                         <Col sm={2}>
-                            <Label value="Supplier" id="AddRequirementSupplier" />
+                            <Label value="Supplier(s)" id="AddRequirementSupplier" />
                             <span style={{ color: "red" }}>&nbsp;*</span>
                         </Col>
                         <Col sm={10} style={{ width: "25%" }}>
-                            <Dropdown required={true} key="ddlSupplier" id="ddlSupplier" name="supplier" value={supplierSelectedValue.supplier} data={SupplierData} valueColumn="Id" textColumn="Name" addDefaultText={true} defaultText="--Select Supplier--" onChange={onChange} />
+                            <Multiselect id="multiSelectSuppliers" options = {NewSupplierList} 
+                                selectedValues = {SelectedSuppliers} onSelect={onSelect} 
+                                onRemove={onRemove} displayValue="name" placeholder="--Select Supplier(s)--" 
+                                ref={multiSelect} 
+                            ></Multiselect>
                         </Col>
                     </Row>
                     <Row className="mb20px">
@@ -451,7 +482,7 @@ export default function AddRequirement() {
                         </Col>
                         <Col sm={2}>
                             <button type="submit" className="btn btn-primary float-right">Save</button>
-                            <button className="btn btn-secondary float-right" variant="secondary" onClick={ResetForm} style={{ marginLeft: "10px" }}>
+                            <button className="btn btn-secondary float-right" variant="secondary" onClick= {() => {ResetForm(false);}} style={{ marginLeft: "10px" }}>
                                 clear
                             </button>
                         </Col>

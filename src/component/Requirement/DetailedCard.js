@@ -234,7 +234,7 @@ const DetailedCard = (props) => {
                                                                 <td>{
                                                                         item.Currency && item.MinSalary && item.MinSalary > 0 && item.MaxSalary && item.MaxSalary > 0 ?
                                                                             <span>
-                                                                                {getMoneyFormat(item.MaxSalary, item.Currency)}-{getMoneyFormat(item.MinSalary, item.Currency)}
+                                                                                {getMoneyFormat(item.MinSalary, item.Currency)} - {getMoneyFormat(item.MaxSalary, item.Currency)}
                                                                             </span>
                                                                             : <span>Not Disclosed</span>
                                                                     }</td>

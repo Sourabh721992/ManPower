@@ -7,7 +7,6 @@ import moment from "moment";
 const WorkerInfo = (props) => {
     const [workerDetails, setWorkerDetails] = useState({})
     const [showWorkerDetails, setShowWorkerDetails] = useState(false)
-
     const handleOpenWorkerModal = () => {
         GetWorkerApi({workerCode: props.workerCode})
         .then((response) => {
@@ -34,19 +33,19 @@ const WorkerInfo = (props) => {
                     <Row>
                         <Col sm={2}>
                             <h6>
-                                <small class="text-muted">Name</small>
+                                <small className="text-muted">Name</small>
                             </h6>
                         </Col>
                         <Col sm={4}>
-                            <small class="text-muted">{workerDetails.Name}</small>
+                            <small className="text-muted">{workerDetails.Name}</small>
                         </Col>
                         <Col sm={2}>
                             <h6>
-                                <small class="text-muted">Age</small>
+                                <small className="text-muted">Age</small>
                             </h6>
                         </Col>
                         <Col sm={4}>
-                            <small class="text-muted">
+                            <small className="text-muted">
                                 { `${moment().diff(moment(workerDetails.DOB, 'YYYY-MM-DD'), 'years')} years` }
                             </small>
                         </Col>
@@ -54,19 +53,19 @@ const WorkerInfo = (props) => {
                     <Row className="mt-2">
                         <Col sm={2}>
                             <h6>
-                                <small class="text-muted">Contact Number</small>
+                                <small className="text-muted">Contact Number</small>
                             </h6>
                         </Col>
                         <Col sm={4}>
-                            <small class="text-muted">{workerDetails.ContactNo}</small>
+                            <small className="text-muted">{workerDetails.ContactNo}</small>
                         </Col>
                         <Col sm={2}>
                             <h6>
-                                <small class="text-muted">Aadhaar Number</small>
+                                <small className="text-muted">Aadhaar Number</small>
                             </h6>
                         </Col>
                         <Col sm={4}>
-                            <small class="text-muted">
+                            <small className="text-muted">
                                 { workerDetails.AdharNo ?? '' }
                             </small>
                         </Col>
@@ -74,19 +73,19 @@ const WorkerInfo = (props) => {
                     <Row className="mt-2">
                         <Col sm={2}>
                             <h6>
-                                <small class="text-muted">Passport Number</small>
+                                <small className="text-muted">Passport Number</small>
                             </h6>
                         </Col>
                         <Col sm={4}>
-                            <small class="text-muted">{workerDetails.PassportNo ?? ''}</small>
+                            <small className="text-muted">{workerDetails.PassportNo ?? ''}</small>
                         </Col>
                         <Col sm={2}>
                             <h6>
-                                <small class="text-muted">Passport Valid Till</small>
+                                <small className="text-muted">Passport Valid Till</small>
                             </h6>
                         </Col>
                         <Col sm={4}>
-                            <small class="text-muted">
+                            <small className="text-muted">
                                 { workerDetails.PassportExpy ?? '' }
                             </small>
                         </Col>
@@ -94,45 +93,65 @@ const WorkerInfo = (props) => {
                     <Row className="mt-2">
                         <Col sm={2}>
                             <h6>
-                                <small class="text-muted">Indian Experience</small>
+                                <small className="text-muted">Indian Experience</small>
                             </h6>
                         </Col>
                         <Col sm={4}>
-                            <small class="text-muted">{`${workerDetails.IndiaExpr} years`}</small>
+                            <small className="text-muted">{`${workerDetails.IndiaExpr} years`}</small>
                         </Col>
                         <Col sm={2}>
                             <h6>
-                                <small class="text-muted">Abroad Experience</small>
+                                <small className="text-muted">Abroad Experience</small>
                             </h6>
                         </Col>
                         <Col sm={4}>
-                            <small class="text-muted">{`${workerDetails.GulfExpr} years`}</small>
+                            <small className="text-muted">{`${workerDetails.GulfExpr} years`}</small>
                         </Col>
                     </Row>
                     <Row className="mt-2">
                         <Col sm={2}>
                             <h6>
-                                <small class="text-muted">Total Experience</small>
+                                <small className="text-muted">Total Experience</small>
                             </h6>
                         </Col>
                         <Col sm={4}>
-                            <small class="text-muted">
+                            <small className="text-muted">
                                 { `${workerDetails.TotalExpr} years` }
                             </small>
                         </Col>
                         <Col sm={2}>
                             <h6>
-                                <small class="text-muted">Profession</small>
+                                <small className="text-muted">Profession</small>
                             </h6>
                         </Col>
                         <Col sm={4}>
-                            <small class="text-muted">{`${workerDetails.Trade1 ?? ''}, ${workerDetails.Trade2 ?? ''}`}</small>
+                            <small className="text-muted">{`${workerDetails.Trade1 ?? ''}, ${workerDetails.Trade2 ?? ''}`}</small>
+                        </Col>
+                    </Row>
+                    <Row className="mt-2">
+                        <Col sm={2}>
+                            <h6>
+                                <small className="text-muted">PCC Date</small>
+                            </h6>
+                        </Col>
+                        <Col sm={4}>
+                            <small className="text-muted">
+                                { ('Progress' in workerDetails) ? workerDetails.Progress.PCCDate == '0001-01-01T00:00:00Z' ? 'N/A' : workerDetails?.Progress.PCCDate : 'N/A'}
+                            </small>
+                        </Col>
+                        <Col sm={2}>
+                            <h6>
+                                <small className="text-muted">PCC Status</small>
+                            </h6>
+                        </Col>
+                        <Col sm={4}>
+                            <small className="text-muted">{ ('Progress' in workerDetails) ? workerDetails.Progress.PCCStatus ?? 'N/A' : 'N/A' }</small>
                         </Col>
                     </Row>
                     <Row className="mt-2">
                         <Col sm={12}>
                             <h6>
-                                <small class="text-muted">Video Links</small>
+                                <small className="text-muted">Video Links</small>
                             </h6>
                         </Col>
                     </Row>
@@ -142,19 +161,19 @@ const WorkerInfo = (props) => {
                                 {
                                     workerDetails.VidLink1 != null &&
                                     <li>
-                                        <small><a href={workerDetails.VidLink1} target="_blank" class="link-primary">{workerDetails.VidLink1}</a></small>
+                                        <small><a href={workerDetails.VidLink1} target="_blank" className="link-primary">{workerDetails.VidLink1}</a></small>
                                     </li>
                                 }
                                 {
                                     workerDetails.VidLink2 != null &&
                                     <li>
-                                        <small><a href={workerDetails.VidLink2} target="_blank" class="link-primary">{workerDetails.VidLink2}</a></small>
+                                        <small><a href={workerDetails.VidLink2} target="_blank" className="link-primary">{workerDetails.VidLink2}</a></small>
                                     </li>
                                 }
                                 {
                                     workerDetails.VidLink3 != null &&
                                     <li>
-                                        <small><a href={workerDetails.VidLink3} target="_blank" class="link-primary">{workerDetails.VidLink3}</a></small>
+                                        <small><a href={workerDetails.VidLink3} target="_blank" className="link-primary">{workerDetails.VidLink3}</a></small>
                                     </li>
                                 }
                             </ul>
@@ -163,7 +182,7 @@ const WorkerInfo = (props) => {
                     <Row className="mt-2">
                         <Col sm={12}>
                             <h6>
-                                <small class="text-muted">CV Link</small>
+                                <small className="text-muted">CV Link</small>
                             </h6>
                         </Col>
                     </Row>
@@ -173,7 +192,7 @@ const WorkerInfo = (props) => {
                                 {
                                     workerDetails.CVLink != null &&
                                     <li>
-                                        <small><a href={workerDetails.CVLink} target="_blank" class="link-primary">{workerDetails.CVLink}</a></small>
+                                        <small><a href={workerDetails.CVLink} target="_blank" className="link-primary">{workerDetails.CVLink}</a></small>
                                     </li>
                                 }
                             </ul>
